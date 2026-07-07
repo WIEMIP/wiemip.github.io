@@ -232,6 +232,14 @@ footer a { color: var(--muted); }
   box-shadow: 0 14px 40px color-mix(in srgb, var(--accent) 38%, transparent);
   margin-bottom: 1.7rem;
 }
+/* Globe logo — circular crop masks the image's black corners. */
+.hero-logo {
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1.7rem;
+  box-shadow: 0 14px 40px color-mix(in srgb, var(--accent) 38%, transparent);
+}
 .landing h1 {
   margin: 0 0 2.2rem;
   font-size: clamp(1.9rem, 7vw, 3.4rem);
@@ -252,5 +260,63 @@ footer a { color: var(--muted); }
 .cta:hover { background: var(--accent-2); transform: translateY(-2px); }
 .cta .arrow { transition: transform .14s ease; }
 .cta:hover .arrow { transform: translateX(4px); }
+.cta.secondary {
+  background: var(--surface); color: var(--text);
+  border: 1px solid var(--border);
+}
+.cta.secondary:hover { background: var(--surface); border-color: var(--accent); color: var(--accent-2); }
+
+.cta-row { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; }
 
 .footer-wrap { text-align: center; }
+
+/* --- Model results page --- */
+.mr-meta {
+  display: flex; flex-wrap: wrap; gap: .4rem 1.2rem;
+  color: var(--muted); font-size: .85rem; margin: -.6rem 0 1.6rem;
+}
+.mr-meta code { color: var(--text); }
+
+.mr-controls { display: flex; align-items: center; gap: .8rem; margin: 0 0 1.6rem; flex-wrap: wrap; }
+.mr-controls label { margin: 0; }
+.mr-controls select { width: auto; min-width: 15rem; }
+
+.mr-note { color: var(--muted); font-size: .9rem; margin: 0 0 1rem; max-width: 62ch; }
+.mr-note code { color: var(--text); }
+
+/* Horizontal scroll container so wide tables never blow out the page width. */
+.mr-scroll { overflow-x: auto; margin: 0 0 1.6rem; -webkit-overflow-scrolling: touch; }
+
+/* Factorial feedback table — fixed green palette matching the WIEMIP reference
+   layout (teal header, lime grid, pale-green rows), independent of page theme. */
+.mr-table {
+  border-collapse: collapse;
+  width: 100%; min-width: 34rem;
+  font-size: 1rem;
+  background: #eaf1ed;
+  border: 3px solid #bcd634;
+  box-shadow: var(--shadow);
+}
+.mr-table th, .mr-table td {
+  border: 2px solid #bcd634;
+  padding: .85rem 1.1rem;
+  text-align: left;
+  vertical-align: top;
+  color: #17231d;
+}
+.mr-table thead th {
+  background: #7cbfa4;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border-bottom: 4px solid #bcd634;
+}
+.mr-table thead th small { display: block; font-weight: 700; font-size: .95rem; }
+.mr-table thead th:first-child { min-width: 9rem; }
+.mr-table tbody th { font-weight: 400; white-space: nowrap; }
+.mr-table tbody tr:nth-child(odd)  th, .mr-table tbody tr:nth-child(odd)  td { background: #cfe0da; }
+.mr-table tbody tr:nth-child(even) th, .mr-table tbody tr:nth-child(even) td { background: #e7efeb; }
+.mr-table .yes { font-weight: 800; font-size: 1.15rem; color: #0e6b46; }
+
+/* Factorials the selected model doesn't run — recessed so filled rows stand out. */
+.mr-table tbody tr.mr-absent th { font-style: italic; color: #5c6b64; }
+.mr-table tbody tr.mr-absent td { opacity: .5; }

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WIEMIP · Model results · 1pctCO2</title>
+  <meta name="description" content="Per-model carbon-cycle feedback table for the WIEMIP 1pctCO2 experiment, across factorial runs.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <main class="wrap">
+    <a class="back" href="/model-results/">← Model results</a>
+    <span class="badge">Model results</span>
+    <h1 style="font-size:clamp(1.8rem,5vw,2.6rem)"><span class="accent">1pctCO2</span></h1>
+
+    <div class="mr-meta" id="meta"></div>
+
+    <div id="notice" class="notice err hidden"></div>
+
+    <div class="mr-controls">
+      <label for="modelSelect">Model</label>
+      <select id="modelSelect" aria-label="Select a model"></select>
+    </div>
+
+    <section id="modelPanel" class="hidden">
+      <div class="mr-scroll">
+        <table class="mr-table" id="feedbackTable">
+          <thead>
+            <tr>
+              <th></th>
+              <th>beta</th>
+              <th>gamma</th>
+              <th>eta<small>(beta scaling)</small></th>
+              <th>delta<small>(gamma shift)</small></th>
+            </tr>
+          </thead>
+          <tbody id="feedbackBody"></tbody>
+        </table>
+      </div>
+      <p class="mr-note">
+        eta&nbsp;=&nbsp;beta&nbsp;/&nbsp;beta<sub>default</sub>, delta&nbsp;=&nbsp;gamma&nbsp;−&nbsp;gamma<sub>default</sub>
+        (blank on the default row). A ✓ marks a quantity the model has uploaded the runs to compute.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-wrap">
+      WIEMIP · <a href="https://github.com/WIEMIP">github.com/WIEMIP</a>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    "use strict";
+
+    var META = document.getElementById("meta");
+    var NOTICE = document.getElementById("notice");
+    var SELECT = document.getElementById("modelSelect");
+    var PANEL = document.getElementById("modelPanel");
+    var BODY = document.getElementById("feedbackBody");
+
+    function fail(msg) {
+      NOTICE.textContent = msg;
+      NOTICE.classList.remove("hidden");
+    }
+
+    function el(tag, attrs, children) {
+      var node = document.createElement(tag);
+      if (attrs) {
+        Object.keys(attrs).forEach(function (k) {
+          if (k === "class") node.className = attrs[k];
+          else if (k === "html") node.innerHTML = attrs[k];
+          else if (k === "text") node.textContent = attrs[k];
+          else node.setAttribute(k, attrs[k]);
+        });
+      }
+      (children || []).forEach(function (c) {
+        node.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+      });
+      return node;
+    }
+
+    function has(cov, fac, sim) {
+      return !!(cov[fac] && cov[fac][sim] && cov[fac][sim].length > 0);
+    }
+    function isProvided(model, fac) {
+      return model.declared_factorials.indexOf(fac) !== -1;
+    }
+
+    // beta from the biogeochemically-coupled run; gamma from the coupled minus
+    // biogeochemical runs (no separate radiatively-coupled run needed).
+    function betaReady(cov, fac) { return has(cov, fac, "bgc"); }
+    function gammaReady(cov, fac) { return has(cov, fac, "bgc") && has(cov, fac, "cou"); }
+
+    function cell(ready, title) {
+      var td = el("td", { title: title || "" });
+      if (ready) td.appendChild(el("span", { class: "yes", text: "✓" }));
+      return td;
+    }
+
+    function buildTable(model, data) {
+      BODY.textContent = "";
+      var cov = model.coverage;
+
+      data.factorial_schema.forEach(function (fac) {
+        var label = data.factorial_labels[fac] || fac;
+        var provided = isProvided(model, fac);
+        var tr = el("tr", provided ? null : { class: "mr-absent" }, [
+          el("th", { text: label })
+        ]);
+
+        if (!provided) {
+          var why = "Not in " + model.label + "'s run plan";
+          [0, 1, 2, 3].forEach(function () { tr.appendChild(cell(false, why)); });
+          BODY.appendChild(tr);
+          return;
+        }
+
+        var b = betaReady(cov, fac);
+        var g = gammaReady(cov, fac);
+        tr.appendChild(cell(b, b ? "beta available" : "beta pending"));
+        tr.appendChild(cell(g, g ? "gamma available" : "gamma pending"));
+
+        if (fac === "baseline") {
+          tr.appendChild(cell(false, "Not defined for the default row"));
+          tr.appendChild(cell(false, "Not defined for the default row"));
+        } else {
+          var eta = b && betaReady(cov, "baseline");
+          var delta = g && gammaReady(cov, "baseline");
+          tr.appendChild(cell(eta, eta ? "eta available" : "eta pending (needs this factorial and default beta)"));
+          tr.appendChild(cell(delta, delta ? "delta available" : "delta pending (needs this factorial and default gamma)"));
+        }
+        BODY.appendChild(tr);
+      });
+    }
+
+    var STATE = { data: null };
+
+    function render(modelKey) {
+      var data = STATE.data;
+      var model = data.models.filter(function (m) { return m.key === modelKey; })[0];
+      if (!model) return;
+      if (SELECT.value !== modelKey) SELECT.value = modelKey;
+      if (history.replaceState) history.replaceState(null, "", "#" + modelKey);
+      buildTable(model, data);
+      PANEL.classList.remove("hidden");
+    }
+
+    function init(data) {
+      STATE.data = data;
+
+      var when = new Date(data.generated_at);
+      var whenStr = isNaN(when) ? data.generated_at : when.toISOString().slice(0, 10);
+      META.appendChild(el("span", { html: "Experiment: <code>" + data.experiment + "</code>" }));
+      META.appendChild(el("span", { html: "Models: <code>" + data.models.length + "</code>" }));
+      META.appendChild(el("span", { html: "Updated: <code>" + whenStr + "</code>" }));
+
+      data.models.forEach(function (m) {
+        SELECT.appendChild(el("option", { value: m.key }, [m.label]));
+      });
+      SELECT.addEventListener("change", function () { render(SELECT.value); });
+
+      var fromHash = (location.hash || "").replace(/^#/, "");
+      var initial = data.models.filter(function (m) { return m.key === fromHash; })[0];
+      render(initial ? initial.key : data.models[0].key);
+    }
+
+    fetch("./data.json", { cache: "no-cache" })
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(init)
+      .catch(function (e) {
+        fail("Could not load model data (" + e.message +
+             "). Regenerate it with tools/build_model_results.py.");
+      });
+  })();
+  </script>
+</body>
+</html>
