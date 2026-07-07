@@ -4,30 +4,30 @@
    --------------------------------------------------------------------------- */
 
 :root {
-  --bg:        #f6f8f7;
+  --bg:        #f3f6fb;
   --surface:   #ffffff;
-  --border:    #e2e8e5;
-  --text:      #1a2420;
-  --muted:     #5b6b64;
-  --accent:    #1f8a70;   /* WIEMIP accent — edit me */
-  --accent-2:  #146c56;
+  --border:    #e0e6f0;
+  --text:      #16213a;   /* Spark Midnight Blue family */
+  --muted:     #5a6578;
+  --accent:    #2c85d7;   /* Spark Primary Blue */
+  --accent-2:  #142162;   /* Spark Midnight Blue */
   --accent-fg: #ffffff;
-  --shadow:    0 1px 2px rgba(16, 40, 34, .06), 0 8px 24px rgba(16, 40, 34, .06);
+  --shadow:    0 1px 2px rgba(20, 33, 80, .07), 0 8px 24px rgba(20, 33, 80, .08);
   --radius:    14px;
   --maxw:      780px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg:      #0e1512;
-    --surface: #16211d;
-    --border:  #263631;
-    --text:    #e8efeb;
-    --muted:   #9db0a8;
-    --accent:  #33b391;
-    --accent-2:#57c7a8;
-    --accent-fg:#06120e;
-    --shadow:  0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+    --bg:      #0c1426;
+    --surface: #131d33;
+    --border:  #263352;
+    --text:    #e8eefa;
+    --muted:   #98a6c2;
+    --accent:  #4a97e0;
+    --accent-2:#7fb4ec;
+    --accent-fg:#08111f;
+    --shadow:  0 1px 2px rgba(0,0,0,.35), 0 10px 30px rgba(0,0,0,.45);
   }
 }
 
@@ -99,6 +99,15 @@ h1 {
 }
 h1 .accent {
   background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+/* Landing hero: "warming stripes" diverging blue→red→blue fill on the WIEMIP text. */
+.landing h1 .accent {
+  background: linear-gradient(90deg,
+    #2a56b8 0%, #2c85d7 13%, #86b7ea 27%,
+    #f45858 44%, #b52626 50%, #f45858 56%,
+    #86b7ea 73%, #2c85d7 87%, #2a56b8 100%);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
 }
@@ -269,6 +278,21 @@ footer a { color: var(--muted); }
 .cta-row { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; }
 
 .footer-wrap { text-align: center; }
+
+/* Spark Climate Solutions credit — white backdrop keeps the navy logo legible
+   on both light and dark footers. */
+.spark-credit {
+  display: inline-flex; flex-direction: column; align-items: center; gap: .45rem;
+  text-decoration: none; color: var(--muted); margin-bottom: 1rem;
+}
+.spark-credit > span { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+.spark-credit img {
+  display: block; background: #fff;
+  padding: .55rem .85rem; border-radius: 12px;
+  border: 1px solid var(--border); box-shadow: var(--shadow);
+  transition: border-color .12s ease;
+}
+.spark-credit:hover img { border-color: var(--accent); }
 
 /* --- Model results page --- */
 .mr-meta {
