@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WIEMIP · Data Hub</title>
+  <!-- ===== edit me: destination for wiemip.github.io/hub ===== -->
+  <!-- Note: this is a plain-HTTP address, so the connection to the hub is
+       not encrypted. Prefer https:// (or a domain with a TLS cert) if the
+       server supports it. -->
+  <meta http-equiv="refresh" content="0; url=http://13.58.168.60">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%231f8a70'/></svg>">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <main class="wrap">
+    <a class="back" href="/">← WIEMIP</a>
+    <div class="panel">
+      <h1 style="font-size:1.6rem;margin:.2rem 0 .6rem">Opening the Data Hub…</h1>
+      <p class="tagline" style="margin-bottom:1.4rem">
+        You are being redirected to the WIEMIP data hub. If nothing happens,
+        use the button below.
+      </p>
+      <a class="btn" id="go" href="http://13.58.168.60">Go to the Data Hub →</a>
+    </div>
+  </main>
+
+  <script>
+    // Belt-and-braces: JS redirect in case meta-refresh is blocked.
+    window.location.replace(document.getElementById("go").href);
+  </script>
+</body>
+</html>
