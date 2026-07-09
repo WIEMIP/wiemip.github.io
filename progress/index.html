@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WIEMIP · Progress tracker</title>
+<meta name="description" content="Live per-model submission progress for the WIEMIP experiments, derived from files uploaded to the WIEMIP data bucket.">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<style>
+/* Self-contained tracker styling (Spark palette), independent of the shared
+   /assets/styles.css so the dashboard keeps its own dense-table look. */
+:root {
+  --navy: #142161;
+  --navy-deep: #17215d;
+  --navy-dark: #0e1740;
+  --blue: #2c85d7;
+  --blue-hover: #3a96e8;
+  --blue-light: #cee6fa;
+  --blue-pale: #eaf7ff;
+  --coral: #eb4141;
+  --coral-light: #ffdedf;
+  --amber: #e8930b;
+  --amber-light: #fff3d6;
+  --teal: #1b9e85;
+  --teal-light: #d4f3ec;
+  --white: #ffffff;
+  --gray-50: #f7fafc;
+  --gray-100: #edf2f7;
+  --gray-200: #e2e8f0;
+  --gray-400: #a0aec0;
+  --gray-500: #718096;
+  --gray-600: #4a5568;
+  --text: #142161;
+  --text-body: #3d4f7c;
+  --text-light: #6b7fa3;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--blue-pale);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.bg-decoration {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 800px 500px at 10% 0%, rgba(44,133,215,0.06), transparent),
+    radial-gradient(ellipse 600px 400px at 90% 100%, rgba(44,133,215,0.04), transparent);
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 11px 32px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--gray-200);
+}
+.logo { display: flex; align-items: center; text-decoration: none; }
+.logo img { height: 32px; width: auto; }
+.nav-divider { height: 24px; width: 1px; background: var(--gray-200); }
+.nav-title { font-size: 13px; font-weight: 600; color: var(--navy); }
+.nav-right { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+.nav-back { font-size: 12px; font-weight: 600; color: var(--text-light); text-decoration: none; }
+.nav-back:hover { color: var(--blue); }
+.last-updated { font-size: 11px; color: var(--text-light); }
+
+/* HERO */
+.hero {
+  position: relative;
+  background: linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, var(--blue) 100%);
+  padding: 96px 32px 80px;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 80px;
+  background: linear-gradient(180deg, transparent, var(--blue-pale));
+  pointer-events: none;
+}
+.container { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+.hero-inner { position: relative; z-index: 1; max-width: 860px; }
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 100px;
+  padding: 5px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--blue-light);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 300;
+  color: var(--blue-light);
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  margin-bottom: 14px;
+}
+.hero h1 strong { font-weight: 700; color: white; }
+.hero p {
+  font-size: 15px;
+  color: rgba(206,230,250,0.8);
+  line-height: 1.7;
+  max-width: 640px;
+  margin-bottom: 28px;
+}
+.hero-meta {
+  font-size: 11px;
+  color: rgba(206,230,250,0.5);
+  margin-bottom: 28px;
+  letter-spacing: 0.3px;
+}
+
+/* HERO STATS */
+.hero-stats { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-stat {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 12px 20px;
+  text-align: center;
+  min-width: 90px;
+}
+.hero-stat-num {
+  font-size: 26px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.5px;
+  display: block;
+  line-height: 1;
+}
+.hero-stat-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(206,230,250,0.55);
+  margin-top: 4px;
+  display: block;
+}
+.hero-stat.green .hero-stat-num { color: #5ee6c8; }
+.hero-stat.yellow .hero-stat-num { color: #fbbf24; }
+.hero-stat.red .hero-stat-num { color: #fc8181; }
+.hero-stat.blue .hero-stat-num { color: #90c7f0; }
+
+/* MAIN SECTION */
+.tracker-section { position: relative; z-index: 1; padding: 40px 0 80px; }
+
+.section-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.section-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--blue);
+}
+
+/* TABLE */
+.table-wrapper {
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(20,33,97,0.05);
+  overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead tr { background: var(--gray-50); border-bottom: 2px solid var(--gray-200); }
+thead tr:first-child { border-bottom: 1px solid var(--blue-light); }
+th.group-header { background: var(--blue-pale) !important; color: var(--blue) !important; text-align: center; font-size: 11px; letter-spacing: 1px; }
+th.sub-header { background: var(--gray-100) !important; font-size: 10px; border-left: 1px solid var(--blue-light); }
+th.sub-header:last-of-type { border-right: 1px solid var(--blue-light); }
+th {
+  padding: 11px 14px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+th.center { text-align: center; }
+td { padding: 13px 14px; border-bottom: 1px solid var(--gray-100); vertical-align: middle; }
+tbody tr:last-child > td { border-bottom: none; }
+tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s; }
+
+.model-name { font-weight: 700; font-size: 13px; color: var(--navy); white-space: nowrap; }
+.poc-name { font-size: 12px; color: var(--text-light); max-width: 150px; line-height: 1.4; }
+.unreg-badge {
+  display: inline-block;
+  margin-left: 7px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--gray-500);
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: 100px;
+  padding: 1px 7px;
+  vertical-align: middle;
+  cursor: default;
+}
+
+/* STATUS DOTS */
+.status-cell { text-align: center; }
+.status-dot-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  position: relative;
+}
+.status-dot {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  display: block;
+  flex-shrink: 0;
+}
+.dot-green { background: var(--teal); box-shadow: 0 0 0 3px rgba(27,158,133,0.18); }
+.dot-yellow { background: var(--amber); box-shadow: 0 0 0 3px rgba(232,147,11,0.18); }
+.dot-red { background: var(--coral); box-shadow: 0 0 0 3px rgba(235,65,65,0.18); }
+.dot-gray { background: #94a3b8; box-shadow: 0 0 0 3px rgba(148,163,184,0.18); }
+.status-mini-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+
+/* FACTORIALS */
+.factorials-cell { display: flex; flex-wrap: wrap; gap: 5px; max-width: 230px; }
+.factorial-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px 3px 5px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  user-select: none;
+}
+.factorial-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.factorial-tag.green { background: var(--teal-light); color: #0d7a64; }
+.factorial-tag.green .factorial-dot { background: var(--teal); }
+.factorial-tag.gray { background: #f1f5f9; color: #64748b; }
+.factorial-tag.gray .factorial-dot { background: #94a3b8; }
+.no-factorials { font-size: 12px; color: var(--gray-400); font-style: italic; }
+
+/* DUE DATE */
+.due-date { font-size: 12px; color: var(--text-light); white-space: nowrap; }
+.due-date.overdue { color: var(--coral); font-weight: 700; }
+.due-date.upcoming { color: var(--amber); font-weight: 600; }
+
+/* EXPAND BUTTON */
+.expand-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: var(--text-light);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.expand-btn:hover { background: var(--gray-100); color: var(--blue); }
+.expand-btn svg { transition: transform 0.25s; }
+.expand-btn.expanded svg { transform: rotate(180deg); }
+
+/* DETAIL ROW */
+.detail-row td { padding: 0; background: var(--gray-50); }
+.detail-inner {
+  padding: 16px 20px 20px;
+  border-top: 1px dashed var(--gray-200);
+}
+.detail-field label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--blue);
+  display: block;
+  margin-bottom: 5px;
+}
+.detail-field p { font-size: 12px; color: var(--text-body); line-height: 1.55; }
+.detail-field p.none-val { color: var(--gray-400); font-style: italic; }
+
+/* LEGEND */
+.legend { margin-top: 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.legend-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-body); }
+.legend-dot { width: 11px; height: 11px; border-radius: 50%; }
+.legend-hint { margin-left: auto; font-size: 11px; color: var(--text-light); font-style: italic; }
+
+.derived-note {
+  margin: 16px 0 0;
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.6;
+  max-width: 900px;
+}
+.derived-note code { background: var(--gray-100); border-radius: 4px; padding: 1px 5px; font-size: 11px; }
+
+.load-error {
+  background: var(--coral-light);
+  border: 1px solid var(--coral);
+  color: #b51e1e;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 13px;
+}
+
+/* HIDDEN */
+.hidden { display: none !important; }
+
+/* TOOLTIP */
+.has-tip { position: relative; }
+.has-tip .tip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy-dark);
+  color: rgba(255,255,255,0.9);
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  white-space: normal;
+  z-index: 300;
+  pointer-events: none;
+  max-width: 220px;
+  text-align: center;
+  line-height: 1.45;
+  font-style: normal;
+  font-weight: 400;
+}
+.has-tip .tip::after {
+  content: '';
+  position: absolute;
+  top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--navy-dark);
+}
+.has-tip:hover .tip { display: block; }
+
+/* FOOTER */
+footer { position: relative; z-index: 1; border-top: 1px solid var(--gray-200); background: white; }
+footer .container { padding-top: 20px; padding-bottom: 20px; text-align: center; font-size: 13px; color: var(--text-light); }
+footer a { color: var(--blue); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .container { padding: 0 16px; }
+  .detail-inner { grid-template-columns: 1fr 1fr; }
+  nav { padding: 10px 16px; gap: 12px; }
+}
+@media (max-width: 600px) {
+  .detail-inner { grid-template-columns: 1fr; }
+  .hero-stats { gap: 8px; }
+  .hero-stat { min-width: 70px; padding: 10px 12px; }
+}
+</style>
+</head>
+<body>
+<div class="bg-decoration"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="https://sparkclimate.org" class="logo" target="_blank" rel="noopener">
+    <img src="https://cdn.prod.website-files.com/640b41de65cb720e175382b0/647ebba5f7a36cf6853dd3a4_spark-logo-light-bg-color-default-lg.png" alt="Spark Climate Solutions">
+  </a>
+  <div class="nav-divider"></div>
+  <span class="nav-title">WIEMIP Progress Tracker</span>
+  <div class="nav-right">
+    <span class="last-updated" id="last-updated"></span>
+    <a class="nav-back" href="/">← WIEMIP home</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-badge">🌍 WIEMIP · Submission progress</div>
+      <h1>Model submission <strong>progress</strong></h1>
+      <p>Live status for the WIEMIP <strong>1pctCO2</strong> experiment, derived from the
+        files each group has actually uploaded to the data bucket. Registered models and
+        their factorial run plans come from the <code>wiemip_registry</code> package; every
+        status dot is computed from real bucket coverage — nothing here is set by hand.</p>
+      <p class="hero-meta" id="hero-meta"></p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num" id="stat-models">—</span>
+          <span class="hero-stat-label">Models</span>
+        </div>
+        <div class="hero-stat green">
+          <span class="hero-stat-num" id="stat-green">—</span>
+          <span class="hero-stat-label">UKESM complete</span>
+        </div>
+        <div class="hero-stat red">
+          <span class="hero-stat-num" id="stat-red">—</span>
+          <span class="hero-stat-label">No data</span>
+        </div>
+        <div class="hero-stat blue">
+          <span class="hero-stat-num" id="stat-all3">—</span>
+          <span class="hero-stat-label">All 3 GCMs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACKER -->
+<section class="tracker-section">
+  <div class="container">
+
+    <div id="load-error" class="load-error hidden"></div>
+
+    <div class="section-controls">
+      <span class="section-eyebrow" id="controls-eyebrow">Registered modeling groups</span>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th rowspan="2" style="min-width:130px">Model</th>
+            <th rowspan="2" style="min-width:150px">Point of Contact</th>
+            <th colspan="3" class="group-header" style="min-width:270px">GCM pattern</th>
+            <th rowspan="2" style="min-width:200px">Factorials</th>
+            <th rowspan="2" style="width:44px"></th>
+          </tr>
+          <tr>
+            <th class="center sub-header" style="min-width:90px">UKESM</th>
+            <th class="center sub-header" style="min-width:90px">IPSL</th>
+            <th class="center sub-header" style="min-width:90px">GFDL</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+
+    <div class="legend">
+      <span class="legend-label">Legend:</span>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div> Complete (uploaded)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--coral)"></div> n/a (no data)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#94a3b8"></div> Planned (not uploaded)</div>
+      <span class="legend-hint">Hover a dot for the underlying file counts</span>
+    </div>
+
+    <p class="derived-note" id="derived-note"></p>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    WIEMIP · <a href="https://github.com/WIEMIP">github.com/WIEMIP</a>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+var LABEL = { green: "Complete", red: "n/a", gray: "Planned" };
+var TABLE_BODY = document.getElementById("table-body");
+var DATA = null;
+
+function esc(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function fail(msg) {
+  var box = document.getElementById("load-error");
+  box.textContent = msg;
+  box.classList.remove("hidden");
+}
+
+// A single status dot with a tooltip.
+function dot(status, tip) {
+  return '<div class="status-dot-wrap has-tip">' +
+           '<span class="status-dot dot-' + status + '"></span>' +
+           '<span class="status-mini-label">' + LABEL[status] + '</span>' +
+           '<span class="tip">' + esc(tip) + '</span>' +
+         '</div>';
+}
+
+function gcmTip(forcing, m) {
+  var name = forcing.toUpperCase();
+  var cell = m.gcm[forcing];
+  if (m.registered) {
+    return name + " coupled 1pctCO2 run — " + cell.vars + " of " +
+           DATA.variables_total + " baseline variables uploaded";
+  }
+  return name + " coupled 1pctCO2 — " + cell.files + " ESM-tagged file" +
+         (cell.files === 1 ? "" : "s") + " on the bucket (coarse, no adapter)";
+}
+
+function factorialsHTML(m) {
+  if (!m.factorials.length) return '<span class="no-factorials">—</span>';
+  return m.factorials.map(function (f) {
+    var tip = f.label + " — " + (f.status === "green"
+      ? "sensitivity run uploaded"
+      : "planned sensitivity run, not uploaded yet");
+    return '<span class="factorial-tag ' + f.status + ' has-tip">' +
+             '<span class="factorial-dot"></span>' + esc(f.label) +
+             '<span class="tip">' + esc(tip) + '</span></span>';
+  }).join("");
+}
+
+function detailField(labelText, value) {
+  var empty = !value || value === "—";
+  return '<div class="detail-field"><label>' + labelText + "</label>" +
+         '<p' + (empty ? ' class="none-val"' : "") + ">" +
+         (empty ? "None recorded" : esc(value)) + "</p></div>";
+}
+
+function renderTable() {
+  TABLE_BODY.innerHTML = "";
+  DATA.models.forEach(function (m) {
+    var g = m.gcm;
+
+    var tr = document.createElement("tr");
+    tr.className = "main-row";
+    var badge = !m.empty ? "" :
+      ' <span class="unreg-badge has-tip">no data uploaded' +
+      '<span class="tip">No files on the WIEMIP bucket for this model yet.</span></span>';
+    tr.innerHTML =
+      "<td><span class=\"model-name\">" + esc(m.label) + "</span>" + badge + "</td>" +
+      "<td><span class=\"poc-name\">" + esc(m.poc) + "</span></td>" +
+      '<td class="status-cell">' + dot(g.ukesm.status, gcmTip("ukesm", m)) + "</td>" +
+      '<td class="status-cell">' + dot(g.ipsl.status, gcmTip("ipsl", m)) + "</td>" +
+      '<td class="status-cell">' + dot(g.gfdl.status, gcmTip("gfdl", m)) + "</td>" +
+      '<td><div class="factorials-cell">' + factorialsHTML(m) + "</div></td>" +
+      '<td><button class="expand-btn" type="button" title="Show details" aria-label="Show details">' +
+        '<svg width="14" height="14" viewBox="0 0 14 14" fill="none">' +
+        '<path d="M3 5L7 9L11 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>' +
+      "</button></td>";
+
+    var dr = document.createElement("tr");
+    dr.className = "detail-row hidden";
+    var coverage = m.registered
+      ? "Baseline coupled variables — UKESM " + g.ukesm.vars + ", IPSL " + g.ipsl.vars +
+        ", GFDL " + g.gfdl.vars + " (of " + DATA.variables_total + " requested); " +
+        "shared bgc " + m.bgc + ", ctrl " + m.ctrl + "."
+      : "No registry adapter — coarse ESM-tagged 1pctCO2 file counts: UKESM " +
+        g.ukesm.files + ", IPSL " + g.ipsl.files + ", GFDL " + g.gfdl.files + ".";
+    if (m.factorials_extra) {
+      coverage += " +" + m.factorials_extra +
+        " more factorial run" + (m.factorials_extra === 1 ? "" : "s") +
+        " uploaded beyond those shown.";
+    }
+    dr.innerHTML = "<td colspan=\"7\"><div class=\"detail-inner\">" +
+      detailField("Bucket coverage", coverage) +
+      "</div></td>";
+
+    var btn = tr.querySelector(".expand-btn");
+    btn.addEventListener("click", function () {
+      var open = dr.classList.toggle("hidden");
+      btn.classList.toggle("expanded", !open);
+    });
+
+    TABLE_BODY.appendChild(tr);
+    TABLE_BODY.appendChild(dr);
+  });
+}
+
+function init(data) {
+  DATA = data;
+  var st = data.stats;
+
+  document.getElementById("stat-models").textContent = st.models;
+  document.getElementById("stat-green").textContent = st.gcm.green;
+  document.getElementById("stat-red").textContent = st.gcm.red;
+  document.getElementById("stat-all3").textContent = st.all_three_gcms;
+
+  var when = new Date(data.generated_at);
+  var whenStr = isNaN(when) ? data.generated_at : when.toISOString().slice(0, 10);
+  document.getElementById("last-updated").textContent = "Coverage as of " + whenStr;
+  document.getElementById("hero-meta").textContent =
+    "Source: wiemip_registry " + data.registry_version + " · experiment " +
+    data.experiment + " · generated " + whenStr;
+  document.getElementById("controls-eyebrow").textContent =
+    st.models + " modeling groups · " + st.registered + " registered · " +
+    data.experiment + " experiment";
+  document.getElementById("derived-note").innerHTML =
+    "How the dots are computed: each <strong>GCM pattern</strong> dot is the coupled " +
+    "(<code>cou</code>) 1pctCO2 run under that ESM driver — green (complete) once it's " +
+    "been uploaded at all, even a few stocks; red when absent. UKESM is the default " +
+    "pattern nearly every group uploads. A coupled run uploaded without indicating its " +
+    "ESM pattern counts as UKESM, not IPSL/GFDL. <strong>Factorial</strong> tags are green " +
+    "when the sensitivity run's files are on the bucket, grey when it's planned but not " +
+    "uploaded yet. Models with no registry adapter are scanned coarsely (ESM-tagged file " +
+    "counts); their factorial tags show the planned run list. Everything shown is derived " +
+    "from the bucket except point of contact and planned factorials. Regenerate with " +
+    "<code>tools/build_progress.py</code>.";
+
+  renderTable();
+}
+
+fetch("./data.json", { cache: "no-cache" })
+  .then(function (r) {
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.json();
+  })
+  .then(init)
+  .catch(function (e) {
+    fail("Could not load progress data (" + e.message +
+         "). Regenerate it with tools/build_progress.py.");
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,686 @@
+{
+  "generated_at": "2026-07-09T18:53:48+00:00",
+  "registry_version": "0.1.1.dev6+ge045f8d76",
+  "experiment": "1pctCO2",
+  "variables_total": 168,
+  "gcm_forcings": [
+    "ukesm",
+    "ipsl",
+    "gfdl"
+  ],
+  "factorial_labels": {
+    "noFire": "No fire",
+    "noNitrogen": "No N limitation",
+    "noPermafrost": "No permafrost",
+    "noBVOC": "No BVOC",
+    "noFire_noNitrogen": "No fire + no N limitation",
+    "noFire_noPermafrost": "No fire + no permafrost"
+  },
+  "stats": {
+    "models": 19,
+    "registered": 11,
+    "gcm": {
+      "green": 11,
+      "red": 8
+    },
+    "all_three_gcms": 5
+  },
+  "models": [
+    {
+      "key": "BiomeE",
+      "label": "BiomeE",
+      "dir": "BiomeE",
+      "registered": true,
+      "empty": false,
+      "poc": "Paul Lerner",
+      "gcm": {
+        "ukesm": {
+          "status": "green",
+          "vars": 40
+        },
+        "ipsl": {
+          "status": "red",
+          "vars": 0
+        },
+        "gfdl": {
+          "status": "red",
+          "vars": 0
+        }
+      },
+      "bgc": 40,
+      "ctrl": 40,
+      "factorials": [],
+      "factorials_extra": 0,
+      "overall": "green"
+    },
+    {
+      "key": "CLASSIC",
+      "label": "CLASSIC",
+      "dir": "CLASSIC",
+      "registered": true,
+      "empty": false,
+      "poc": "Vivek Arora / Sal Curasi",
+      "gcm": {
+        "ukesm": {
+          "status": "green",
+          "vars": 71
+        },
+        "ipsl": {
+          "status": "red",
+          "vars": 0
+        },
+        "gfdl": {
+          "status": "red",
+          "vars": 0
+        }
+      },
+      "bgc": 71,
+      "ctrl": 71,
+      "factorials": [
+        {
+          "name": "noFire",
+          "label": "No fire",
+          "status": "green"
+        },
+        {
+          "name": "noNitrogen",
+          "label": "No N limitation",
+          "status": "green"
+        },
+        {
+          "name": "noFire_noNitrogen",
+          "label": "No fire + no N limitation",
+          "status": "green"
+        }
+      ],
+      "factorials_extra": 0,
+      "overall": "green"
+    },
+    {
+      "key": "CLM_FATES",
+      "label": "CLM-FATES",
+      "dir": "CLM-FATES",
+      "registered": true,
+      "empty": false,
+      "poc": "Rosie Fisher",
+      "gcm": {
+        "ukesm": {
+          "status": "green",
+          "vars": 62
+        },
+        "ipsl": {
+          "status": "red",
+          "vars": 0
+        },
+        "gfdl": {
+          "status": "red",
+          "vars": 0
+        }
+      },
+      "bgc": 62,
+      "ctrl": 62,
+      "factorials": [],
+      "factorials_extra": 0,
+      "overall": "green"
+    },
+    {
+      "key": "DLEM",
+      "label": "DLEM",
+      "dir": "DLEM",
+      "registered": true,
+      "empty": false,
+      "poc": "Susan Pan / Yuchun Zhang",
+      "gcm": {
+        "ukesm": {
+          "status": "green",
+          "vars": 25
+        },
+        "ipsl": {
+          "status": "green",
+          "vars": 25
+        },
+        "gfdl": {
+          "status": "green",
+          "vars": 25
+        }
+      },
+      "bgc": 25,
+      "ctrl": 25,
+      "factorials": [],
+      "factorials_extra": 0,
+      "overall": "green"
+    },
+    {
+      "key": "JSBACH",
+      "label": "JSBACH",
+      "dir": "JSBACH",
+      "registered": true,
+      "empty": false,
+      "poc": "Beiyao Xu",
+      "gcm": {
+        "ukesm": {
+          "status": "green",
+          "vars": 57
+        },
+        "ipsl": {
+          "status": "green",
+          "vars": 57
+        },
+        "gfdl": {
+          "status": "green",
+          "vars": 57
+        }
+      },
+      "bgc": 57,
+      "ctrl": 57,
+      "factorials": [
+        {
+          "name": "noNitrogen",
+          "label": "No N limitation",
+          "status": "green"
+        }
+      ],
+      "factorials_extra": 0,
+      "overall": "green"
+    },
+    {
+      "key": "JULES",
+      "label": "JULES",
+      "dir": "JULES",
+      "registered": true,
+      "empty": false,
+      "poc": "Eleanor Burke",
+      "gcm": {
+        "ukesm": {
+          "status": "green",
+          "vars": 2
+        },
+        "ipsl": {
+          "status": "green",
+          "vars": 2
+        },
+        "gfdl": {
+          "status": "green",
+          "vars": 2
+        }
+      },
+      "bgc": 2,
+      "ctrl": 2,
+      "factorials": [
+        {
+          "name": "noFire_noNitrogen",
+          "label": "No fire + no N limitation",
+          "status": "green"
+        }
+      ],
+      "factorials_extra": 13,
+      "overall": "green"
+    },
+    {
+      "key": "LPJ_EOSIM",
+      "label": "LPJ-EOSIM",
+      "dir": "LPJ-EOSIM",
+      "registered": true,
+      "empty": false,
+      "poc": "Tom Colligan",
+      "gcm": {
+        "ukesm": {
+          "status": "green",
+          "vars": 29
+        },
+        "ipsl": {
+          "status": "red",
+          "vars": 0
+        },
+        "gfdl": {
+          "status": "red",
+          "vars": 0
+        }
+      },
+      "bgc": 25,
+      "ctrl": 29,
+      "factorials": [
+        {
+          "name": "noFire",
+          "label": "No fire",
+          "status": "green"
+        }
+      ],
+      "factorials_extra": 0,
+      "overall": "green"
+    },
+    {
+      "key": "LPJmL6",
+      "label": "LPJmL6",
+      "dir": "LPJmL6",
+      "registered": true,
+      "empty": false,
+      "poc": "Sibyll Schaphoff",
+      "gcm": {
+        "ukesm": {
+          "status": "green",
+          "vars": 55
+        },
+        "ipsl": {
+          "status": "red",
+          "vars": 0
+        },
+        "gfdl": {
+          "status": "red",
+          "vars": 0
+        }
+      },
+      "bgc": 55,
+      "ctrl": 55,
+      "factorials": [],
+      "factorials_extra": 0,
+      "overall": "green"
+    },
+    {
+      "key": "LPX_Bern",
+      "label": "LPX-Bern",
+      "dir": "LPX-Bern",
+      "registered": true,
+      "empty": false,
+      "poc": "Hyuna Kim",
+      "gcm": {
+        "ukesm": {
+          "status": "green",
+          "vars": 70
+        },
+        "ipsl": {
+          "status": "green",
+          "vars": 70
+        },
+        "gfdl": {
+          "status": "green",
+          "vars": 70
+        }
+      },
+      "bgc": 70,
+      "ctrl": 70,
+      "factorials": [
+        {
+          "name": "noFire",
+          "label": "No fire",
+          "status": "green"
+        },
+        {
+          "name": "noPermafrost",
+          "label": "No permafrost",
+          "status": "green"
+        },
+        {
+          "name": "noFire_noPermafrost",
+          "label": "No fire + no permafrost",
+          "status": "green"
+        }
+      ],
+      "factorials_extra": 0,
+      "overall": "green"
+    },
+    {
+      "key": "TEM",
+      "label": "TEM-MDM",
+      "dir": "TEM",
+      "registered": true,
+      "empty": false,
+      "poc": "Shuo Chen / Qianlai Zhuang",
+      "gcm": {
+        "ukesm": {
+          "status": "green",
+          "vars": 11
+        },
+        "ipsl": {
+          "status": "red",
+          "vars": 0
+        },
+        "gfdl": {
+          "status": "red",
+          "vars": 0
+        }
+      },
+      "bgc": 11,
+      "ctrl": 11,
+      "factorials": [],
+      "factorials_extra": 0,
+      "overall": "green"
+    },
+    {
+      "key": "VISIT_UT",
+      "label": "VISIT-UT",
+      "dir": "VISIT-UT",
+      "registered": true,
+      "empty": false,
+      "poc": "Akihiko Ito",
+      "gcm": {
+        "ukesm": {
+          "status": "green",
+          "vars": 26
+        },
+        "ipsl": {
+          "status": "green",
+          "vars": 26
+        },
+        "gfdl": {
+          "status": "green",
+          "vars": 26
+        }
+      },
+      "bgc": 26,
+      "ctrl": 26,
+      "factorials": [
+        {
+          "name": "noFire",
+          "label": "No fire",
+          "status": "green"
+        },
+        {
+          "name": "noBVOC",
+          "label": "No BVOC",
+          "status": "green"
+        }
+      ],
+      "factorials_extra": 0,
+      "overall": "green"
+    },
+    {
+      "key": "BEPS",
+      "label": "BEPS",
+      "dir": "BEPS",
+      "registered": false,
+      "empty": true,
+      "poc": "Mousong Wu",
+      "gcm": {
+        "ukesm": {
+          "status": "red",
+          "files": 0
+        },
+        "ipsl": {
+          "status": "red",
+          "files": 0
+        },
+        "gfdl": {
+          "status": "red",
+          "files": 0
+        }
+      },
+      "bgc": null,
+      "ctrl": null,
+      "factorials": [
+        {
+          "name": "No fire",
+          "label": "No fire",
+          "status": "gray"
+        },
+        {
+          "name": "No permafrost",
+          "label": "No permafrost",
+          "status": "gray"
+        }
+      ],
+      "factorials_extra": 0,
+      "overall": "red"
+    },
+    {
+      "key": "CARDAMOM_JPL",
+      "label": "CARDAMOM-JPL",
+      "dir": "CARDAMOM-JPL",
+      "registered": false,
+      "empty": true,
+      "poc": "Eren Bilir",
+      "gcm": {
+        "ukesm": {
+          "status": "red",
+          "files": 0
+        },
+        "ipsl": {
+          "status": "red",
+          "files": 0
+        },
+        "gfdl": {
+          "status": "red",
+          "files": 0
+        }
+      },
+      "bgc": null,
+      "ctrl": null,
+      "factorials": [
+        {
+          "name": "No fire",
+          "label": "No fire",
+          "status": "gray"
+        }
+      ],
+      "factorials_extra": 0,
+      "overall": "red"
+    },
+    {
+      "key": "CLM",
+      "label": "CLM",
+      "dir": "CLM",
+      "registered": false,
+      "empty": true,
+      "poc": "Will Wieder",
+      "gcm": {
+        "ukesm": {
+          "status": "red",
+          "files": 0
+        },
+        "ipsl": {
+          "status": "red",
+          "files": 0
+        },
+        "gfdl": {
+          "status": "red",
+          "files": 0
+        }
+      },
+      "bgc": null,
+      "ctrl": null,
+      "factorials": [
+        {
+          "name": "No fire",
+          "label": "No fire",
+          "status": "gray"
+        }
+      ],
+      "factorials_extra": 0,
+      "overall": "red"
+    },
+    {
+      "key": "DVM_DOS_TEM",
+      "label": "DVM-DOS-TEM",
+      "dir": "DVM-DOS-TEM",
+      "registered": false,
+      "empty": true,
+      "poc": "Elchin Jafarov / Helene Genet",
+      "gcm": {
+        "ukesm": {
+          "status": "red",
+          "files": 0
+        },
+        "ipsl": {
+          "status": "red",
+          "files": 0
+        },
+        "gfdl": {
+          "status": "red",
+          "files": 0
+        }
+      },
+      "bgc": null,
+      "ctrl": null,
+      "factorials": [
+        {
+          "name": "No permafrost",
+          "label": "No permafrost",
+          "status": "gray"
+        },
+        {
+          "name": "No fire",
+          "label": "No fire",
+          "status": "gray"
+        },
+        {
+          "name": "No wetland",
+          "label": "No wetland",
+          "status": "gray"
+        },
+        {
+          "name": "No N limitation",
+          "label": "No N limitation",
+          "status": "gray"
+        }
+      ],
+      "factorials_extra": 0,
+      "overall": "red"
+    },
+    {
+      "key": "ELM",
+      "label": "ELM",
+      "dir": "ELM",
+      "registered": false,
+      "empty": true,
+      "poc": "Qing Zhu",
+      "gcm": {
+        "ukesm": {
+          "status": "red",
+          "files": 0
+        },
+        "ipsl": {
+          "status": "red",
+          "files": 0
+        },
+        "gfdl": {
+          "status": "red",
+          "files": 0
+        }
+      },
+      "bgc": null,
+      "ctrl": null,
+      "factorials": [],
+      "factorials_extra": 0,
+      "overall": "red"
+    },
+    {
+      "key": "IBIS",
+      "label": "IBIS",
+      "dir": "IBIS",
+      "registered": false,
+      "empty": true,
+      "poc": "Min Chen",
+      "gcm": {
+        "ukesm": {
+          "status": "red",
+          "files": 0
+        },
+        "ipsl": {
+          "status": "red",
+          "files": 0
+        },
+        "gfdl": {
+          "status": "red",
+          "files": 0
+        }
+      },
+      "bgc": null,
+      "ctrl": null,
+      "factorials": [
+        {
+          "name": "No fire",
+          "label": "No fire",
+          "status": "gray"
+        },
+        {
+          "name": "No wetland",
+          "label": "No wetland",
+          "status": "gray"
+        }
+      ],
+      "factorials_extra": 0,
+      "overall": "red"
+    },
+    {
+      "key": "LPJ_GUESS",
+      "label": "LPJ-GUESS",
+      "dir": "LPJ-GUESS",
+      "registered": false,
+      "empty": true,
+      "poc": "Prashant Paudel / Benjamin Smith",
+      "gcm": {
+        "ukesm": {
+          "status": "red",
+          "files": 0
+        },
+        "ipsl": {
+          "status": "red",
+          "files": 0
+        },
+        "gfdl": {
+          "status": "red",
+          "files": 0
+        }
+      },
+      "bgc": null,
+      "ctrl": null,
+      "factorials": [
+        {
+          "name": "No fire",
+          "label": "No fire",
+          "status": "gray"
+        },
+        {
+          "name": "No N limitation",
+          "label": "No N limitation",
+          "status": "gray"
+        },
+        {
+          "name": "No BVOC",
+          "label": "No BVOC",
+          "status": "gray"
+        }
+      ],
+      "factorials_extra": 0,
+      "overall": "red"
+    },
+    {
+      "key": "ORCHIDEE_MICT",
+      "label": "ORCHIDEE-MICT-CALIPSO",
+      "dir": "ORCHIDEE-MICT-CALIPSO",
+      "registered": false,
+      "empty": true,
+      "poc": "Yi Xi / Julien All\u00e9on",
+      "gcm": {
+        "ukesm": {
+          "status": "red",
+          "files": 0
+        },
+        "ipsl": {
+          "status": "red",
+          "files": 0
+        },
+        "gfdl": {
+          "status": "red",
+          "files": 0
+        }
+      },
+      "bgc": null,
+      "ctrl": null,
+      "factorials": [
+        {
+          "name": "No permafrost",
+          "label": "No permafrost",
+          "status": "gray"
+        },
+        {
+          "name": "No wetland",
+          "label": "No wetland",
+          "status": "gray"
+        }
+      ],
+      "factorials_extra": 0,
+      "overall": "red"
+    }
+  ]
+}
