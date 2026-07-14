@@ -190,7 +190,7 @@ nav {
   transition: all 0.2s;
 }
 .toggle-overshoot-btn:hover { border-color: var(--blue); color: var(--blue); }
-.overshoot-col.hidden-col { display: none; }
+.overshoot-col.hidden-col { display: none; } .co2-col.hidden-col { display: none; }
 
 /* TABLE */
 .table-wrapper {
@@ -569,32 +569,6 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
       <h1>WIEMIP Simulation <strong>Progress</strong></h1>
       <p>Track submission status across 19 modeling groups. Click any dot to update progress. Changes are saved automatically in your browser.</p>
       <p class="hero-meta">Data last updated from spreadsheet: June 25, 2026</p>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <span class="hero-stat-num">19</span>
-          <span class="hero-stat-label">Models</span>
-        </div>
-        <div class="hero-stat green">
-          <span class="hero-stat-num" id="stat-green">—</span>
-          <span class="hero-stat-label">Uploaded</span>
-        </div>
-        <div class="hero-stat yellow">
-          <span class="hero-stat-num" id="stat-yellow">—</span>
-          <span class="hero-stat-label">In Progress</span>
-        </div>
-        <div class="hero-stat red">
-          <span class="hero-stat-num" id="stat-red">—</span>
-          <span class="hero-stat-label">Not Reported</span>
-        </div>
-        <div class="hero-stat blue">
-          <span class="hero-stat-num" id="stat-blue">—</span>
-          <span class="hero-stat-label">Testing/Special</span>
-        </div>
-        <div class="hero-stat gray">
-          <span class="hero-stat-num" id="stat-gray">—</span>
-          <span class="hero-stat-label">N/A</span>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -605,7 +579,7 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
 
 <div class="section-controls reveal">
   <span class="section-eyebrow">19 Modeling Groups · June 25, 2026</span>
-  <button class="toggle-overshoot-btn" id="toggle-overshoot">Hide Overshoot ↕</button>
+  <button class="toggle-overshoot-btn" id="toggle-overshoot">Overshoot ↕</button>
 </div>
 
     <div class="table-wrapper reveal">
@@ -614,14 +588,14 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
           <tr>
             <th rowspan="2" style="min-width:130px">Model</th>
             <th rowspan="2" style="min-width:150px">Point of Contact</th>
-            <th colspan="2" class="group-header">1pct CO₂</th>
+            <th colspan="2" class="group-header co2-col">1pct CO₂</th>
             <th colspan="3" class="group-header overshoot-col" style="min-width:270px">Climate Overshoot</th>
             <th rowspan="2" style="min-width:160px">Anticipated Submission Date</th>
             <th rowspan="2" style="width:44px"></th>
           </tr>
           <tr>
-            <th class="center sub-header" style="min-width:90px">Status</th>
-            <th class="sub-header sub-header-end" style="min-width:200px">Factorials</th>
+            <th class="center sub-header co2-col" style="min-width:90px">Status</th>
+            <th class="sub-header sub-header-end co2-col" style="min-width:200px">Factorials</th>
             <th class="center sub-header overshoot-col" style="min-width:90px">UKESM</th>
             <th class="center sub-header overshoot-col" style="min-width:90px">IPSL</th>
             <th class="center sub-header overshoot-col" style="min-width:90px">GFDL</th>
@@ -1069,32 +1043,28 @@ function renderTable() {
     tr.innerHTML = `
       <td><span class="model-name">${m.name}</span></td>
       <td><span class="poc-name">${m.poc}</span></td>
-      <td class="status-cell">
+      <td class="status-cell co2-col">
         <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','co2')">
           <span class="status-dot dot-${s.co2.c}"></span>
-          <span class="status-mini-label">${LABEL_MAP[s.co2.c]}</span>
           <span class="tip">${esc(m.co2.t)}</span>
         </div>
       </td>
-      <td><div class="factorials-cell">${factHTML}</div></td>
+      <td class="co2-col"><div class="factorials-cell">${factHTML}</div></td>
       <td class="status-cell">
         <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','ukesm')">
           <span class="status-dot dot-${s.ukesm.c}"></span>
-          <span class="status-mini-label">${LABEL_MAP[s.ukesm.c]}</span>
           <span class="tip">UKESM — ${esc(m.overshoot.t)}</span>
         </div>
       </td>
       <td class="status-cell">
         <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','ipsl')">
           <span class="status-dot dot-${s.ipsl.c}"></span>
-          <span class="status-mini-label">${LABEL_MAP[s.ipsl.c]}</span>
           <span class="tip">IPSL — ${esc(m.overshoot.t)}</span>
         </div>
       </td>
       <td class="status-cell">
         <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','gfdl')">
           <span class="status-dot dot-${s.gfdl.c}"></span>
-          <span class="status-mini-label">${LABEL_MAP[s.gfdl.c]}</span>
           <span class="tip">GFDL — ${esc(m.overshoot.t)}</span>
         </div>
       </td>
@@ -1262,14 +1232,19 @@ function closePopover() {
 }
 
 // Overshoot toggle
-let overshootVisible = true;
+let showingCO2 = true;
+document.querySelectorAll('.overshoot-col').forEach(el => el.classList.add('hidden-col'));
+
 document.getElementById('toggle-overshoot').addEventListener('click', () => {
-  overshootVisible = !overshootVisible;
+  showingCO2 = !showingCO2;
+  document.querySelectorAll('.co2-col').forEach(el => {
+    el.classList.toggle('hidden-col', !showingCO2);
+  });
   document.querySelectorAll('.overshoot-col').forEach(el => {
-    el.classList.toggle('hidden-col', !overshootVisible);
+    el.classList.toggle('hidden-col', showingCO2);
   });
   document.getElementById('toggle-overshoot').textContent =
-    overshootVisible ? 'Hide Overshoot ↕' : 'Show Overshoot ↕';
+    showingCO2 ? 'Overshoot' : '1pctCO2';
 });
 
 // Reset
