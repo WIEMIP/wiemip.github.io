@@ -579,7 +579,7 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
 
 <div class="section-controls reveal">
   <span class="section-eyebrow">19 Modeling Groups · June 25, 2026</span>
-  <button class="toggle-overshoot-btn" id="toggle-overshoot">Overshoot ↕</button>
+  <button class="toggle-overshoot-btn" id="toggle-overshoot">Overshoot↕</button>
 </div>
 
     <div class="table-wrapper reveal">
@@ -1050,19 +1050,19 @@ function renderTable() {
         </div>
       </td>
       <td class="co2-col"><div class="factorials-cell">${factHTML}</div></td>
-      <td class="status-cell">
+      <td class="status-cell overshoot-col">
         <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','ukesm')">
           <span class="status-dot dot-${s.ukesm.c}"></span>
           <span class="tip">UKESM — ${esc(m.overshoot.t)}</span>
         </div>
       </td>
-      <td class="status-cell">
+     <td class="status-cell overshoot-col">
         <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','ipsl')">
           <span class="status-dot dot-${s.ipsl.c}"></span>
           <span class="tip">IPSL — ${esc(m.overshoot.t)}</span>
         </div>
       </td>
-      <td class="status-cell">
+      <td class="status-cell overshoot-col">
         <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','gfdl')">
           <span class="status-dot dot-${s.gfdl.c}"></span>
           <span class="tip">GFDL — ${esc(m.overshoot.t)}</span>
@@ -1122,7 +1122,6 @@ function renderTable() {
     tbody.appendChild(dr);
   });
 
-  updateStats();
 }
 
 function esc(s) {
