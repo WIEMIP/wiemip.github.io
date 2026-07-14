@@ -958,7 +958,7 @@ function buildDefaultState(m) {
     followupEdit: null,
     expanded: false,
   };
-  m.factorials.forEach(f => { s.factorials[f] = { c: 'yellow', note: '' }; });
+  m.factorials.forEach(f => { s.factorials[f] = { c: 'green', note: '' }; });
   return s;
 }
 
@@ -974,7 +974,7 @@ async function loadState() {
         if (!state[m.id].co2) state[m.id].co2 = { c: m.co2.c, note: '' };
         if (!state[m.id].factorials) state[m.id].factorials = {};
         m.factorials.forEach(f => {
-          if (!state[m.id].factorials[f]) state[m.id].factorials[f] = { c: 'yellow', note: '' };
+          if (!state[m.id].factorials[f]) state[m.id].factorials[f] = { c: 'green', note: '' };
         });
         if (!state[m.id].ukesm) state[m.id].ukesm = { c: m.overshoot.c, note: '' };
         if (!state[m.id].ipsl)  state[m.id].ipsl  = { c: m.overshoot.c, note: '' };
