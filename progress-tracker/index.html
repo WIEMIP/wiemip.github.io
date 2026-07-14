@@ -176,8 +176,8 @@ nav {
   letter-spacing: 1.5px;
   color: var(--blue);
 }
-.filter-btns { display: flex; gap: 6px; margin-left: auto; }
-.filter-btn {
+.toggle-overshoot-btn {
+  margin-left: auto;
   padding: 5px 14px;
   border-radius: 50px;
   border: 1px solid var(--gray-200);
@@ -189,8 +189,8 @@ nav {
   cursor: pointer;
   transition: all 0.2s;
 }
-.filter-btn:hover { border-color: var(--blue); color: var(--blue); }
-.filter-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+.toggle-overshoot-btn:hover { border-color: var(--blue); color: var(--blue); }
+.overshoot-col.hidden-col { display: none; }
 
 /* TABLE */
 .table-wrapper {
@@ -603,17 +603,10 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
 <section class="tracker-section">
   <div class="container">
 
-    <div class="section-controls reveal">
-      <span class="section-eyebrow">19 Modeling Groups · June 25, 2026</span>
-      <div class="filter-btns">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="green">🟢 Uploaded</button>
-        <button class="filter-btn" data-filter="yellow">🟡 In Progress</button>
-        <button class="filter-btn" data-filter="red">🔴 Not Reported</button>
-        <button class="filter-btn" data-filter="blue">🔵 Testing/Special Path</button>
-        <button class="filter-btn" data-filter="gray">⚫ N/A</button>
-      </div>
-    </div>
+<div class="section-controls reveal">
+  <span class="section-eyebrow">19 Modeling Groups · June 25, 2026</span>
+  <button class="toggle-overshoot-btn" id="toggle-overshoot">Hide Overshoot ↕</button>
+</div>
 
     <div class="table-wrapper reveal">
       <table>
@@ -622,16 +615,16 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
             <th rowspan="2" style="min-width:130px">Model</th>
             <th rowspan="2" style="min-width:150px">Point of Contact</th>
             <th colspan="2" class="group-header">1pct CO₂</th>
-            <th colspan="3" class="group-header" style="min-width:270px">Climate Overshoot</th>
-            <th rowspan="2" style="min-width:100px">Due Date</th>
+            <th colspan="3" class="group-header overshoot-col" style="min-width:270px">Climate Overshoot</th>
+            <th rowspan="2" style="min-width:160px">Anticipated Submission Date</th>
             <th rowspan="2" style="width:44px"></th>
           </tr>
           <tr>
             <th class="center sub-header" style="min-width:90px">Status</th>
             <th class="sub-header sub-header-end" style="min-width:200px">Factorials</th>
-            <th class="center sub-header" style="min-width:90px">UKESM</th>
-            <th class="center sub-header" style="min-width:90px">IPSL</th>
-            <th class="center sub-header" style="min-width:90px">GFDL</th>
+            <th class="center sub-header overshoot-col" style="min-width:90px">UKESM</th>
+            <th class="center sub-header overshoot-col" style="min-width:90px">IPSL</th>
+            <th class="center sub-header overshoot-col" style="min-width:90px">GFDL</th>
           </tr>
         </thead>
         <tbody id="table-body"></tbody>
@@ -1058,7 +1051,6 @@ function renderTable() {
   MODELS.forEach(m => {
     const s = state[m.id];
     const overall = overallColor(m.id);
-    if (activeFilter !== 'all' && overall !== activeFilter) return;
 
     // Factorial tags
     const factHTML = m.factorials.length === 0
@@ -1269,14 +1261,15 @@ function closePopover() {
   selectedStatus = null;
 }
 
-// Filter buttons
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilter = btn.dataset.filter;
-    renderTable();
+// Overshoot toggle
+let overshootVisible = true;
+document.getElementById('toggle-overshoot').addEventListener('click', () => {
+  overshootVisible = !overshootVisible;
+  document.querySelectorAll('.overshoot-col').forEach(el => {
+    el.classList.toggle('hidden-col', !overshootVisible);
   });
+  document.getElementById('toggle-overshoot').textContent =
+    overshootVisible ? 'Hide Overshoot ↕' : 'Show Overshoot ↕';
 });
 
 // Reset
