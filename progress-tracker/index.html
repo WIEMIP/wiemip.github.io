@@ -588,7 +588,7 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
             <th rowspan="2" style="min-width:130px">Model</th>
             <th rowspan="2" style="min-width:150px">Point of Contact</th>
             <th colspan="2" class="group-header co2-col">1pct CO₂</th>
-            <th colspan="3" class="group-header overshoot-col" style="min-width:270px">Climate Overshoot</th>
+            <th colspan="3" class="group-header overshoot-col" style="min-width:270px">GCM Pattern</th>
             <th rowspan="2" style="min-width:160px">Anticipated Submission Date</th>
             <th rowspan="2" style="width:44px"></th>
           </tr>
@@ -771,8 +771,8 @@ const MODELS = [
     followup: 'Yes',
   },
   {
-    id: 'fates',
-    name: 'FATES',
+    id: 'clm-fates',
+    name: 'CLM-FATES',
     poc: 'Rosie Fisher',
     baseline:  { c: 'yellow', t: 'In progress — baseline runs' },
     co2:       { c: 'yellow', t: 'Getting submitted before summer break' },
@@ -1127,6 +1127,14 @@ function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+ function applyColumnVisibility() {
+  document.querySelectorAll('.co2-col').forEach(el => {
+    el.classList.toggle('hidden-col', !showingCO2);
+  });
+  document.querySelectorAll('.overshoot-col').forEach(el => {
+    el.classList.toggle('hidden-col', showingCO2);
+  });
+} 
 // ─────────────────────────────────────────────────────────────────────────────
 // INTERACTIONS
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1188,7 +1196,7 @@ function openPopover(event, modelId, field) {
 
   const tgt  = event.target.closest('.status-dot-wrap, .factorial-tag');
   const rect = tgt ? tgt.getBoundingClientRect() : { top: event.clientY, left: event.clientX, bottom: event.clientY, right: event.clientX, width: 0, height: 0 };
-  const pw = 300, ph = 290;
+  const pw = 300, ph = pop.offsetHeight || 320;
   let left = rect.right + 12;
   if (left + pw > window.innerWidth - 12) left = rect.left - pw - 12;
   let top = rect.top + rect.height / 2 - ph / 2;
@@ -1217,8 +1225,9 @@ function savePopover() {
     state[modelId][field] = { c: selectedStatus, note };
   }
 
-  saveState(modelId);
+saveState(modelId);
   renderTable();
+  applyColumnVisibility();
   closePopover();
 }
 
@@ -1231,16 +1240,10 @@ function closePopover() {
 
 // Overshoot toggle
 let showingCO2 = true;
-document.querySelectorAll('.overshoot-col').forEach(el => el.classList.add('hidden-col'));
 
 document.getElementById('toggle-overshoot').addEventListener('click', () => {
   showingCO2 = !showingCO2;
-  document.querySelectorAll('.co2-col').forEach(el => {
-    el.classList.toggle('hidden-col', !showingCO2);
-  });
-  document.querySelectorAll('.overshoot-col').forEach(el => {
-    el.classList.toggle('hidden-col', showingCO2);
-  });
+  applyColumnVisibility();
   document.getElementById('toggle-overshoot').textContent =
     showingCO2 ? 'Overshoot' : '1pctCO2';
 });
@@ -1277,6 +1280,7 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 (async () => {
   await loadState();
   renderTable();
+  applyColumnVisibility();
 })();
 </script>
 </body>
