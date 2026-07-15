@@ -1138,9 +1138,7 @@ function esc(s) {
   document.querySelectorAll('.co2-col').forEach(el => {
     el.classList.toggle('hidden-col', !showingCO2);
   });
-  document.querySelectorAll('.overshoot-col').forEach(el => {
-    el.classList.toggle('hidden-col', showingCO2);
-  });
+  
 } 
 // ─────────────────────────────────────────────────────────────────────────────
 // INTERACTIONS
@@ -1179,7 +1177,7 @@ function openPopover(event, modelId, field) {
     simLabel  = `Factorial: ${fname}`;
     document.getElementById('pop-note').value = s.factorials[fname] ? (s.factorials[fname].note || '') : '';
   } else {
-    const labels = { co2: '1pct CO₂', ukesm: 'Climate Overshoot — UKESM', ipsl: 'Climate Overshoot — IPSL', gfdl: 'Climate Overshoot — GFDL' };
+    const labels = { co2: 'Climate Overshoot', ukesm: '1pct CO₂ — UKESM', ipsl: '1pct CO₂ — IPSL', gfdl: '1pct CO₂ — GFDL' };
     const origMap = { co2: m.co2.t, ukesm: m.overshoot.t, ipsl: m.overshoot.t, gfdl: m.overshoot.t };
     curColor  = s[field].c;
     origText  = origMap[field] || '';
