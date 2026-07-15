@@ -190,6 +190,10 @@ nav {
   transition: all 0.2s;
 }
 .toggle-overshoot-btn:hover { border-color: var(--blue); color: var(--blue); }
+.view-tabs { margin-left: auto; display: flex; gap: 2px; background: var(--gray-100); border-radius: 50px; padding: 3px; }
+.tab-btn { padding: 5px 14px; border-radius: 50px; border: none; background: transparent; font-family: 'Open Sans', sans-serif; font-size: 11px; font-weight: 600; color: var(--text-light); cursor: pointer; transition: all 0.2s; }
+.tab-btn.active { background: white; color: var(--navy); box-shadow: 0 1px 4px rgba(20,33,97,0.1); }
+.tab-btn:hover:not(.active) { color: var(--navy); }
 .overshoot-col.hidden-col { display: none; } .co2-col.hidden-col { display: none; }
 
 /* TABLE */
@@ -578,7 +582,10 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
 
 <div class="section-controls reveal">
   <span class="section-eyebrow">19 Modeling Groups · June 25, 2026</span>
-  <button class="toggle-overshoot-btn" id="toggle-overshoot">Overshoot↕</button>
+  <div class="view-tabs">
+    <button class="tab-btn active" id="tab-1pct">1pct CO₂</button>
+    <button class="tab-btn" id="tab-overshoot">Climate Overshoot</button>
+  </div>
 </div>
 
     <div class="table-wrapper reveal">
@@ -587,14 +594,14 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
           <tr>
             <th rowspan="2" style="min-width:130px">Model</th>
             <th rowspan="2" style="min-width:150px">Point of Contact</th>
-            <th colspan="2" class="group-header co2-col">1pct CO₂</th>
+            <th class="group-header co2-col">Climate Overshoot</th>
             <th colspan="3" class="group-header overshoot-col" style="min-width:270px">GCM Pattern</th>
+            <th rowspan="2" style="min-width:200px">Factorials</th>
             <th rowspan="2" style="min-width:160px">Anticipated Submission Date</th>
             <th rowspan="2" style="width:44px"></th>
           </tr>
           <tr>
             <th class="center sub-header co2-col" style="min-width:90px">Status</th>
-            <th class="sub-header sub-header-end co2-col" style="min-width:200px">Factorials</th>
             <th class="center sub-header overshoot-col" style="min-width:90px">UKESM</th>
             <th class="center sub-header overshoot-col" style="min-width:90px">IPSL</th>
             <th class="center sub-header overshoot-col" style="min-width:90px">GFDL</th>
@@ -1039,7 +1046,7 @@ function renderTable() {
     const tr = document.createElement('tr');
     tr.className = 'main-row';
     tr.dataset.id = m.id;
-    tr.innerHTML = `
+tr.innerHTML = `
       <td><span class="model-name">${m.name}</span></td>
       <td><span class="poc-name">${m.poc}</span></td>
       <td class="status-cell co2-col">
@@ -1048,14 +1055,13 @@ function renderTable() {
           <span class="tip">${esc(m.co2.t)}</span>
         </div>
       </td>
-      <td class="co2-col"><div class="factorials-cell">${factHTML}</div></td>
       <td class="status-cell overshoot-col">
         <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','ukesm')">
           <span class="status-dot dot-${s.ukesm.c}"></span>
           <span class="tip">UKESM — ${esc(m.overshoot.t)}</span>
         </div>
       </td>
-     <td class="status-cell overshoot-col">
+      <td class="status-cell overshoot-col">
         <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','ipsl')">
           <span class="status-dot dot-${s.ipsl.c}"></span>
           <span class="tip">IPSL — ${esc(m.overshoot.t)}</span>
@@ -1067,6 +1073,7 @@ function renderTable() {
           <span class="tip">GFDL — ${esc(m.overshoot.t)}</span>
         </div>
       </td>
+      <td><div class="factorials-cell">${factHTML}</div></td>
       <td>${dueDateHTML(m)}</td>
       <td>
         <button class="expand-btn ${s.expanded ? 'expanded' : ''}"
@@ -1239,13 +1246,20 @@ function closePopover() {
 }
 
 // Overshoot toggle
-let showingCO2 = true;
+let showingCO2 = false;
 
-document.getElementById('toggle-overshoot').addEventListener('click', () => {
-  showingCO2 = !showingCO2;
+document.getElementById('tab-1pct').addEventListener('click', () => {
+  showingCO2 = false;
   applyColumnVisibility();
-  document.getElementById('toggle-overshoot').textContent =
-    showingCO2 ? 'Overshoot' : '1pctCO2';
+  document.getElementById('tab-1pct').classList.add('active');
+  document.getElementById('tab-overshoot').classList.remove('active');
+});
+
+document.getElementById('tab-overshoot').addEventListener('click', () => {
+  showingCO2 = true;
+  applyColumnVisibility();
+  document.getElementById('tab-overshoot').classList.add('active');
+  document.getElementById('tab-1pct').classList.remove('active');
 });
 
 // Reset
