@@ -665,8 +665,10 @@ const MODELS = [
     name: 'LPX-Bern',
     poc: 'Hyuna Kim',
     baseline:  { c: 'green',  t: 'Uploaded' },
-    co2:       { c: 'green',  t: 'Uploaded' },
-    overshoot: { c: 'green',  t: 'Uploaded' },
+    co2:       { c: 'green',  t: 'Uploaded (UKESM, IPSL, GFDL)' },
+    ukesm:     { c: 'green',  t: 'Uploaded' },
+    ipsl:      { c: 'green',  t: 'Uploaded' },
+    gfdl:      { c: 'green',  t: 'Uploaded' },
     dueDate: 'Jun 15, 2026', dueDateRaw: '2026-06-15',
     factorials: ['No fire', 'No fire + no permafrost', 'No permafrost'],
     retune: '—',
@@ -678,8 +680,10 @@ const MODELS = [
     name: 'DLEM',
     poc: 'Susan Pan / Yuchun Zhang',
     baseline:  { c: 'green', t: 'Uploaded' },
-    co2:       { c: 'green', t: 'Uploaded' },
-    overshoot: { c: 'red',   t: 'Not reported' },
+    co2:       { c: 'red',   t: 'Not reported' },
+    ukesm:     { c: 'green', t: 'Uploaded' },
+    ipsl:      { c: 'green', t: 'Uploaded' },
+    gfdl:      { c: 'green', t: 'Uploaded' },
     dueDate: '—', dueDateRaw: null,
     factorials: [],
     retune: 'If necessary',
@@ -691,8 +695,10 @@ const MODELS = [
     name: 'CLASSIC',
     poc: 'Vivek Arora / Sal Curasi',
     baseline:  { c: 'green',  t: 'Uploaded' },
-    co2:       { c: 'green',  t: 'Uploaded' },
-    overshoot: { c: 'yellow', t: 'No date (OK with July)' },
+    co2:       { c: 'red',    t: 'Not reported' },
+    ukesm:     { c: 'green',  t: 'Uploaded' },
+    ipsl:      { c: 'red',    t: 'Not reported' },
+    gfdl:      { c: 'red',    t: 'Not reported' },
     dueDate: '—', dueDateRaw: null,
     factorials: ['No fire', 'No N limitation', 'No fire + no N limitation'],
     retune: 'No — no time to retune',
@@ -704,8 +710,10 @@ const MODELS = [
     name: 'VISIT-UT',
     poc: 'Akihiko Ito',
     baseline:  { c: 'green',  t: 'Uploaded' },
-    co2:       { c: 'green',  t: 'Uploaded' },
-    overshoot: { c: 'yellow', t: 'ETA Jun 30, 2026' },
+    co2:       { c: 'yellow', t: 'Partially uploaded — UKESM + GFDL on the bucket; IPSL not yet' },
+    ukesm:     { c: 'green',  t: 'Uploaded' },
+    ipsl:      { c: 'green',  t: 'Uploaded' },
+    gfdl:      { c: 'green',  t: 'Uploaded' },
     dueDate: 'Jun 30, 2026', dueDateRaw: '2026-06-30',
     factorials: ['No fire', 'No BVOC'],
     retune: 'If necessary',
@@ -717,8 +725,10 @@ const MODELS = [
     name: 'CLM',
     poc: 'Will Wieder',
     baseline:  { c: 'green',  t: 'Done / post-processing' },
-    co2:       { c: 'green',  t: 'Baselines done (UKESM1)' },
-    overshoot: { c: 'yellow', t: 'No date; production ~Jun 15' },
+    co2:       { c: 'red',    t: 'Not reported' },
+    ukesm:     { c: 'red',    t: 'Not reported (no files on the bucket yet)' },
+    ipsl:      { c: 'red',    t: 'Not reported' },
+    gfdl:      { c: 'red',    t: 'Not reported' },
     dueDate: '—', dueDateRaw: null,
     factorials: ['No fire'],
     retune: 'Yes — TBD; possibly "low fire" to tune well',
@@ -730,8 +740,10 @@ const MODELS = [
     name: 'JULES',
     poc: 'Eleanor Burke',
     baseline:  { c: 'green', t: 'Uploaded' },
-    co2:       { c: 'green', t: 'Uploaded' },
-    overshoot: { c: 'red',   t: 'Not reported' },
+    co2:       { c: 'red',   t: 'Not reported' },
+    ukesm:     { c: 'green', t: 'Uploaded' },
+    ipsl:      { c: 'green', t: 'Uploaded' },
+    gfdl:      { c: 'green', t: 'Uploaded' },
     dueDate: '—', dueDateRaw: null,
     factorials: ['No fire + no N limitation'],
     retune: 'Yes for fire; unsure about nitrogen',
@@ -743,8 +755,10 @@ const MODELS = [
     name: 'LPJ-EOSIM',
     poc: 'Tom Colligan',
     baseline:  { c: 'yellow', t: 'In progress — baseline runs' },
-    co2:       { c: 'yellow', t: 'In progress (baseline done)' },
-    overshoot: { c: 'yellow', t: '~Jun 17 target (past)' },
+    co2:       { c: 'red',    t: 'Not reported' },
+    ukesm:     { c: 'green',  t: 'Uploaded' },
+    ipsl:      { c: 'green',  t: 'Uploaded' },
+    gfdl:      { c: 'green',  t: 'Uploaded' },
     dueDate: 'Jun 17, 2026', dueDateRaw: '2026-06-17',
     factorials: ['No fire'],
     retune: 'Yes — match main stocks (litc, soilc, vegc) and fluxes (gpp, npp, nbp)',
@@ -756,8 +770,10 @@ const MODELS = [
     name: 'TEM-MDM',
     poc: 'Shuo Chen / Qianlai Zhuang',
     baseline:  { c: 'yellow', t: 'In progress — baseline runs' },
-    co2:       { c: 'yellow', t: 'In progress (most baseline done)' },
-    overshoot: { c: 'yellow', t: 'ETA Jul 17, 2026' },
+    co2:       { c: 'red',    t: 'Not reported' },
+    ukesm:     { c: 'green',  t: 'Uploaded' },
+    ipsl:      { c: 'red',    t: 'Not reported' },
+    gfdl:      { c: 'red',    t: 'Not reported' },
     dueDate: 'Jul 17, 2026', dueDateRaw: '2026-07-17',
     factorials: [],
     retune: 'If necessary',
@@ -769,10 +785,12 @@ const MODELS = [
     name: 'BiomeE',
     poc: 'Paul Lerner',
     baseline:  { c: 'yellow', t: 'Re-running runs' },
-    co2:       { c: 'yellow', t: 'In progress (beginning baseline)' },
-    overshoot: { c: 'yellow', t: 'P1 Jul 1; P2/P3 Jul 31' },
+    co2:       { c: 'red',    t: 'Not reported' },
+    ukesm:     { c: 'green',  t: 'Uploaded' },
+    ipsl:      { c: 'red',    t: 'Not reported' },
+    gfdl:      { c: 'red',    t: 'Not reported' },
     dueDate: 'Jul 31, 2026', dueDateRaw: '2026-07-31',
-    factorials: [],
+    factorials: ['No fire', 'No N limitation'],
     retune: 'Not currently planned; will re-tune baseline stocks/fluxes time-permitting',
     blockers: 'Modelling time',
     followup: 'Yes',
@@ -782,8 +800,10 @@ const MODELS = [
     name: 'CLM-FATES',
     poc: 'Rosie Fisher',
     baseline:  { c: 'yellow', t: 'In progress — baseline runs' },
-    co2:       { c: 'yellow', t: 'Getting submitted before summer break' },
-    overshoot: { c: 'yellow', t: 'After Jul 24, 2026' },
+    co2:       { c: 'red',    t: 'Not reported' },
+    ukesm:     { c: 'green',  t: 'Uploaded' },
+    ipsl:      { c: 'green',  t: 'Uploaded' },
+    gfdl:      { c: 'green',  t: 'Uploaded' },
     dueDate: 'Jul 31, 2026', dueDateRaw: '2026-07-31',
     factorials: [],
     retune: 'If necessary',
@@ -795,8 +815,10 @@ const MODELS = [
     name: 'LPJ-GUESS',
     poc: 'Prashant Paudel / Benjamin Smith',
     baseline:  { c: 'yellow', t: 'In progress — baseline runs' },
-    co2:       { c: 'yellow', t: 'Maybe end of June' },
-    overshoot: { c: 'red',    t: 'Not reported' },
+    co2:       { c: 'red',    t: 'Not reported' },
+    ukesm:     { c: 'red',    t: 'Not reported (no files on the bucket yet)' },
+    ipsl:      { c: 'red',    t: 'Not reported' },
+    gfdl:      { c: 'red',    t: 'Not reported' },
     dueDate: '—', dueDateRaw: null,
     factorials: ['No fire', 'No N limitation', 'No BVOC'],
     retune: 'If required — depends on variability in outputs',
@@ -808,8 +830,10 @@ const MODELS = [
     name: 'JSBACH',
     poc: 'Beiyao Xu',
     baseline:  { c: 'green',  t: 'Uploaded' },
-    co2:       { c: 'yellow', t: 'In progress (spin-up)' },
-    overshoot: { c: 'yellow', t: '~Jul 20, 2026 (uncertain)' },
+    co2:       { c: 'red',    t: 'Not reported' },
+    ukesm:     { c: 'green',  t: 'Uploaded' },
+    ipsl:      { c: 'green',  t: 'Uploaded' },
+    gfdl:      { c: 'green',  t: 'Uploaded' },
     dueDate: 'Jul 20, 2026', dueDateRaw: '2026-07-20',
     factorials: ['No N limitation'],
     retune: 'If necessary',
@@ -821,8 +845,10 @@ const MODELS = [
     name: 'LPJmL6',
     poc: 'Sibyll Schaphoff',
     baseline:  { c: 'yellow', t: 'In progress — spin-up' },
-    co2:       { c: 'yellow', t: 'In progress' },
-    overshoot: { c: 'red',    t: 'Not reported' },
+    co2:       { c: 'red',    t: 'Not reported' },
+    ukesm:     { c: 'green',  t: 'Uploaded' },
+    ipsl:      { c: 'red',    t: 'Not reported' },
+    gfdl:      { c: 'red',    t: 'Not reported' },
     dueDate: '—', dueDateRaw: null,
     factorials: [],
     retune: 'If necessary',
@@ -834,8 +860,10 @@ const MODELS = [
     name: 'ELM',
     poc: 'Qing Zhu',
     baseline:  { c: 'yellow', t: 'In progress — spin-up' },
-    co2:       { c: 'yellow', t: 'In progress (spin-up)' },
-    overshoot: { c: 'red',    t: 'Not reported' },
+    co2:       { c: 'red',    t: 'Not reported' },
+    ukesm:     { c: 'red',    t: 'Not reported (no files on the bucket yet)' },
+    ipsl:      { c: 'red',    t: 'Not reported' },
+    gfdl:      { c: 'red',    t: 'Not reported' },
     dueDate: '—', dueDateRaw: null,
     factorials: [],
     retune: '—',
@@ -847,8 +875,10 @@ const MODELS = [
     name: 'DVM-DOS-TEM',
     poc: 'Elchin Jafarov / Helene Genet',
     baseline:  { c: 'yellow', t: 'In progress — spin-up' },
-    co2:       { c: 'yellow', t: 'In progress (spin-up) — working through calibration issues' },
-    overshoot: { c: 'yellow', t: 'Late Jul+' },
+    co2:       { c: 'red',    t: 'Not reported' },
+    ukesm:     { c: 'red',    t: 'Not reported (no files on the bucket yet)' },
+    ipsl:      { c: 'red',    t: 'Not reported' },
+    gfdl:      { c: 'red',    t: 'Not reported' },
     dueDate: 'Jul 31, 2026', dueDateRaw: '2026-07-31',
     factorials: ['No permafrost', 'No fire', 'No wetland', 'No N limitation'],
     retune: 'If necessary',
@@ -860,8 +890,10 @@ const MODELS = [
     name: 'ORCHIDEE-MICT',
     poc: 'Yi Xi / Julien Alléon',
     baseline:  { c: 'red', t: 'No status — cluster down' },
-    co2:       { c: 'red', t: 'BLOCKED: Cluster down' },
-    overshoot: { c: 'red', t: 'Not reported (1pct at risk)' },
+    co2:       { c: 'red', t: 'Not reported' },
+    ukesm:     { c: 'red', t: 'Not reported — BLOCKED: cluster down (1pct at risk)' },
+    ipsl:      { c: 'red', t: 'Not reported' },
+    gfdl:      { c: 'red', t: 'Not reported' },
     dueDate: '—', dueDateRaw: null,
     factorials: ['No permafrost', 'No wetland'],
     retune: 'If necessary',
@@ -873,8 +905,10 @@ const MODELS = [
     name: 'BEPS',
     poc: 'Mousong Wu',
     baseline:  { c: 'blue',   t: 'Testing / blocked / special path' },
-    co2:       { c: 'yellow', t: 'In progress (moving to server)' },
-    overshoot: { c: 'yellow', t: 'July (no specific date)' },
+    co2:       { c: 'red',    t: 'Not reported' },
+    ukesm:     { c: 'red',    t: 'Not reported (no files on the bucket yet)' },
+    ipsl:      { c: 'red',    t: 'Not reported' },
+    gfdl:      { c: 'red',    t: 'Not reported' },
     dueDate: '—', dueDateRaw: null,
     factorials: ['No fire', 'No permafrost'],
     retune: 'If necessary',
@@ -886,8 +920,10 @@ const MODELS = [
     name: 'IBIS',
     poc: 'Min Chen',
     baseline:  { c: 'blue',   t: 'Testing / blocked / special path' },
-    co2:       { c: 'yellow', t: 'In progress' },
-    overshoot: { c: 'red',    t: 'Not reported' },
+    co2:       { c: 'red',    t: 'Not reported' },
+    ukesm:     { c: 'red',    t: 'Not reported (no files on the bucket yet)' },
+    ipsl:      { c: 'red',    t: 'Not reported' },
+    gfdl:      { c: 'red',    t: 'Not reported' },
     dueDate: '—', dueDateRaw: null,
     factorials: ['No fire', 'No wetland'],
     retune: 'If necessary',
@@ -899,8 +935,10 @@ const MODELS = [
     name: 'CARDAMOM-JPL',
     poc: 'Eren Bilir',
     baseline:  { c: 'blue',   t: 'Testing / blocked / special path' },
-    co2:       { c: 'yellow', t: 'Reanalysis due Jun 15, then spin-up' },
-    overshoot: { c: 'yellow', t: '~End July (tentative)' },
+    co2:       { c: 'red',    t: 'Not reported' },
+    ukesm:     { c: 'red',    t: 'Not reported (no files on the bucket yet)' },
+    ipsl:      { c: 'red',    t: 'Not reported' },
+    gfdl:      { c: 'red',    t: 'Not reported' },
     dueDate: 'Jul 31, 2026', dueDateRaw: '2026-07-31',
     factorials: ['No fire'],
     retune: 'Possible — would add time',
@@ -920,10 +958,10 @@ let selectedStatus = null;
 
 function buildDefaultState(m) {
   const s = {
-    co2:   { c: m.co2.c,       note: '' },
-    ukesm: { c: m.overshoot.c, note: '' },
-    ipsl:  { c: m.overshoot.c, note: '' },
-    gfdl:  { c: m.overshoot.c, note: '' },
+    co2:   { c: m.co2.c,   note: '' },
+    ukesm: { c: m.ukesm.c, note: '' },
+    ipsl:  { c: m.ipsl.c,  note: '' },
+    gfdl:  { c: m.gfdl.c,  note: '' },
     factorials: {},
     notes: '',
     blockersEdit: null,
@@ -949,9 +987,9 @@ async function loadState() {
         m.factorials.forEach(f => {
           if (!state[m.id].factorials[f]) state[m.id].factorials[f] = { c: 'green', note: '' };
         });
-        if (!state[m.id].ukesm) state[m.id].ukesm = { c: m.overshoot.c, note: '' };
-        if (!state[m.id].ipsl)  state[m.id].ipsl  = { c: m.overshoot.c, note: '' };
-        if (!state[m.id].gfdl)  state[m.id].gfdl  = { c: m.overshoot.c, note: '' };
+        if (!state[m.id].ukesm) state[m.id].ukesm = { c: m.ukesm.c, note: '' };
+        if (!state[m.id].ipsl)  state[m.id].ipsl  = { c: m.ipsl.c, note: '' };
+        if (!state[m.id].gfdl)  state[m.id].gfdl  = { c: m.gfdl.c, note: '' };
         if (state[m.id].blockersEdit === undefined) state[m.id].blockersEdit = null;
         if (state[m.id].retuneEdit === undefined) state[m.id].retuneEdit = null;
         if (state[m.id].followupEdit === undefined) state[m.id].followupEdit = null;
@@ -1058,19 +1096,19 @@ tr.innerHTML = `
       <td class="status-cell overshoot-col">
         <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','ukesm')">
           <span class="status-dot dot-${s.ukesm.c}"></span>
-          <span class="tip">UKESM — ${esc(m.overshoot.t)}</span>
+          <span class="tip">UKESM — ${esc(m.ukesm.t)}</span>
         </div>
       </td>
       <td class="status-cell overshoot-col">
         <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','ipsl')">
           <span class="status-dot dot-${s.ipsl.c}"></span>
-          <span class="tip">IPSL — ${esc(m.overshoot.t)}</span>
+          <span class="tip">IPSL — ${esc(m.ipsl.t)}</span>
         </div>
       </td>
       <td class="status-cell overshoot-col">
         <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','gfdl')">
           <span class="status-dot dot-${s.gfdl.c}"></span>
-          <span class="tip">GFDL — ${esc(m.overshoot.t)}</span>
+          <span class="tip">GFDL — ${esc(m.gfdl.t)}</span>
         </div>
       </td>
       <td><div class="factorials-cell">${factHTML}</div></td>
@@ -1178,7 +1216,7 @@ function openPopover(event, modelId, field) {
     document.getElementById('pop-note').value = s.factorials[fname] ? (s.factorials[fname].note || '') : '';
   } else {
     const labels = { co2: 'Climate Overshoot', ukesm: '1pct CO₂ — UKESM', ipsl: '1pct CO₂ — IPSL', gfdl: '1pct CO₂ — GFDL' };
-    const origMap = { co2: m.co2.t, ukesm: m.overshoot.t, ipsl: m.overshoot.t, gfdl: m.overshoot.t };
+    const origMap = { co2: m.co2.t, ukesm: m.ukesm.t, ipsl: m.ipsl.t, gfdl: m.gfdl.t };
     curColor  = s[field].c;
     origText  = origMap[field] || '';
     simLabel  = `Simulation: ${labels[field] || field}`;
