@@ -594,14 +594,13 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
           <tr>
             <th rowspan="2" style="min-width:130px">Model</th>
             <th rowspan="2" style="min-width:150px">Point of Contact</th>
-            <th class="group-header co2-col">Climate Overshoot</th>
+            <th colspan="3" class="group-header co2-col">Climate Overshoot</th>
             <th colspan="3" class="group-header overshoot-col" style="min-width:270px">GCM Pattern</th>
             <th rowspan="2" style="min-width:200px">Factorials</th>
             <th rowspan="2" style="min-width:160px">Anticipated Submission Date</th>
             <th rowspan="2" style="width:44px"></th>
           </tr>
           <tr>
-            <th class="center sub-header co2-col" style="min-width:90px">Status</th>
             <th class="center sub-header overshoot-col" style="min-width:90px">UKESM</th>
             <th class="center sub-header overshoot-col" style="min-width:90px">IPSL</th>
             <th class="center sub-header overshoot-col" style="min-width:90px">GFDL</th>
@@ -962,6 +961,9 @@ function buildDefaultState(m) {
     ukesm: { c: m.ukesm.c, note: '' },
     ipsl:  { c: m.ipsl.c,  note: '' },
     gfdl:  { c: m.gfdl.c,  note: '' },
+    os_ukesm: { c: 'red', note: '' },
+    os_ipsl:  { c: 'red', note: '' },
+    os_gfdl:  { c: 'red', note: '' },
     factorials: {},
     notes: '',
     blockersEdit: null,
@@ -990,6 +992,9 @@ async function loadState() {
         if (!state[m.id].ukesm) state[m.id].ukesm = { c: m.ukesm.c, note: '' };
         if (!state[m.id].ipsl)  state[m.id].ipsl  = { c: m.ipsl.c, note: '' };
         if (!state[m.id].gfdl)  state[m.id].gfdl  = { c: m.gfdl.c, note: '' };
+        if (!state[m.id].os_ukesm) state[m.id].os_ukesm = { c: 'red', note: '' };
+        if (!state[m.id].os_ipsl)  state[m.id].os_ipsl  = { c: 'red', note: '' };
+        if (!state[m.id].os_gfdl)  state[m.id].os_gfdl  = { c: 'red', note: '' };
         if (state[m.id].blockersEdit === undefined) state[m.id].blockersEdit = null;
         if (state[m.id].retuneEdit === undefined) state[m.id].retuneEdit = null;
         if (state[m.id].followupEdit === undefined) state[m.id].followupEdit = null;
@@ -1088,9 +1093,21 @@ tr.innerHTML = `
       <td><span class="model-name">${m.name}</span></td>
       <td><span class="poc-name">${m.poc}</span></td>
       <td class="status-cell co2-col">
-        <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','co2')">
-          <span class="status-dot dot-${s.co2.c}"></span>
-          <span class="tip">${esc(m.co2.t)}</span>
+        <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','os_ukesm')">
+          <span class="status-dot dot-${s.os_ukesm.c}"></span>
+          <span class="tip">Overshoot UKESM</span>
+        </div>
+      </td>
+      <td class="status-cell co2-col">
+        <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','os_ipsl')">
+          <span class="status-dot dot-${s.os_ipsl.c}"></span>
+          <span class="tip">Overshoot IPSL</span>
+        </div>
+      </td>
+      <td class="status-cell co2-col">
+        <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','os_gfdl')">
+          <span class="status-dot dot-${s.os_gfdl.c}"></span>
+          <span class="tip">Overshoot GFDL</span>
         </div>
       </td>
       <td class="status-cell overshoot-col">
@@ -1130,7 +1147,7 @@ tr.innerHTML = `
     dr.id = `detail-${m.id}`;
     if (!s.expanded) dr.classList.add('hidden');
     dr.innerHTML = `
-      <td colspan="9">
+      <td colspan="11">
         <div class="detail-inner">
           <div class="detail-field">
             <label>Blockers</label>
@@ -1176,7 +1193,9 @@ function esc(s) {
   document.querySelectorAll('.co2-col').forEach(el => {
     el.classList.toggle('hidden-col', !showingCO2);
   });
-  
+  document.querySelectorAll('.overshoot-col').forEach(el => {
+    el.classList.toggle('hidden-col', showingCO2);
+  });
 } 
 // ─────────────────────────────────────────────────────────────────────────────
 // INTERACTIONS
@@ -1215,8 +1234,8 @@ function openPopover(event, modelId, field) {
     simLabel  = `Factorial: ${fname}`;
     document.getElementById('pop-note').value = s.factorials[fname] ? (s.factorials[fname].note || '') : '';
   } else {
-    const labels = { co2: 'Climate Overshoot', ukesm: '1pct CO₂ — UKESM', ipsl: '1pct CO₂ — IPSL', gfdl: '1pct CO₂ — GFDL' };
-    const origMap = { co2: m.co2.t, ukesm: m.ukesm.t, ipsl: m.ipsl.t, gfdl: m.gfdl.t };
+    const labels = { co2: 'Climate Overshoot', ukesm: '1pct CO₂ — UKESM', ipsl: '1pct CO₂ — IPSL', gfdl: '1pct CO₂ — GFDL', os_ukesm: 'Overshoot — UKESM', os_ipsl: 'Overshoot — IPSL', os_gfdl: 'Overshoot — GFDL' };
+    const origMap = { co2: m.co2.t, ukesm: m.ukesm.t, ipsl: m.ipsl.t, gfdl: m.gfdl.t, os_ukesm: 'Climate Overshoot — UKESM', os_ipsl: 'Climate Overshoot — IPSL', os_gfdl: 'Climate Overshoot — GFDL' };
     curColor  = s[field].c;
     origText  = origMap[field] || '';
     simLabel  = `Simulation: ${labels[field] || field}`;
