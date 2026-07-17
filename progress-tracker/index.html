@@ -316,6 +316,10 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
   border-bottom-color: var(--blue);
   color: var(--text);
 }
+  .date-input:not(:placeholder-shown) {
+  font-weight: 700;
+  color: var(--text);
+}
 /* EXPAND BUTTON */
 .expand-btn {
   background: none;
@@ -1148,7 +1152,7 @@ tr.innerHTML = `
         </div>
       </td>
       <td><div class="factorials-cell">${factHTML}</div></td>
-      <td><input class="date-input" type="text" placeholder="e.g. Jul 31, 2026"
+      <td><input class="date-input" type="text" placeholder="Jul 31, 2026"
         value="${esc(s.dueDateEdit !== null ? s.dueDateEdit : (m.dueDate && m.dueDate !== '—' ? m.dueDate : ''))}"
         oninput="saveFieldEdit('${m.id}','dueDateEdit',this.value)"></td>
       <td>
