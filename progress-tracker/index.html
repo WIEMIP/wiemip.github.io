@@ -969,6 +969,7 @@ function buildDefaultState(m) {
     blockersEdit: null,
     retuneEdit: null,
     followupEdit: null,
+    dueDateEdit: null,
     expanded: false,
   };
   m.factorials.forEach(f => { s.factorials[f] = { c: 'green', note: '' }; });
@@ -998,6 +999,7 @@ async function loadState() {
         if (state[m.id].blockersEdit === undefined) state[m.id].blockersEdit = null;
         if (state[m.id].retuneEdit === undefined) state[m.id].retuneEdit = null;
         if (state[m.id].followupEdit === undefined) state[m.id].followupEdit = null;
+        if (state[m.id].dueDateEdit === undefined) state[m.id].dueDateEdit = null;
       }
     });
     document.getElementById('last-updated').textContent = 'Loaded';
@@ -1055,6 +1057,8 @@ function updateStats() {
 }
 
 function dueDateHTML(m) {
+  const edited = state[m.id] && state[m.id].dueDateEdit;
+  if (edited) return `<span class="due-date">${esc(edited)}</span>`;
   if (!m.dueDateRaw || m.dueDate === '—') return `<span class="due-date">—</span>`;
   const d = new Date(m.dueDateRaw);
   const now = new Date('2026-07-01');
@@ -1176,6 +1180,13 @@ tr.innerHTML = `
               placeholder="Add a note for ${m.name}..."
               oninput="saveNote('${m.id}',this.value)"
             >${esc(s.notes || '')}</textarea>
+          </div>
+          <div class="detail-field">
+            <label>Submission Date</label>
+            <textarea class="notes-input"
+              placeholder="e.g. Jul 31, 2026"
+              oninput="saveFieldEdit('${m.id}','dueDateEdit',this.value)"
+            >${esc(s.dueDateEdit !== null ? s.dueDateEdit : (m.dueDate && m.dueDate !== '—' ? m.dueDate : ''))}</textarea>
           </div>
         </div>
       </td>
