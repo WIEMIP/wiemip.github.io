@@ -300,7 +300,22 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
 .due-date { font-size: 12px; color: var(--text-light); white-space: nowrap; }
 .due-date.overdue { color: var(--coral); font-weight: 700; }
 .due-date.upcoming { color: var(--amber); font-weight: 600; }
-
+.date-input {
+  background: none;
+  border: none;
+  border-bottom: 1px dashed var(--gray-400);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  color: var(--text-light);
+  width: 100%;
+  padding: 2px 4px;
+  cursor: text;
+}
+.date-input:focus {
+  outline: none;
+  border-bottom-color: var(--blue);
+  color: var(--text);
+}
 /* EXPAND BUTTON */
 .expand-btn {
   background: none;
@@ -1133,7 +1148,9 @@ tr.innerHTML = `
         </div>
       </td>
       <td><div class="factorials-cell">${factHTML}</div></td>
-      <td>${dueDateHTML(m)}</td>
+      <td><input class="date-input" type="text" placeholder="e.g. Jul 31, 2026"
+        value="${esc(s.dueDateEdit !== null ? s.dueDateEdit : (m.dueDate && m.dueDate !== '—' ? m.dueDate : ''))}"
+        oninput="saveFieldEdit('${m.id}','dueDateEdit',this.value)"></td>
       <td>
         <button class="expand-btn ${s.expanded ? 'expanded' : ''}"
           onclick="toggleExpand('${m.id}')" title="Show details">
@@ -1180,13 +1197,6 @@ tr.innerHTML = `
               placeholder="Add a note for ${m.name}..."
               oninput="saveNote('${m.id}',this.value)"
             >${esc(s.notes || '')}</textarea>
-          </div>
-          <div class="detail-field">
-            <label>Submission Date</label>
-            <textarea class="notes-input"
-              placeholder="e.g. Jul 31, 2026"
-              oninput="saveFieldEdit('${m.id}','dueDateEdit',this.value)"
-            >${esc(s.dueDateEdit !== null ? s.dueDateEdit : (m.dueDate && m.dueDate !== '—' ? m.dueDate : ''))}</textarea>
           </div>
         </div>
       </td>
