@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WIEMIP Simulation Progress</title>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <style>
 :root {
   --navy: #142161;
@@ -295,6 +298,28 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
 .factorial-tag.gray { background: #f1f5f9; color: #64748b; }
 .factorial-tag.gray .factorial-dot { background: #94a3b8; }
 .no-factorials { font-size: 12px; color: var(--gray-400); font-style: italic; }
+.no-factorials { font-size: 12px; color: var(--gray-400); font-style: italic; }
+
+.factorial-remove {
+  margin-left: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  opacity: 0.6;
+}
+.factorial-remove:hover { opacity: 1; }
+.factorial-add {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--gray-100);
+  color: var(--text-light);
+  border: 1px dashed var(--gray-400);
+}
+.factorial-add:hover { background: var(--gray-200); color: var(--text); }
 
 /* DUE DATE */
 .due-date { font-size: 12px; color: var(--text-light); white-space: nowrap; }
@@ -600,7 +625,7 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
   <div class="container">
 
 <div class="section-controls reveal">
-  <span class="section-eyebrow">19 Modeling Groups · June 25, 2026</span>
+  <span class="section-eyebrow">19 Modeling Groups</span>
   <div class="view-tabs">
     <button class="tab-btn active" id="tab-1pct">1pct CO₂</button>
     <button class="tab-btn" id="tab-overshoot">Climate Overshoot</button>
@@ -615,7 +640,7 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
             <th rowspan="2" style="min-width:150px">Point of Contact</th>
             <th colspan="3" class="group-header co2-col">GCM Pattern</th>
             <th colspan="3" class="group-header overshoot-col" style="min-width:270px">GCM Pattern</th>
-            <th rowspan="2" style="min-width:200px">Factorials</th>
+            <th rowspan="2" style="min-width:200px" class="overshoot-col">Factorials</th>
             <th rowspan="2" style="min-width:160px">Anticipated Submission Date</th>
             <th rowspan="2" style="width:44px"></th>
           </tr>
@@ -989,8 +1014,10 @@ function buildDefaultState(m) {
     retuneEdit: null,
     followupEdit: null,
     dueDateEdit: null,
+    osDueDateEdit: null,
     expanded: false,
   };
+  s.factorialList = [...m.factorials];
   m.factorials.forEach(f => { s.factorials[f] = { c: 'green', note: '' }; });
   return s;
 }
@@ -1006,7 +1033,8 @@ async function loadState() {
         state[m.id] = saved[m.id];
         if (!state[m.id].co2) state[m.id].co2 = { c: m.co2.c, note: '' };
         if (!state[m.id].factorials) state[m.id].factorials = {};
-        m.factorials.forEach(f => {
+        if (!state[m.id].factorialList) state[m.id].factorialList = [...m.factorials];
+        state[m.id].factorialList.forEach(f => {
           if (!state[m.id].factorials[f]) state[m.id].factorials[f] = { c: 'green', note: '' };
         });
         if (!state[m.id].ukesm) state[m.id].ukesm = { c: m.ukesm.c, note: '' };
@@ -1019,6 +1047,7 @@ async function loadState() {
         if (state[m.id].retuneEdit === undefined) state[m.id].retuneEdit = null;
         if (state[m.id].followupEdit === undefined) state[m.id].followupEdit = null;
         if (state[m.id].dueDateEdit === undefined) state[m.id].dueDateEdit = null;
+        if (state[m.id].osDueDateEdit === undefined) state[m.id].osDueDateEdit = null;
       }
     });
     document.getElementById('last-updated').textContent = 'Loaded';
@@ -1099,14 +1128,13 @@ function renderTable() {
     const overall = overallColor(m.id);
 
     // Factorial tags
-    const factHTML = m.factorials.length === 0
+    const factTags = s.factorialList.length === 0
       ? `<span class="no-factorials">—</span>`
-      : m.factorials.map(f => {
-          const fc = s.factorials[f] ? s.factorials[f].c : 'yellow';
-          return `<span class="factorial-tag ${fc} has-tip"
-            onclick="openPopover(event,'${m.id}','factorial_${f}')"
-          ><span class="factorial-dot"></span>${f}<span class="tip">${f}: ${LABEL_MAP[fc]}</span></span>`;
-        }).join('');
+      : s.factorialList.map(f => `<span class="factorial-tag green has-tip">
+          <span class="factorial-dot"></span>${esc(f)}<span class="tip">${esc(f)}</span>
+          <span class="factorial-remove" onclick="removeFactorial(event,'${m.id}','${encodeURIComponent(f)}')">×</span>
+        </span>`).join('');
+    const factHTML = factTags + `<span class="factorial-add" onclick="addFactorial(event,'${m.id}')">+ Add</span>`;
 
     // Main row
     const tr = document.createElement('tr');
@@ -1151,10 +1179,12 @@ tr.innerHTML = `
           <span class="tip">GFDL — ${esc(m.gfdl.t)}</span>
         </div>
       </td>
-      <td><div class="factorials-cell">${factHTML}</div></td>
+      <td class="overshoot-col"><div class="factorials-cell">${factHTML}</div></td>
       <td><input class="date-input" type="text" placeholder="month day, year"
-        value="${esc(s.dueDateEdit !== null ? s.dueDateEdit : (m.dueDate && m.dueDate !== '—' ? m.dueDate : ''))}"
-        oninput="saveFieldEdit('${m.id}','dueDateEdit',this.value)"></td>
+        value="${esc(showingCO2
+          ? (s.osDueDateEdit !== null ? s.osDueDateEdit : '')
+          : (s.dueDateEdit !== null ? s.dueDateEdit : (m.dueDate && m.dueDate !== '—' ? m.dueDate : '')))}"
+        oninput="saveFieldEdit('${m.id}','${showingCO2 ? 'osDueDateEdit' : 'dueDateEdit'}',this.value)"></td>
       <td>
         <button class="expand-btn ${s.expanded ? 'expanded' : ''}"
           onclick="toggleExpand('${m.id}')" title="Show details">
@@ -1241,6 +1271,31 @@ function saveNote(id, val) {
 function saveFieldEdit(id, field, val) {
   state[id][field] = val;
   saveState(id);
+}
+function addFactorial(event, modelId) {
+  event.stopPropagation();
+  const name = prompt('Enter new factorial name:');
+  if (!name || !name.trim()) return;
+  const trimmed = name.trim();
+  const s = state[modelId];
+  if (!s.factorialList.includes(trimmed)) {
+    s.factorialList.push(trimmed);
+    s.factorials[trimmed] = { c: 'green', note: '' };
+  }
+  saveState(modelId);
+  renderTable();
+  applyColumnVisibility();
+}
+
+function removeFactorial(event, modelId, encodedName) {
+  event.stopPropagation();
+  const name = decodeURIComponent(encodedName);
+  const s = state[modelId];
+  s.factorialList = s.factorialList.filter(f => f !== name);
+  delete s.factorials[name];
+  saveState(modelId);
+  renderTable();
+  applyColumnVisibility();
 }
 
 function openPopover(event, modelId, field) {
@@ -1330,6 +1385,7 @@ let showingCO2 = false;
 
 document.getElementById('tab-1pct').addEventListener('click', () => {
   showingCO2 = false;
+  renderTable();
   applyColumnVisibility();
   document.getElementById('tab-1pct').classList.add('active');
   document.getElementById('tab-overshoot').classList.remove('active');
@@ -1337,6 +1393,7 @@ document.getElementById('tab-1pct').addEventListener('click', () => {
 
 document.getElementById('tab-overshoot').addEventListener('click', () => {
   showingCO2 = true;
+  renderTable();
   applyColumnVisibility();
   document.getElementById('tab-overshoot').classList.add('active');
   document.getElementById('tab-1pct').classList.remove('active');
