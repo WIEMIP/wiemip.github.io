@@ -231,6 +231,9 @@ footer a { color: var(--muted); }
   width: 100%;
 }
 .landing > * { max-width: 100%; }
+/* The hero title above is centered, but a grid of link cards reads better
+   left-aligned like every other .cards use on the site. */
+.landing .cards { width: 100%; text-align: left; }
 .hero-mark {
   width: 74px; height: 74px;
   border-radius: 22px;
@@ -344,3 +347,366 @@ footer a { color: var(--muted); }
 /* Factorials the selected model doesn't run — recessed so filled rows stand out. */
 .mr-table tbody tr.mr-absent th { font-style: italic; color: #5c6b64; }
 .mr-table tbody tr.mr-absent td { opacity: .5; }
+
+/* ---------------------------------------------------------------------------
+   Docs pages (/docs) — Sphinx/readthedocs-style shell: persistent left nav
+   rail, content column beside it, prev/next at the foot. Rendered from markdown
+   by docs/build_docs.py. Everything here is scoped to .docs-* / .doc so it
+   cannot touch the landing, submit or model-results pages.
+   --------------------------------------------------------------------------- */
+
+.docs-body {
+  display: block;         /* the shared body is a flex column; docs use a grid */
+  background-image: none; /* the hero gradients read as noise behind dense prose */
+}
+
+.docs-shell {
+  display: grid;
+  grid-template-columns: 17.5rem minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* --- Left nav rail --- */
+.docs-sidebar {
+  --side-bg:     #16235c;
+  --side-bg-2:   #1d3080;
+  --side-text:   #d8e3f8;
+  --side-muted:  #9db0dc;
+  --side-active: #ffffff;
+  --side-rule:   rgba(255, 255, 255, .16);
+
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 1.4rem 1.1rem 2rem;
+  color: var(--side-text);
+  background: linear-gradient(170deg, var(--side-bg-2), var(--side-bg) 60%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .docs-sidebar {
+    --side-bg:   #0a1226;
+    --side-bg-2: #111d3d;
+    --side-rule: rgba(255, 255, 255, .12);
+  }
+}
+
+.docs-brand {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  text-decoration: none;
+  color: var(--side-active);
+  padding-bottom: 1.1rem;
+  margin-bottom: 1.1rem;
+  border-bottom: 1px solid var(--side-rule);
+}
+.docs-brand strong { display: block; font-size: 1.02rem; letter-spacing: -.01em; }
+.docs-brand small { display: block; font-size: .76rem; color: var(--side-muted); }
+.docs-brand-mark {
+  flex: none;
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 1.05rem;
+  color: #0b1430;
+  background: linear-gradient(135deg, #7fb4ec, #4a97e0);
+}
+
+.docs-sidebar-links {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  margin-top: 1.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--side-rule);
+}
+.docs-sidebar-links a {
+  color: var(--side-muted);
+  text-decoration: none;
+  font-size: .85rem;
+}
+.docs-sidebar-links a:hover { color: var(--side-active); }
+
+/* --- Content column --- */
+.docs-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;            /* lets wide code/tables scroll instead of stretching */
+}
+
+.docs-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding: .7rem clamp(1.1rem, 3vw, 2.8rem);
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+}
+.docs-crumbs { font-size: .84rem; color: var(--muted); }
+.docs-crumbs a { color: var(--muted); text-decoration: none; }
+.docs-crumbs a:hover { color: var(--accent-2); }
+.docs-crumbs span { opacity: .5; margin: 0 .1rem; }
+
+/* Off-canvas nav controls: only meaningful on narrow screens. */
+.docs-burger, .docs-nav-close {
+  display: none;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+}
+.docs-burger { font-size: 1.15rem; color: var(--muted); padding: .2rem .35rem; }
+.docs-scrim { display: none; }
+
+/* --- Prev/next + docs footer --- */
+.docs-seq {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.5rem clamp(1.1rem, 3vw, 2.8rem) 0;
+  padding-top: 1.3rem;
+  border-top: 1px solid var(--border);
+}
+.docs-seq a {
+  flex: 1 1 12rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: .7rem 1rem;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 600;
+  transition: border-color .12s ease;
+}
+.docs-seq a:hover { border-color: var(--accent); }
+.docs-seq small {
+  display: block;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.docs-seq-next { text-align: right; }
+
+.docs-foot {
+  margin-top: 2.4rem;
+  padding: 1.2rem clamp(1.1rem, 3vw, 2.8rem);
+}
+
+/* --- The prose itself --- */
+/* Wide enough that an 88-column code sample fits without horizontal scrolling,
+   which is what most of these pages are made of. */
+.doc {
+  max-width: 54rem;
+  padding: clamp(1.4rem, 3vw, 2.4rem) clamp(1.1rem, 3vw, 2.8rem) 0;
+}
+
+.doc h1 { font-size: clamp(1.9rem, 5vw, 2.5rem); margin: .2rem 0 1.2rem; }
+.doc h2 {
+  font-size: 1.45rem;
+  margin: 2.8rem 0 .9rem;
+  padding-top: .9rem;
+  border-top: 1px solid var(--border);
+  letter-spacing: -.01em;
+  scroll-margin-top: 1rem;
+}
+.doc h3 {
+  font-size: 1.1rem;
+  margin: 2rem 0 .7rem;
+  scroll-margin-top: 1rem;
+}
+.doc p, .doc li { overflow-wrap: break-word; }
+.doc ul, .doc ol { padding-left: 1.4rem; margin: 0 0 1rem; }
+.doc li { margin-bottom: .35rem; }
+.doc li > ul, .doc li > ol { margin-top: .35rem; }
+.doc strong { font-weight: 650; }
+
+/* Heading anchor links: invisible until the heading is hovered. */
+.doc .headerlink {
+  margin-left: .45rem;
+  color: var(--accent);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity .12s ease;
+}
+.doc h2:hover .headerlink, .doc h3:hover .headerlink { opacity: .7; }
+
+/* Inline code and fenced blocks. Blocks scroll horizontally rather than
+   stretching the page — some registry paths and call signatures are long. */
+.doc code, .doc kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .88em;
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: .1rem .32rem;
+}
+.doc pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem 1.1rem;
+  margin: 0 0 1.4rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  line-height: 1.55;
+}
+.doc pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: .85rem;
+  white-space: pre;
+}
+
+/* Reference tables — same card treatment as the panels, own scroll container. */
+.doc table {
+  display: block;          /* lets a wide table scroll instead of overflowing */
+  overflow-x: auto;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0 0 1.6rem;
+  font-size: .92rem;
+}
+.doc th, .doc td {
+  border: 1px solid var(--border);
+  padding: .55rem .8rem;
+  text-align: left;
+  vertical-align: top;
+}
+.doc thead th { background: color-mix(in srgb, var(--accent) 12%, var(--surface)); font-weight: 650; }
+.doc tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--accent) 4%, var(--surface)); }
+
+.doc blockquote {
+  margin: 0 0 1.4rem;
+  padding: .1rem 0 .1rem 1.1rem;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+}
+
+.doc hr { border: 0; border-top: 1px solid var(--border); margin: 2.4rem 0; }
+
+/* --- Sidebar search --- */
+.docs-search-wrap { position: relative; margin-bottom: 1rem; }
+.docs-search {
+  width: 100%;
+  font: inherit;
+  font-size: .9rem;
+  padding: .45rem .65rem;
+  border-radius: 8px;
+  border: 1px solid var(--side-rule);
+  background: rgba(255, 255, 255, .08);
+  color: var(--side-active);
+  -webkit-appearance: none;
+}
+.docs-search::placeholder { color: var(--side-muted); }
+.docs-search:focus {
+  outline: none;
+  border-color: #7fb4ec;
+  background: rgba(255, 255, 255, .14);
+}
+
+/* Results float over the nav so the rail doesn't jump around while typing. */
+.docs-search-results {
+  position: absolute;
+  z-index: 40;
+  left: 0; right: 0; top: calc(100% + .35rem);
+  max-height: 60vh;
+  overflow-y: auto;
+  margin: 0;
+  padding: .25rem;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .35);
+}
+.docs-search-results a {
+  display: block;
+  padding: .4rem .55rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--text);
+}
+.docs-search-results a:hover { background: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
+.docs-search-results strong { display: block; font-size: .88rem; font-weight: 600; }
+.docs-search-results small { color: var(--muted); font-size: .75rem; }
+.docs-search-empty { padding: .45rem .55rem; color: var(--muted); font-size: .85rem; }
+
+/* --- Nav tree: every page, the current one expanded to its own headings --- */
+.docs-nav-pages, .docs-nav-sections { list-style: none; margin: 0; padding: 0; }
+
+.docs-nav-pages > li > a {
+  display: block;
+  padding: .42rem .6rem;
+  border-radius: 8px;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--side-text);
+  text-decoration: none;
+}
+.docs-nav-pages > li > a:hover { background: rgba(255, 255, 255, .09); color: var(--side-active); }
+.docs-nav-pages > li.current > a {
+  background: rgba(255, 255, 255, .15);
+  color: var(--side-active);
+}
+
+.docs-nav-sections {
+  margin: .3rem 0 .8rem .75rem;
+  padding-left: .55rem;
+  border-left: 1px solid var(--side-rule);
+}
+.docs-nav-sections a {
+  display: block;
+  padding: .2rem .5rem;
+  font-size: .85rem;
+  line-height: 1.4;
+  color: var(--side-muted);
+  text-decoration: none;
+  /* Generated API entries are long unbroken identifiers — wrap, don't clip. */
+  overflow-wrap: anywhere;
+}
+.docs-nav-sections a:hover { color: var(--side-active); }
+.docs-nav-sections .docs-nav-sections {  /* h3 under h2 */
+  margin: .1rem 0 .3rem .5rem;
+  font-size: .95em;
+}
+
+/* --- Narrow screens: the rail slides in over the content, CSS only --- */
+@media (max-width: 900px) {
+  .docs-shell { grid-template-columns: minmax(0, 1fr); }
+  .docs-sidebar {
+    position: fixed;
+    top: 0; bottom: 0; left: 0;
+    width: 16.5rem;
+    z-index: 30;
+    transform: translateX(-100%);
+    transition: transform .18s ease;
+    box-shadow: 0 0 40px rgba(0, 0, 0, .4);
+  }
+  .docs-nav-toggle:checked ~ .docs-shell .docs-sidebar { transform: none; }
+  .docs-nav-toggle:checked ~ .docs-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    background: rgba(8, 14, 30, .5);
+  }
+  .docs-burger { display: inline-flex; }
+  .docs-nav-close {
+    display: block;
+    position: absolute;
+    top: 1.1rem; right: 1.1rem;
+    color: var(--side-muted);
+    font-size: .95rem;
+  }
+  .doc { max-width: none; }
+}

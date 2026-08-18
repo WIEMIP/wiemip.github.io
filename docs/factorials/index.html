@@ -1,0 +1,104 @@
+<!doctype html>
+<!-- GENERATED from docs/factorials.md by docs/build_docs.py — edit the markdown, not this file. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WIEMIP · Factorials</title>
+  <meta name="description" content="Documentation for the WIEMIP data tooling.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body class="docs-body">
+  <!-- CSS-only sidebar toggle for narrow screens; the only JS is search. -->
+  <input type="checkbox" id="docs-nav-toggle" class="docs-nav-toggle" hidden>
+  <div class="docs-shell">
+    <aside class="docs-sidebar">
+      <a class="docs-brand" href="/">
+        <span class="docs-brand-mark">W</span>
+        <span>
+          <strong>wiemip_registry</strong>
+          <small>WIEMIP submission reader</small>
+        </span>
+      </a>
+      <label class="docs-nav-close" for="docs-nav-toggle" aria-label="Close navigation">✕</label>
+      <div class="docs-search-wrap">
+        <input type="search" id="docs-search" class="docs-search" placeholder="Search docs (/)"
+               autocomplete="off" spellcheck="false" aria-label="Search documentation">
+        <ul id="docs-search-results" class="docs-search-results" hidden></ul>
+      </div>
+      <nav class="docs-nav" aria-label="Documentation">
+      <ul class="docs-nav-pages">
+      <li><a href="/docs/overview/">Overview</a></li>
+      <li><a href="/docs/quickstart/">Quickstart</a></li>
+      <li><a href="/docs/reading-data/">Reading data</a></li>
+      <li class="current"><a href="/docs/factorials/">Factorials</a><ul class="docs-nav-sections"><li><a href="#why-wiemip-asks-for-them">Why WIEMIP asks for them</a></li><li><a href="#factorials-are-per-model">Factorials are per model</a><ul class="docs-nav-sections"><li><a href="#the-shared-names">The shared names</a></li><li><a href="#model-specific-names">Model-specific names</a></li></ul></li><li><a href="#baseline-vs-factorial">Baseline vs factorial</a></li><li><a href="#comparing-them-properly">Comparing them properly</a></li><li><a href="#asking-for-one-a-model-doesnt-have">Asking for one a model doesn't have</a></li><li><a href="#naming-quirks">Naming quirks</a></li></ul></li>
+      <li><a href="/docs/examples/">Examples</a></li>
+      <li><a href="/docs/adding-a-model/">Adding a model</a></li>
+      <li><a href="/docs/caveats/">Data caveats</a></li>
+      </ul>
+      </nav>
+      <div class="docs-sidebar-links">
+        <a href="/docs/api/">API reference</a>
+        <a href="https://wiemip-hub.org/">JupyterHub</a>
+        <a href="https://github.com/WIEMIP/wiemip-data-registry">Source (GitHub)</a>
+        <a href="https://github.com/WIEMIP/wiemip-data-registry/issues">Issues</a>
+      </div>
+    </aside>
+
+    <div class="docs-main">
+      <div class="docs-topbar">
+        <label class="docs-burger" for="docs-nav-toggle" aria-label="Open navigation">☰</label>
+        <nav class="docs-crumbs" aria-label="Breadcrumb">
+          <a href="/">WIEMIP</a> <span>›</span> <a href="/docs/">Docs</a> <span>›</span> Factorials
+        </nav>
+      </div>
+
+      <article class="doc">
+<h1 id="factorials">Factorials<a class="headerlink" href="#factorials" title="Permanent link">#</a></h1>
+<!-- Plain-language definition first: a run with a process switched off. -->
+
+<h2 id="why-wiemip-asks-for-them">Why WIEMIP asks for them<a class="headerlink" href="#why-wiemip-asks-for-them" title="Permanent link">#</a></h2>
+<!-- The science reason — isolating a process's contribution to the feedback
+     factors. This is the bit a newcomer won't get from the code. -->
+
+<h2 id="factorials-are-per-model">Factorials are per model<a class="headerlink" href="#factorials-are-per-model" title="Permanent link">#</a></h2>
+<!-- Each adapter declares its own list; how to check what a given model has. -->
+
+<h3 id="the-shared-names">The shared names<a class="headerlink" href="#the-shared-names" title="Permanent link">#</a></h3>
+<!-- const.Factorial. -->
+
+<h3 id="model-specific-names">Model-specific names<a class="headerlink" href="#model-specific-names" title="Permanent link">#</a></h3>
+<!-- const.extra_factorials; passing one as a plain string. -->
+
+<h2 id="baseline-vs-factorial">Baseline vs factorial<a class="headerlink" href="#baseline-vs-factorial" title="Permanent link">#</a></h2>
+<!-- What counts as the baseline, and that _ndep is a simulation not a factorial. -->
+
+<h2 id="comparing-them-properly">Comparing them properly<a class="headerlink" href="#comparing-them-properly" title="Permanent link">#</a></h2>
+<!-- Difference against the same model's own baseline, then compare differences
+     across models. Worth being explicit about. -->
+
+<h2 id="asking-for-one-a-model-doesnt-have">Asking for one a model doesn't have<a class="headerlink" href="#asking-for-one-a-model-doesnt-have" title="Permanent link">#</a></h2>
+<!-- What raises, what returns False, and how to sweep the whole product safely. -->
+
+<h2 id="naming-quirks">Naming quirks<a class="headerlink" href="#naming-quirks" title="Permanent link">#</a></h2>
+<!-- Optional: the per-model spelling table, if it's useful to have here rather
+     than in AGENTS.md. -->
+      </article>
+
+      <nav class="docs-seq" aria-label="Page navigation">
+        <a class="docs-seq-prev" href="/docs/reading-data/"><small>Previous</small>Reading data</a>
+        <a class="docs-seq-next" href="/docs/examples/"><small>Next</small>Examples</a>
+      </nav>
+
+      <footer class="docs-foot">
+        WIEMIP · <a href="https://github.com/WIEMIP">github.com/WIEMIP</a>
+      </footer>
+    </div>
+  </div>
+  <label class="docs-scrim" for="docs-nav-toggle" aria-hidden="true"></label>
+  <script src="/assets/docs-search.js" defer></script>
+</body>
+</html>

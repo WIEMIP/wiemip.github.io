@@ -1,0 +1,14 @@
+{# WIEMIP override: API Documentation above Submodules in the sidebar — the members
+   people actually came for, not the package's file layout. Reuses every block from
+   the default template unchanged; only the ORDER of nav sub-blocks differs. #}
+{% extends "default/module.html.jinja2" %}
+{% block nav %}
+    {{ self.module_list_link() }}
+    {{ self.nav_title() }}
+    {{ self.search_box() }}
+    {{ self.nav_index() }}
+    {{ self.nav_members() }}
+    {{ self.nav_submodules() }}
+    {{ self.nav_footer() }}
+    {{ self.attribution() }}
+{% endblock %}

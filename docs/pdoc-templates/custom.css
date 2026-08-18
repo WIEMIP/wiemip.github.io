@@ -1,0 +1,13 @@
+/* WIEMIP overrides for pdoc's default theme. See docs/pdoc-templates/README.md. */
+
+/* A centered mark, not a full-width banner (pdoc's default .logo scales to the
+   sidebar width, which blew this up to ~300px) — but big enough to read, and with
+   room below so it doesn't crowd the search box. */
+nav.pdoc .logo {
+    max-width: 72px;
+    max-height: 72px;
+    display: block;
+    margin: .5rem auto 1.25rem;
+    transform: none;
+    border-radius: 50%;
+}

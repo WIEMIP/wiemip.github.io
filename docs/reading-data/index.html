@@ -1,0 +1,113 @@
+<!doctype html>
+<!-- GENERATED from docs/reading-data.md by docs/build_docs.py — edit the markdown, not this file. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WIEMIP · Reading data</title>
+  <meta name="description" content="Documentation for the WIEMIP data tooling.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body class="docs-body">
+  <!-- CSS-only sidebar toggle for narrow screens; the only JS is search. -->
+  <input type="checkbox" id="docs-nav-toggle" class="docs-nav-toggle" hidden>
+  <div class="docs-shell">
+    <aside class="docs-sidebar">
+      <a class="docs-brand" href="/">
+        <span class="docs-brand-mark">W</span>
+        <span>
+          <strong>wiemip_registry</strong>
+          <small>WIEMIP submission reader</small>
+        </span>
+      </a>
+      <label class="docs-nav-close" for="docs-nav-toggle" aria-label="Close navigation">✕</label>
+      <div class="docs-search-wrap">
+        <input type="search" id="docs-search" class="docs-search" placeholder="Search docs (/)"
+               autocomplete="off" spellcheck="false" aria-label="Search documentation">
+        <ul id="docs-search-results" class="docs-search-results" hidden></ul>
+      </div>
+      <nav class="docs-nav" aria-label="Documentation">
+      <ul class="docs-nav-pages">
+      <li><a href="/docs/overview/">Overview</a></li>
+      <li><a href="/docs/quickstart/">Quickstart</a></li>
+      <li class="current"><a href="/docs/reading-data/">Reading data</a><ul class="docs-nav-sections"><li><a href="#what-a-request-gives-you">What a request gives you</a><ul class="docs-nav-sections"><li><a href="#why-path-never-fails-and-read-does">Why .path never fails and .read() does</a></li></ul></li><li><a href="#the-gridded-field">The gridded field</a></li><li><a href="#global-and-regional-totals">Global and regional totals</a><ul class="docs-nav-sections"><li><a href="#units">Units</a></li><li><a href="#monthly-vs-annual">Monthly vs annual</a></li><li><a href="#area-weighting">Area weighting</a></li></ul></li><li><a href="#the-csv-cache">The CSV cache</a></li><li><a href="#total-land-carbon">Total land carbon</a></li><li><a href="#when-something-errors">When something errors</a></li></ul></li>
+      <li><a href="/docs/factorials/">Factorials</a></li>
+      <li><a href="/docs/examples/">Examples</a></li>
+      <li><a href="/docs/adding-a-model/">Adding a model</a></li>
+      <li><a href="/docs/caveats/">Data caveats</a></li>
+      </ul>
+      </nav>
+      <div class="docs-sidebar-links">
+        <a href="/docs/api/">API reference</a>
+        <a href="https://wiemip-hub.org/">JupyterHub</a>
+        <a href="https://github.com/WIEMIP/wiemip-data-registry">Source (GitHub)</a>
+        <a href="https://github.com/WIEMIP/wiemip-data-registry/issues">Issues</a>
+      </div>
+    </aside>
+
+    <div class="docs-main">
+      <div class="docs-topbar">
+        <label class="docs-burger" for="docs-nav-toggle" aria-label="Open navigation">☰</label>
+        <nav class="docs-crumbs" aria-label="Breadcrumb">
+          <a href="/">WIEMIP</a> <span>›</span> <a href="/docs/">Docs</a> <span>›</span> Reading data
+        </nav>
+      </div>
+
+      <article class="doc">
+<h1 id="reading-data">Reading data<a class="headerlink" href="#reading-data" title="Permanent link">#</a></h1>
+<!-- One or two lines: a request hands back a WIEFile, and nothing is read until
+     you ask for data. -->
+
+<h2 id="what-a-request-gives-you">What a request gives you<a class="headerlink" href="#what-a-request-gives-you" title="Permanent link">#</a></h2>
+<!-- The members worth knowing: .path, .exists(), .read(), .weighted_dataarray(),
+     .latitudinal_sum(), .units, .kind. Table is probably clearest. -->
+
+<h3 id="why-path-never-fails-and-read-does">Why .path never fails and .read() does<a class="headerlink" href="#why-path-never-fails-and-read-does" title="Permanent link">#</a></h3>
+<!-- The design split, and what it buys you when a number looks wrong. -->
+
+<h2 id="the-gridded-field">The gridded field<a class="headerlink" href="#the-gridded-field" title="Permanent link">#</a></h2>
+<!-- What read() standardizes: dim names, time decoding, fill masking. And that
+     units stay as the model wrote them. -->
+
+<h2 id="global-and-regional-totals">Global and regional totals<a class="headerlink" href="#global-and-regional-totals" title="Permanent link">#</a></h2>
+<!-- latitudinal_sum(), with and without a band. -->
+
+<h3 id="units">Units<a class="headerlink" href="#units" title="Permanent link">#</a></h3>
+<!-- Stocks vs fluxes, and what the returned numbers are in. -->
+
+<h3 id="monthly-vs-annual">Monthly vs annual<a class="headerlink" href="#monthly-vs-annual" title="Permanent link">#</a></h3>
+<!-- Native cadence is preserved; nothing is silently averaged. -->
+
+<h3 id="area-weighting">Area weighting<a class="headerlink" href="#area-weighting" title="Permanent link">#</a></h3>
+<!-- Provided rasters vs computed spherical area; masked cells drop out. -->
+
+<h2 id="the-csv-cache">The CSV cache<a class="headerlink" href="#the-csv-cache" title="Permanent link">#</a></h2>
+<!-- Where it lives, that it's shared on the hub, what invalidates it, and how to
+     force a recompute. -->
+
+<h2 id="total-land-carbon">Total land carbon<a class="headerlink" href="#total-land-carbon" title="Permanent link">#</a></h2>
+<!-- land_carbon_variables() / land_carbon_stock(), and that the pool list differs
+     between models. -->
+
+<h2 id="when-something-errors">When something errors<a class="headerlink" href="#when-something-errors" title="Permanent link">#</a></h2>
+<!-- The exception list and what each one means. Which fire at request time vs on
+     read. -->
+      </article>
+
+      <nav class="docs-seq" aria-label="Page navigation">
+        <a class="docs-seq-prev" href="/docs/quickstart/"><small>Previous</small>Quickstart</a>
+        <a class="docs-seq-next" href="/docs/factorials/"><small>Next</small>Factorials</a>
+      </nav>
+
+      <footer class="docs-foot">
+        WIEMIP · <a href="https://github.com/WIEMIP">github.com/WIEMIP</a>
+      </footer>
+    </div>
+  </div>
+  <label class="docs-scrim" for="docs-nav-toggle" aria-hidden="true"></label>
+  <script src="/assets/docs-search.js" defer></script>
+</body>
+</html>

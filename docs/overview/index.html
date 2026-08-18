@@ -1,0 +1,112 @@
+<!doctype html>
+<!-- GENERATED from docs/overview.md by docs/build_docs.py — edit the markdown, not this file. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WIEMIP · wiemip_registry docs</title>
+  <meta name="description" content="Documentation for the WIEMIP data tooling.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body class="docs-body">
+  <!-- CSS-only sidebar toggle for narrow screens; the only JS is search. -->
+  <input type="checkbox" id="docs-nav-toggle" class="docs-nav-toggle" hidden>
+  <div class="docs-shell">
+    <aside class="docs-sidebar">
+      <a class="docs-brand" href="/">
+        <span class="docs-brand-mark">W</span>
+        <span>
+          <strong>wiemip_registry</strong>
+          <small>WIEMIP submission reader</small>
+        </span>
+      </a>
+      <label class="docs-nav-close" for="docs-nav-toggle" aria-label="Close navigation">✕</label>
+      <div class="docs-search-wrap">
+        <input type="search" id="docs-search" class="docs-search" placeholder="Search docs (/)"
+               autocomplete="off" spellcheck="false" aria-label="Search documentation">
+        <ul id="docs-search-results" class="docs-search-results" hidden></ul>
+      </div>
+      <nav class="docs-nav" aria-label="Documentation">
+      <ul class="docs-nav-pages">
+      <li class="current"><a href="/docs/overview/">Overview</a><ul class="docs-nav-sections"><li><a href="#what-problem-this-solves">What problem this solves</a></li><li><a href="#who-this-is-for">Who this is for</a></li><li><a href="#where-it-runs">Where it runs</a><ul class="docs-nav-sections"><li><a href="#on-the-jupyterhub">On the JupyterHub</a></li><li><a href="#on-your-own-machine">On your own machine</a></li><li><a href="#colab-and-other-hosted-notebooks">Colab and other hosted notebooks</a></li></ul></li><li><a href="#quick-start">Quick start</a></li><li><a href="#what-goes-into-a-request">What goes into a request</a><ul class="docs-nav-sections"><li><a href="#which-forcing-goes-with-which-simulation">Which forcing goes with which simulation</a></li></ul></li><li><a href="#the-simulations">The simulations</a></li></ul></li>
+      <li><a href="/docs/quickstart/">Quickstart</a></li>
+      <li><a href="/docs/reading-data/">Reading data</a></li>
+      <li><a href="/docs/factorials/">Factorials</a></li>
+      <li><a href="/docs/examples/">Examples</a></li>
+      <li><a href="/docs/adding-a-model/">Adding a model</a></li>
+      <li><a href="/docs/caveats/">Data caveats</a></li>
+      </ul>
+      </nav>
+      <div class="docs-sidebar-links">
+        <a href="/docs/api/">API reference</a>
+        <a href="https://wiemip-hub.org/">JupyterHub</a>
+        <a href="https://github.com/WIEMIP/wiemip-data-registry">Source (GitHub)</a>
+        <a href="https://github.com/WIEMIP/wiemip-data-registry/issues">Issues</a>
+      </div>
+    </aside>
+
+    <div class="docs-main">
+      <div class="docs-topbar">
+        <label class="docs-burger" for="docs-nav-toggle" aria-label="Open navigation">☰</label>
+        <nav class="docs-crumbs" aria-label="Breadcrumb">
+          <a href="/">WIEMIP</a> <span>›</span> <a href="/docs/">Docs</a> <span>›</span> Overview
+        </nav>
+      </div>
+
+      <article class="doc">
+<!-- Cues are HTML comments: invisible on the page, though still in the HTML source.
+     Delete as you go. Headings render with nothing under them, so the page is safe to
+     publish half-finished. -->
+
+<h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h1>
+<!-- 2-3 sentences: what wiemip_registry is, for someone who has never used it. -->
+
+<h2 id="what-problem-this-solves">What problem this solves<a class="headerlink" href="#what-problem-this-solves" title="Permanent link">#</a></h2>
+<!-- Every group uploads differently; this gives one way to ask for a variable.
+     Worth saying why that matters before the how. -->
+
+<h2 id="who-this-is-for">Who this is for<a class="headerlink" href="#who-this-is-for" title="Permanent link">#</a></h2>
+<!-- Modelling groups checking their own submission? Anyone doing cross-model
+     analysis? Says who should read on. -->
+
+<h2 id="where-it-runs">Where it runs<a class="headerlink" href="#where-it-runs" title="Permanent link">#</a></h2>
+<h3 id="on-the-jupyterhub">On the JupyterHub<a class="headerlink" href="#on-the-jupyterhub" title="Permanent link">#</a></h3>
+<!-- Pre-installed, bucket already mounted, cache already warm. -->
+
+<h3 id="on-your-own-machine">On your own machine<a class="headerlink" href="#on-your-own-machine" title="Permanent link">#</a></h3>
+<!-- Clone + uv sync; WIEMIP_DATA_ROOT and WIEMIP_CSV_PATH; the
+     set-it-before-you-import gotcha. -->
+
+<h3 id="colab-and-other-hosted-notebooks">Colab and other hosted notebooks<a class="headerlink" href="#colab-and-other-hosted-notebooks" title="Permanent link">#</a></h3>
+<!-- pip not uv sync; mount it yourself; credentials warning; expect it slow. -->
+
+<h2 id="quick-start">Quick start<a class="headerlink" href="#quick-start" title="Permanent link">#</a></h2>
+<!-- Shortest thing that works: one request, .path, .read(), .latitudinal_sum(). -->
+
+<h2 id="what-goes-into-a-request">What goes into a request<a class="headerlink" href="#what-goes-into-a-request" title="Permanent link">#</a></h2>
+<!-- The five axes and how to list the valid values for each. A table works here. -->
+
+<h3 id="which-forcing-goes-with-which-simulation">Which forcing goes with which simulation<a class="headerlink" href="#which-forcing-goes-with-which-simulation" title="Permanent link">#</a></h3>
+<!-- The stable-vs-GCM-pattern rule, and what happens if you get it wrong. -->
+
+<h2 id="the-simulations">The simulations<a class="headerlink" href="#the-simulations" title="Permanent link">#</a></h2>
+<!-- 1pctCO2 vs overshoot run names. What _ndep and _cf mean. Which models have
+     actually uploaded overshoot output. -->
+      </article>
+
+      <nav class="docs-seq" aria-label="Page navigation">
+        <a class="docs-seq-next" href="/docs/quickstart/"><small>Next</small>Quickstart</a>
+      </nav>
+
+      <footer class="docs-foot">
+        WIEMIP · <a href="https://github.com/WIEMIP">github.com/WIEMIP</a>
+      </footer>
+    </div>
+  </div>
+  <label class="docs-scrim" for="docs-nav-toggle" aria-hidden="true"></label>
+  <script src="/assets/docs-search.js" defer></script>
+</body>
+</html>
