@@ -4,18 +4,43 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>WIEMIP · JupyterHub</title>
-  <!-- ===== edit me: destination for wiemip.github.io/hub ===== -->
-  <meta http-equiv="refresh" content="0; url=https://wiemip-hub.org/">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/styles.css">
+  <style>
+    /* Only shown when the hub isn't answering. */
+    #asleep { display: none; }
+    #asleep p { max-width: 32rem; margin: 0 auto 1.5rem; }
+    #asleep .fineprint { font-size: .85rem; opacity: .65; margin-top: 2rem; }
+    #wake button {
+      font: inherit; font-weight: 600; padding: .8rem 1.5rem; border: 0;
+      border-radius: .5rem; cursor: pointer;
+    }
+  </style>
 </head>
 <body>
   <main class="wrap landing">
     <div class="hero-mark">W</div>
-    <h1>Opening the <span class="accent">JupyterHub</span>…</h1>
-    <a class="cta" id="go" href="https://wiemip-hub.org/">Go to JupyterHub <span class="arrow">→</span></a>
+
+    <!-- Default state: the hub is up (or we're still checking). -->
+    <div id="checking">
+      <h1>Opening the <span class="accent">JupyterHub</span>…</h1>
+      <a class="cta" id="go" href="https://wiemip-hub.org/">Go to JupyterHub <span class="arrow">→</span></a>
+    </div>
+
+    <!-- Shown only if the hub didn't answer the probe below. -->
+    <div id="asleep">
+      <h1>The hub is <span class="accent">asleep</span></h1>
+      <p>Nobody is using the hub. Hit the button below to wake it. It takes about a minute.
+         Your home directory and results are untouched.</p>
+      <!-- Cross-origin form POST: the browser navigates to the waking page,
+           which forwards to the hub once it's up. No CORS involved. -->
+      <form id="wake" method="post">
+        <button type="submit">Start the hub</button>
+      </form>
+      <p class="fineprint">The hub stops itself when nobody is on it, to keep running costs down.</p>
+    </div>
   </main>
 
   <footer>
@@ -25,8 +50,34 @@
   </footer>
 
   <script>
-    // Belt-and-braces: JS redirect in case meta-refresh is blocked.
-    window.location.replace(document.getElementById("go").href);
+    /* ===== edit me ===== */
+    const HUB_URL  = "https://wiemip-hub.org/";
+    const WAKE_URL = "https://pfdjwqzqgg.execute-api.us-east-2.amazonaws.com/";
+    const PROBE_MS = 6000;   // a stopped box takes ~30s to refuse a connection,
+                             // so don't wait for the browser's own timeout
+    /* ================== */
+
+    document.getElementById("go").href = HUB_URL;
+    document.getElementById("wake").action = WAKE_URL;
+
+    function showAsleep() {
+      document.getElementById("checking").style.display = "none";
+      document.getElementById("asleep").style.display = "block";
+    }
+
+    // ?asleep=1 previews the down state without stopping the box.
+    if (new URLSearchParams(location.search).has("asleep")) {
+      showAsleep();
+    } else {
+      // Liveness probe. /hub/logo is a real PNG the hub serves, and <img> works
+      // cross-origin with no CORS headers needed: onload = up, onerror = down.
+      let done = false;
+      const img = new Image();
+      const timer = setTimeout(() => { if (!done) { done = true; img.src = ""; showAsleep(); } }, PROBE_MS);
+      img.onload  = () => { if (!done) { done = true; clearTimeout(timer); location.replace(HUB_URL); } };
+      img.onerror = () => { if (!done) { done = true; clearTimeout(timer); showAsleep(); } };
+      img.src = HUB_URL.replace(/\/$/, "") + "/hub/logo?cachebust=" + Date.now();
+    }
   </script>
 </body>
 </html>
