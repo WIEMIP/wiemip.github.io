@@ -8,6 +8,7 @@ Static site for **https://wiemip.github.io**:
 | `/hub`                     | Redirects to the data hub at `http://13.58.168.60`.     |
 | `/docs`                    | Docs for the `wiemip_registry` data tooling. Built from markdown — see below. |
 | `/docs/api`                | API reference, generated from docstrings by pdoc. |
+| `/progress-tracker`        | Bucket-derived submission progress, both experiments. `progress-tracker/data.json` is regenerated nightly — see §4. |
 
 Every page works with **zero configuration**.
 
@@ -93,3 +94,37 @@ writing docstrings in the code, not editing anything here.
 ```sh
 python3 -m http.server 8000   # then open http://localhost:8000
 ```
+
+---
+
+## 4. The progress tracker (`/progress-tracker`)
+
+`progress-tracker/data.json` is derived from what is actually on the Wasabi bucket,
+through the `wiemip_registry` adapters: every legal request (experiment × factorial ×
+simulation × GCM pattern × variable) is spelled and checked against a bucket listing, and
+the page colours the resulting per-run variable counts. Nothing is set by hand except the
+point of contact (`POC` in `tools/build_progress.py`) and the planned factorials of groups
+with no adapter yet (`PLANNED_FACTORIALS`).
+
+**Nightly:** `.github/workflows/progress.yml` lists the bucket, rebuilds `data.json` and
+commits it (one commit per night; GitHub Pages redeploys from `main`). It needs two repo
+secrets holding **read-only** Wasabi keys, `WASABI_READ_ACCESS_KEY_ID` and
+`WASABI_READ_SECRET_ACCESS_KEY`, and it installs the registry from
+`WIEMIP/wiemip-data-registry@main`, so an adapter change reaches the page the night after
+it lands on `main`. Run it by hand from the Actions tab (*Run workflow*) after an upload.
+
+**By hand, from the laptop:**
+
+```sh
+AWS_PROFILE=wasabi-read-only aws s3 ls s3://wiemip/ --recursive \
+    --endpoint-url https://s3.us-east-2.wasabisys.com > /tmp/bucket_listing.txt   # ~1 min
+python3 tools/build_progress.py --listing /tmp/bucket_listing.txt                 # ~2 s
+```
+
+The reader runs under the registry repo's venv (`uv run --project $WIEMIP_REGISTRY_REPO`,
+default `~/projects/wiemip-data-processing`) unless `wiemip_registry` is already
+importable. Without `--listing` it SSHes to the hub box (`wiemip-hub`) and reads the mount
+instead, which needs the box up and a working SSM profile in `~/.ssh/config`.
+
+The old hand-maintained tracker (spreadsheet defaults + click-edits saved to a Google Apps
+Script) was removed on 2026-09-18; it is in the git history if anyone needs the notes.

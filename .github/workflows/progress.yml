@@ -1,0 +1,58 @@
+# Nightly rebuild of /progress-tracker from what is actually on the WIEMIP bucket.
+#
+# Lists the bucket (read-only keys), spells every legal registry request against the
+# listing (tools/progress_coverage.py, using the registry installed fresh from
+# WIEMIP/wiemip-data-registry@main), derives the dots (tools/build_progress.py) and
+# commits progress-tracker/data.json. GitHub Pages then redeploys from main.
+#
+# Secrets (Settings -> Secrets and variables -> Actions), READ-ONLY Wasabi keys:
+#   WASABI_READ_ACCESS_KEY_ID
+#   WASABI_READ_SECRET_ACCESS_KEY
+name: Update progress tracker
+
+on:
+  schedule:
+    - cron: "0 6 * * *"    # 06:00 UTC = midnight Mountain, after the day's uploads
+  workflow_dispatch:       # "Run workflow" button for right-after-an-upload refreshes
+
+permissions:
+  contents: write
+
+concurrency:
+  group: progress-tracker
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the registry (source of truth for adapters, factorials, variables)
+        run: pip install --quiet "wiemip-data-processing @ git+https://github.com/WIEMIP/wiemip-data-registry.git@main"
+
+      - name: List the bucket
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.WASABI_READ_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.WASABI_READ_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-2
+        run: |
+          aws s3 ls s3://wiemip/ --recursive --endpoint-url https://s3.us-east-2.wasabisys.com > /tmp/bucket_listing.txt
+          echo "$(wc -l < /tmp/bucket_listing.txt) keys listed"
+          test "$(wc -l < /tmp/bucket_listing.txt)" -gt 1000   # a near-empty listing means the keys are wrong, not that the bucket is
+
+      - name: Build progress-tracker/data.json
+        run: python tools/build_progress.py --listing /tmp/bucket_listing.txt
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add progress-tracker/data.json
+          git commit -m "progress tracker: bucket coverage as of $(date -u +%Y-%m-%d)" || { echo "nothing changed"; exit 0; }
+          git push

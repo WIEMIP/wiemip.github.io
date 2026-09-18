@@ -1,14 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WIEMIP Simulation Progress</title>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<title>WIEMIP · Progress tracker</title>
+<meta name="description" content="Live per-model submission progress for the WIEMIP experiments, derived from files uploaded to the WIEMIP data bucket.">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <style>
+/* Self-contained tracker styling (Spark palette), independent of the shared
+   /assets/styles.css so the dashboard keeps its own dense-table look. */
 :root {
   --navy: #142161;
   --navy-deep: #17215d;
@@ -38,7 +40,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: var(--blue-pale);
   color: var(--text);
   min-height: 100vh;
@@ -71,7 +73,9 @@ nav {
 .logo img { height: 32px; width: auto; }
 .nav-divider { height: 24px; width: 1px; background: var(--gray-200); }
 .nav-title { font-size: 13px; font-weight: 600; color: var(--navy); }
-.nav-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.nav-right { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+.nav-back { font-size: 12px; font-weight: 600; color: var(--text-light); text-decoration: none; }
+.nav-back:hover { color: var(--blue); }
 .last-updated { font-size: 11px; color: var(--text-light); }
 
 /* HERO */
@@ -90,7 +94,7 @@ nav {
   pointer-events: none;
 }
 .container { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
-.hero-inner { position: relative; z-index: 1; max-width: 820px; }
+.hero-inner { position: relative; z-index: 1; max-width: 860px; }
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -119,7 +123,7 @@ nav {
   font-size: 15px;
   color: rgba(206,230,250,0.8);
   line-height: 1.7;
-  max-width: 580px;
+  max-width: 640px;
   margin-bottom: 28px;
 }
 .hero-meta {
@@ -160,7 +164,6 @@ nav {
 .hero-stat.yellow .hero-stat-num { color: #fbbf24; }
 .hero-stat.red .hero-stat-num { color: #fc8181; }
 .hero-stat.blue .hero-stat-num { color: #90c7f0; }
-.hero-stat.gray .hero-stat-num { color: #cbd5e1; }
 
 /* MAIN SECTION */
 .tracker-section { position: relative; z-index: 1; padding: 40px 0 80px; }
@@ -179,25 +182,6 @@ nav {
   letter-spacing: 1.5px;
   color: var(--blue);
 }
-.toggle-overshoot-btn {
-  margin-left: auto;
-  padding: 5px 14px;
-  border-radius: 50px;
-  border: 1px solid var(--gray-200);
-  background: white;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-light);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.toggle-overshoot-btn:hover { border-color: var(--blue); color: var(--blue); }
-.view-tabs { margin-left: auto; display: flex; gap: 2px; background: var(--gray-100); border-radius: 50px; padding: 3px; }
-.tab-btn { padding: 5px 14px; border-radius: 50px; border: none; background: transparent; font-family: 'Open Sans', sans-serif; font-size: 11px; font-weight: 600; color: var(--text-light); cursor: pointer; transition: all 0.2s; }
-.tab-btn.active { background: white; color: var(--navy); box-shadow: 0 1px 4px rgba(20,33,97,0.1); }
-.tab-btn:hover:not(.active) { color: var(--navy); }
-.overshoot-col.hidden-col { display: none; } .co2-col.hidden-col { display: none; }
 
 /* TABLE */
 .table-wrapper {
@@ -214,7 +198,6 @@ thead tr:first-child { border-bottom: 1px solid var(--blue-light); }
 th.group-header { background: var(--blue-pale) !important; color: var(--blue) !important; text-align: center; font-size: 11px; letter-spacing: 1px; }
 th.sub-header { background: var(--gray-100) !important; font-size: 10px; border-left: 1px solid var(--blue-light); }
 th.sub-header:last-of-type { border-right: 1px solid var(--blue-light); }
-th.sub-header-end { border-right: 1px solid var(--blue-light); }
 th {
   padding: 11px 14px;
   text-align: left;
@@ -232,6 +215,21 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
 
 .model-name { font-weight: 700; font-size: 13px; color: var(--navy); white-space: nowrap; }
 .poc-name { font-size: 12px; color: var(--text-light); max-width: 150px; line-height: 1.4; }
+.unreg-badge {
+  display: inline-block;
+  margin-left: 7px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--gray-500);
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: 100px;
+  padding: 1px 7px;
+  vertical-align: middle;
+  cursor: default;
+}
 
 /* STATUS DOTS */
 .status-cell { text-align: center; }
@@ -240,25 +238,19 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  cursor: pointer;
   padding: 5px 8px;
   border-radius: 8px;
-  transition: background 0.2s;
   position: relative;
 }
-.status-dot-wrap:hover { background: var(--gray-100); }
 .status-dot {
   width: 16px; height: 16px;
   border-radius: 50%;
   display: block;
-  transition: transform 0.2s;
   flex-shrink: 0;
 }
-.status-dot-wrap:hover .status-dot { transform: scale(1.25); }
 .dot-green { background: var(--teal); box-shadow: 0 0 0 3px rgba(27,158,133,0.18); }
 .dot-yellow { background: var(--amber); box-shadow: 0 0 0 3px rgba(232,147,11,0.18); }
 .dot-red { background: var(--coral); box-shadow: 0 0 0 3px rgba(235,65,65,0.18); }
-.dot-blue { background: var(--blue); box-shadow: 0 0 0 3px rgba(44,133,215,0.18); }
 .dot-gray { background: #94a3b8; box-shadow: 0 0 0 3px rgba(148,163,184,0.18); }
 .status-mini-label {
   font-size: 9px;
@@ -279,72 +271,21 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
   border-radius: 100px;
   font-size: 10px;
   font-weight: 700;
-  cursor: pointer;
-  transition: opacity 0.2s, transform 0.15s;
   white-space: nowrap;
   user-select: none;
 }
-.factorial-tag:hover { opacity: 0.8; transform: scale(1.05); }
 .factorial-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-
 .factorial-tag.green { background: var(--teal-light); color: #0d7a64; }
 .factorial-tag.green .factorial-dot { background: var(--teal); }
-.factorial-tag.yellow { background: var(--amber-light); color: #8a5800; }
-.factorial-tag.yellow .factorial-dot { background: var(--amber); }
-.factorial-tag.red { background: var(--coral-light); color: #b51e1e; }
-.factorial-tag.red .factorial-dot { background: var(--coral); }
-.factorial-tag.blue { background: var(--blue-pale); color: #1a5fa8; }
-.factorial-tag.blue .factorial-dot { background: var(--blue); }
 .factorial-tag.gray { background: #f1f5f9; color: #64748b; }
 .factorial-tag.gray .factorial-dot { background: #94a3b8; }
 .no-factorials { font-size: 12px; color: var(--gray-400); font-style: italic; }
-.no-factorials { font-size: 12px; color: var(--gray-400); font-style: italic; }
-
-.factorial-remove {
-  margin-left: 4px;
-  font-weight: 700;
-  cursor: pointer;
-  opacity: 0.6;
-}
-.factorial-remove:hover { opacity: 1; }
-.factorial-add {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 10px;
-  border-radius: 100px;
-  font-size: 10px;
-  font-weight: 700;
-  cursor: pointer;
-  background: var(--gray-100);
-  color: var(--text-light);
-  border: 1px dashed var(--gray-400);
-}
-.factorial-add:hover { background: var(--gray-200); color: var(--text); }
 
 /* DUE DATE */
 .due-date { font-size: 12px; color: var(--text-light); white-space: nowrap; }
 .due-date.overdue { color: var(--coral); font-weight: 700; }
 .due-date.upcoming { color: var(--amber); font-weight: 600; }
-.date-input {
-  background: none;
-  border: none;
-  border-bottom: 1px dashed var(--gray-400);
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  color: var(--text-light);
-  width: 100%;
-  padding: 2px 4px;
-  cursor: text;
-}
-.date-input:focus {
-  outline: none;
-  border-bottom-color: var(--blue);
-  color: var(--text);
-}
-  .date-input:not(:placeholder-shown) {
-  font-weight: 700;
-  color: var(--text);
-}
+
 /* EXPAND BUTTON */
 .expand-btn {
   background: none;
@@ -353,8 +294,6 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
   padding: 4px 8px;
   border-radius: 6px;
   color: var(--text-light);
-  font-size: 14px;
-  line-height: 1;
   transition: all 0.2s;
   display: flex;
   align-items: center;
@@ -365,16 +304,13 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
 .expand-btn.expanded svg { transform: rotate(180deg); }
 
 /* DETAIL ROW */
-.detail-row td {
-  padding: 0;
-  background: var(--gray-50);
-}
+.detail-row td { padding: 0; background: var(--gray-50); }
 .detail-inner {
   padding: 16px 20px 20px;
   border-top: 1px dashed var(--gray-200);
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 18px;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 32px;
 }
 .detail-field label {
   font-size: 10px;
@@ -385,168 +321,36 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
   display: block;
   margin-bottom: 5px;
 }
-.detail-field p {
-  font-size: 12px;
-  color: var(--text-body);
-  line-height: 1.55;
-}
+.detail-field p { font-size: 12px; color: var(--text-body); line-height: 1.55; }
 .detail-field p.none-val { color: var(--gray-400); font-style: italic; }
-.notes-input {
-  width: 100%;
-  border: 1px solid var(--gray-200);
-  border-radius: 8px;
-  padding: 7px 10px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  color: var(--text-body);
-  resize: vertical;
-  min-height: 58px;
-  transition: border-color 0.2s;
-  background: white;
-}
-.notes-input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(44,133,215,0.1); }
-
-/* POPOVER */
-.popover-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  background: rgba(14,23,64,0.18);
-  backdrop-filter: blur(2px);
-}
-.popover {
-  position: fixed;
-  z-index: 201;
-  background: white;
-  border: 1px solid var(--gray-200);
-  border-radius: 14px;
-  box-shadow: 0 16px 48px rgba(20,33,97,0.18);
-  padding: 20px;
-  width: 300px;
-}
-.popover-model-name {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--navy);
-  margin-bottom: 2px;
-}
-.popover-sim {
-  font-size: 11px;
-  color: var(--blue);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-bottom: 10px;
-}
-.popover-original {
-  font-size: 11px;
-  color: var(--text-light);
-  background: var(--gray-50);
-  border-radius: 6px;
-  padding: 7px 10px;
-  margin-bottom: 14px;
-  font-style: italic;
-  line-height: 1.45;
-  border-left: 3px solid var(--gray-200);
-}
-.popover-status-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-.status-btn {
-  flex: 1;
-  padding: 9px 4px;
-  border-radius: 8px;
-  border: 2px solid transparent;
-  cursor: pointer;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  transition: all 0.15s;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.status-btn .s-dot { width: 14px; height: 14px; border-radius: 50%; }
-.status-btn.red-btn { background: var(--coral-light); color: #b51e1e; }
-.status-btn.red-btn .s-dot { background: var(--coral); }
-.status-btn.red-btn:hover, .status-btn.red-btn.active { border-color: var(--coral); background: #ffc8c8; }
-.status-btn.yellow-btn { background: var(--amber-light); color: #8a5800; }
-.status-btn.yellow-btn .s-dot { background: var(--amber); }
-.status-btn.yellow-btn:hover, .status-btn.yellow-btn.active { border-color: var(--amber); background: #ffe8a8; }
-.status-btn.green-btn { background: var(--teal-light); color: #0d7a64; }
-.status-btn.green-btn .s-dot { background: var(--teal); }
-.status-btn.green-btn:hover, .status-btn.green-btn.active { border-color: var(--teal); background: #baeee3; }
-.status-btn.blue-btn { background: var(--blue-pale); color: #1a5fa8; }
-.status-btn.blue-btn .s-dot { background: var(--blue); }
-.status-btn.blue-btn:hover, .status-btn.blue-btn.active { border-color: var(--blue); background: var(--blue-light); }
-.status-btn.gray-btn { background: #f1f5f9; color: #64748b; grid-column: 1 / -1; flex-direction: row; justify-content: center; gap: 8px; padding: 7px; }
-.status-btn.gray-btn .s-dot { background: #94a3b8; }
-.status-btn.gray-btn:hover, .status-btn.gray-btn.active { border-color: #94a3b8; background: #e2e8f0; }
-
-.popover-note-label {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--blue);
-  display: block;
-  margin-bottom: 6px;
-}
-.popover textarea {
-  width: 100%;
-  border: 1px solid var(--gray-200);
-  border-radius: 8px;
-  padding: 8px 10px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  color: var(--text-body);
-  resize: vertical;
-  min-height: 58px;
-  margin-bottom: 12px;
-  transition: border-color 0.2s;
-}
-.popover textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(44,133,215,0.1); }
-.popover-actions { display: flex; gap: 8px; justify-content: flex-end; }
-
-/* BUTTONS */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border-radius: 50px;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-decoration: none;
-  border: none;
-}
-.btn-sm { padding: 6px 16px; font-size: 12px; }
-.btn-primary { background: var(--blue); color: white; }
-.btn-primary:hover { background: var(--blue-hover); }
-.btn-ghost { background: transparent; color: var(--text-light); border: 1px solid var(--gray-200); }
-.btn-ghost:hover { border-color: var(--gray-400); color: var(--text); }
 
 /* LEGEND */
-.legend {
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
+.legend { margin-top: 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
 .legend-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); }
 .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-body); }
 .legend-dot { width: 11px; height: 11px; border-radius: 50%; }
 .legend-hint { margin-left: auto; font-size: 11px; color: var(--text-light); font-style: italic; }
 
+.derived-note {
+  margin: 16px 0 0;
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.6;
+  max-width: 900px;
+}
+.derived-note code { background: var(--gray-100); border-radius: 4px; padding: 1px 5px; font-size: 11px; }
+
+.load-error {
+  background: var(--coral-light);
+  border: 1px solid var(--coral);
+  color: #b51e1e;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 13px;
+}
+
 /* HIDDEN */
 .hidden { display: none !important; }
-
-/* REVEAL */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* TOOLTIP */
 .has-tip { position: relative; }
@@ -564,7 +368,7 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
   white-space: normal;
   z-index: 300;
   pointer-events: none;
-  max-width: 200px;
+  max-width: 220px;
   text-align: center;
   line-height: 1.45;
   font-style: normal;
@@ -580,6 +384,11 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
 }
 .has-tip:hover .tip { display: block; }
 
+/* FOOTER */
+footer { position: relative; z-index: 1; border-top: 1px solid var(--gray-200); background: white; }
+footer .container { padding-top: 20px; padding-bottom: 20px; text-align: center; font-size: 13px; color: var(--text-light); }
+footer a { color: var(--blue); }
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .container { padding: 0 16px; }
@@ -591,6 +400,30 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
   .hero-stats { gap: 8px; }
   .hero-stat { min-width: 70px; padding: 10px 12px; }
 }
+
+/* RUN GRID (detail row) */
+.detail-inner { grid-template-columns: 1fr; }
+.grid-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--blue); margin: 0 0 6px; }
+.grid-note { font-size: 11px; color: var(--text-light); margin: 0 0 8px; }
+.grid-wrap { overflow-x: auto; }
+table.run-grid { width: auto; border-collapse: separate; border-spacing: 2px; font-size: 10px; }
+table.run-grid th { padding: 3px 5px; font-size: 9px; letter-spacing: 0.4px; background: none; white-space: nowrap; text-align: center; }
+table.run-grid th.row-label { text-align: left; padding-right: 10px; }
+table.run-grid td { padding: 3px 0; border: none; text-align: center; min-width: 34px; border-radius: 4px; background: var(--gray-100); color: var(--gray-400); }
+table.run-grid td.complete { background: var(--teal-light); color: #0d7a64; font-weight: 700; }
+table.run-grid td.partial { background: var(--amber-light); color: #9a5b00; font-weight: 700; }
+.factorial-tag.yellow { background: var(--amber-light); color: #9a5b00; }
+.factorial-tag.yellow .factorial-dot { background: var(--amber); }
+.factorial-tag.red { background: var(--coral-light); color: #b51e1e; }
+.factorial-tag.red .factorial-dot { background: var(--coral); }
+.factorial-tag.req { border: 1px solid currentColor; }
+.grid-block + .grid-block { margin-top: 10px; }
+/* scenario dot columns: dot only, no label, so eleven of them fit */
+th.sub-header.scenario { min-width: 52px; text-align: center; padding-left: 4px; padding-right: 4px; }
+th.sub-header.scenario.req { color: var(--navy); }
+td.status-cell.scenario { padding-left: 4px; padding-right: 4px; }
+td.status-cell.scenario .status-dot-wrap { padding: 5px 4px; }
+td.status-cell.scenario .status-dot { width: 13px; height: 13px; }
 </style>
 </head>
 <body>
@@ -602,10 +435,10 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
     <img src="https://cdn.prod.website-files.com/640b41de65cb720e175382b0/647ebba5f7a36cf6853dd3a4_spark-logo-light-bg-color-default-lg.png" alt="Spark Climate Solutions">
   </a>
   <div class="nav-divider"></div>
-  <span class="nav-title">WIEMIP Simulation Tracker</span>
+  <span class="nav-title">WIEMIP Progress Tracker</span>
   <div class="nav-right">
     <span class="last-updated" id="last-updated"></span>
-    <button class="btn btn-sm btn-ghost" id="reset-btn">↺ Reset to Original</button>
+    <a class="nav-back" href="/">← WIEMIP home</a>
   </div>
 </nav>
 
@@ -613,9 +446,40 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
 <section class="hero">
   <div class="container">
     <div class="hero-inner">
-      <div class="hero-badge">🌍 WIEMIP · 2026</div>
-      <h1>WIEMIP Simulation <strong>Progress</strong></h1>
-      <p>Track submission status across 19 modeling groups. Click any dot to update progress. Changes are saved automatically in your browser.</p>
+      <div class="hero-badge">🌍 WIEMIP · Submission progress</div>
+      <h1>Model submission <strong>progress</strong></h1>
+      <p>Live status for the WIEMIP <strong>1pctCO2</strong> and <strong>overshoot</strong>
+        experiments, derived from the files each group has actually uploaded to the data
+        bucket. Every experiment × factorial × simulation × GCM pattern × variable the
+        <code>wiemip_registry</code> package can name is checked against the bucket; the dots
+        summarise those counts. Nothing here is set by hand except the point of contact.</p>
+      <p class="hero-meta" id="hero-meta"></p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num" id="stat-models">—</span>
+          <span class="hero-stat-label">Models</span>
+        </div>
+        <div class="hero-stat green">
+          <span class="hero-stat-num" id="stat-beta">—</span>
+          <span class="hero-stat-label">β inputs (ctrl + bgc)</span>
+        </div>
+        <div class="hero-stat blue">
+          <span class="hero-stat-num" id="stat-gamma">—</span>
+          <span class="hero-stat-label">γ on all 3 GCMs</span>
+        </div>
+        <div class="hero-stat green">
+          <span class="hero-stat-num" id="stat-os-hist">—</span>
+          <span class="hero-stat-label">Overshoot hist</span>
+        </div>
+        <div class="hero-stat blue">
+          <span class="hero-stat-num" id="stat-os-all3">—</span>
+          <span class="hero-stat-label">Overshoot · all 3 GCMs</span>
+        </div>
+        <div class="hero-stat red">
+          <span class="hero-stat-num" id="stat-empty">—</span>
+          <span class="hero-stat-label">Nothing uploaded</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -624,815 +488,308 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
 <section class="tracker-section">
   <div class="container">
 
-<div class="section-controls reveal">
-  <span class="section-eyebrow">19 Modeling Groups</span>
-  <div class="view-tabs">
-    <button class="tab-btn active" id="tab-1pct">1pct CO₂</button>
-    <button class="tab-btn" id="tab-overshoot">Climate Overshoot</button>
-  </div>
-</div>
+    <div id="load-error" class="load-error hidden"></div>
 
-    <div class="table-wrapper reveal">
+    <div class="section-controls">
+      <span class="section-eyebrow" id="controls-eyebrow">Modeling groups</span>
+    </div>
+
+    <div class="table-wrapper">
       <table>
         <thead>
           <tr>
             <th rowspan="2" style="min-width:130px">Model</th>
             <th rowspan="2" style="min-width:150px">Point of Contact</th>
-            <th colspan="3" class="group-header co2-col">GCM Pattern</th>
-            <th colspan="3" class="group-header overshoot-col" style="min-width:270px">GCM Pattern</th>
-            <th rowspan="2" style="min-width:200px" class="overshoot-col">Factorials</th>
-            <th rowspan="2" style="min-width:160px">Anticipated Submission Date</th>
+            <th colspan="4" class="group-header" style="min-width:360px">1pctCO2</th>
+            <th colspan="11" class="group-header" id="os-group-header">Overshoot scenarios</th>
+            <th rowspan="2" style="min-width:220px">Factorials (1pctCO2, from the adapter)</th>
             <th rowspan="2" style="width:44px"></th>
           </tr>
-          <tr>
-            <th class="center sub-header co2-col" style="min-width:90px">UKESM</th>
-            <th class="center sub-header co2-col" style="min-width:90px">IPSL</th>
-            <th class="center sub-header co2-col" style="min-width:90px">GFDL</th>
+          <tr id="sub-header-row">
+            <th class="center sub-header" style="min-width:90px">ctrl + bgc</th>
+            <th class="center sub-header" style="min-width:90px">UKESM cou</th>
+            <th class="center sub-header" style="min-width:90px">IPSL cou</th>
+            <th class="center sub-header" style="min-width:90px">GFDL cou</th>
           </tr>
         </thead>
         <tbody id="table-body"></tbody>
       </table>
     </div>
 
-    <div class="legend reveal">
+    <div class="legend">
       <span class="legend-label">Legend:</span>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div> Uploaded</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div> In Progress</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--coral)"></div> Not Reported / Not Started</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div> Testing / Blocked / Special Path</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#94a3b8"></div> N/A</div>
-      <span class="legend-hint">Click any dot or factorial tag to update status</span>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div> Complete (every required run uploaded in full)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div> Partial (a required run missing or part-uploaded)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--coral)"></div> Nothing uploaded</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#94a3b8"></div> Planned factorial, nothing uploaded</div>
+      <span class="legend-hint">Hover a dot for the runs behind it (scenario dots list UKESM / IPSL / GFDL) · expand a row for the full run grid</span>
     </div>
+
+    <p class="derived-note" id="derived-note"></p>
 
   </div>
 </section>
 
-<!-- POPOVER -->
-<div id="popover-overlay" class="popover-overlay hidden" onclick="closePopover()"></div>
-<div id="popover" class="popover hidden">
-  <div class="popover-model-name" id="pop-model"></div>
-  <div class="popover-sim" id="pop-sim"></div>
-  <div class="popover-original" id="pop-original"></div>
-  <div class="popover-status-btns">
-    <button class="status-btn red-btn" onclick="selectStatus('red')">
-      <span class="s-dot"></span>Not Reported
-    </button>
-    <button class="status-btn yellow-btn" onclick="selectStatus('yellow')">
-      <span class="s-dot"></span>In Progress
-    </button>
-    <button class="status-btn green-btn" onclick="selectStatus('green')">
-      <span class="s-dot"></span>Uploaded
-    </button>
-    <button class="status-btn blue-btn" onclick="selectStatus('blue')">
-      <span class="s-dot"></span>Testing/Blocked/Special Path
-    </button>
-    <button class="status-btn gray-btn" onclick="selectStatus('gray')">
-      <span class="s-dot"></span>N/A
-    </button>
+<footer>
+  <div class="container">
+    WIEMIP · <a href="https://github.com/WIEMIP">github.com/WIEMIP</a>
   </div>
-  <span class="popover-note-label">Note (optional)</span>
-  <textarea id="pop-note" placeholder="Add a status note..."></textarea>
-  <div class="popover-actions">
-    <button class="btn btn-sm btn-ghost" onclick="closePopover()">Cancel</button>
-    <button class="btn btn-sm btn-primary" onclick="savePopover()">Save</button>
-  </div>
-</div>
+</footer>
 
 <script>
-// ─────────────────────────────────────────────────────────────────────────────
-// SPREADSHEET DATA (from WIEMIP simulation progress 20260625.xlsx)
-// ─────────────────────────────────────────────────────────────────────────────
-const MODELS = [
-  {
-    id: 'lpx-bern',
-    name: 'LPX-Bern',
-    poc: 'Hyuna Kim',
-    baseline:  { c: 'green',  t: 'Uploaded' },
-    co2:       { c: 'green',  t: 'Uploaded (UKESM, IPSL, GFDL)' },
-    ukesm:     { c: 'green',  t: 'Uploaded' },
-    ipsl:      { c: 'green',  t: 'Uploaded' },
-    gfdl:      { c: 'green',  t: 'Uploaded' },
-    dueDate: 'Jun 15, 2026', dueDateRaw: '2026-06-15',
-    factorials: ['No fire', 'No fire + no permafrost', 'No permafrost'],
-    retune: '—',
-    blockers: 'Modelling time',
-    followup: 'Yes',
-  },
-  {
-    id: 'dlem',
-    name: 'DLEM',
-    poc: 'Susan Pan / Yuchun Zhang',
-    baseline:  { c: 'green', t: 'Uploaded' },
-    co2:       { c: 'red',   t: 'Not reported' },
-    ukesm:     { c: 'green', t: 'Uploaded' },
-    ipsl:      { c: 'green', t: 'Uploaded' },
-    gfdl:      { c: 'green', t: 'Uploaded' },
-    dueDate: '—', dueDateRaw: null,
-    factorials: [],
-    retune: 'If necessary',
-    blockers: '—',
-    followup: 'Not necessary',
-  },
-  {
-    id: 'classic',
-    name: 'CLASSIC',
-    poc: 'Vivek Arora / Sal Curasi',
-    baseline:  { c: 'green',  t: 'Uploaded' },
-    co2:       { c: 'red',    t: 'Not reported' },
-    ukesm:     { c: 'green',  t: 'Uploaded' },
-    ipsl:      { c: 'red',    t: 'Not reported' },
-    gfdl:      { c: 'red',    t: 'Not reported' },
-    dueDate: '—', dueDateRaw: null,
-    factorials: ['No fire', 'No N limitation', 'No fire + no N limitation'],
-    retune: 'No — no time to retune',
-    blockers: '—',
-    followup: 'Yes (in contact with Vivek)',
-  },
-  {
-    id: 'visit-ut',
-    name: 'VISIT-UT',
-    poc: 'Akihiko Ito',
-    baseline:  { c: 'green',  t: 'Uploaded' },
-    co2:       { c: 'yellow', t: 'Partially uploaded — UKESM + GFDL on the bucket; IPSL not yet' },
-    ukesm:     { c: 'green',  t: 'Uploaded' },
-    ipsl:      { c: 'green',  t: 'Uploaded' },
-    gfdl:      { c: 'green',  t: 'Uploaded' },
-    dueDate: 'Jun 30, 2026', dueDateRaw: '2026-06-30',
-    factorials: ['No fire', 'No BVOC'],
-    retune: 'If necessary',
-    blockers: 'Modelling time',
-    followup: 'Yes',
-  },
-  {
-    id: 'clm',
-    name: 'CLM',
-    poc: 'Will Wieder',
-    baseline:  { c: 'green',  t: 'Done / post-processing' },
-    co2:       { c: 'red',    t: 'Not reported' },
-    ukesm:     { c: 'red',    t: 'Not reported (no files on the bucket yet)' },
-    ipsl:      { c: 'red',    t: 'Not reported' },
-    gfdl:      { c: 'red',    t: 'Not reported' },
-    dueDate: '—', dueDateRaw: null,
-    factorials: ['No fire'],
-    retune: 'Yes — TBD; possibly "low fire" to tune well',
-    blockers: '—',
-    followup: 'Yes',
-  },
-  {
-    id: 'jules',
-    name: 'JULES',
-    poc: 'Eleanor Burke',
-    baseline:  { c: 'green', t: 'Uploaded' },
-    co2:       { c: 'red',   t: 'Not reported' },
-    ukesm:     { c: 'green', t: 'Uploaded' },
-    ipsl:      { c: 'green', t: 'Uploaded' },
-    gfdl:      { c: 'green', t: 'Uploaded' },
-    dueDate: '—', dueDateRaw: null,
-    factorials: ['No fire + no N limitation'],
-    retune: 'Yes for fire; unsure about nitrogen',
-    blockers: 'Broken fire model; unclear main simulation definition',
-    followup: '—',
-  },
-  {
-    id: 'lpj-eosim',
-    name: 'LPJ-EOSIM',
-    poc: 'Tom Colligan',
-    baseline:  { c: 'yellow', t: 'In progress — baseline runs' },
-    co2:       { c: 'red',    t: 'Not reported' },
-    ukesm:     { c: 'green',  t: 'Uploaded' },
-    ipsl:      { c: 'green',  t: 'Uploaded' },
-    gfdl:      { c: 'green',  t: 'Uploaded' },
-    dueDate: 'Jun 17, 2026', dueDateRaw: '2026-06-17',
-    factorials: ['No fire'],
-    retune: 'Yes — match main stocks (litc, soilc, vegc) and fluxes (gpp, npp, nbp)',
-    blockers: 'Modeling and research time',
-    followup: '—',
-  },
-  {
-    id: 'tem-mdm',
-    name: 'TEM-MDM',
-    poc: 'Shuo Chen / Qianlai Zhuang',
-    baseline:  { c: 'yellow', t: 'In progress — baseline runs' },
-    co2:       { c: 'red',    t: 'Not reported' },
-    ukesm:     { c: 'green',  t: 'Uploaded' },
-    ipsl:      { c: 'red',    t: 'Not reported' },
-    gfdl:      { c: 'red',    t: 'Not reported' },
-    dueDate: 'Jul 17, 2026', dueDateRaw: '2026-07-17',
-    factorials: [],
-    retune: 'If necessary',
-    blockers: 'Modelling time; needs historical/future CH₄ concentrations',
-    followup: 'Shuo needs CH₄ concentrations data',
-  },
-  {
-    id: 'biomee',
-    name: 'BiomeE',
-    poc: 'Paul Lerner',
-    baseline:  { c: 'yellow', t: 'Re-running runs' },
-    co2:       { c: 'red',    t: 'Not reported' },
-    ukesm:     { c: 'green',  t: 'Uploaded' },
-    ipsl:      { c: 'red',    t: 'Not reported' },
-    gfdl:      { c: 'red',    t: 'Not reported' },
-    dueDate: 'Jul 31, 2026', dueDateRaw: '2026-07-31',
-    factorials: ['No fire', 'No N limitation'],
-    retune: 'Not currently planned; will re-tune baseline stocks/fluxes time-permitting',
-    blockers: 'Modelling time',
-    followup: 'Yes',
-  },
-  {
-    id: 'clm-fates',
-    name: 'CLM-FATES',
-    poc: 'Rosie Fisher',
-    baseline:  { c: 'yellow', t: 'In progress — baseline runs' },
-    co2:       { c: 'red',    t: 'Not reported' },
-    ukesm:     { c: 'green',  t: 'Uploaded' },
-    ipsl:      { c: 'green',  t: 'Uploaded' },
-    gfdl:      { c: 'green',  t: 'Uploaded' },
-    dueDate: 'Jul 31, 2026', dueDateRaw: '2026-07-31',
-    factorials: [],
-    retune: 'If necessary',
-    blockers: 'Modelling time',
-    followup: 'Yes (no response to overshoot deadline)',
-  },
-  {
-    id: 'lpj-guess',
-    name: 'LPJ-GUESS',
-    poc: 'Prashant Paudel / Benjamin Smith',
-    baseline:  { c: 'yellow', t: 'In progress — baseline runs' },
-    co2:       { c: 'red',    t: 'Not reported' },
-    ukesm:     { c: 'red',    t: 'Not reported (no files on the bucket yet)' },
-    ipsl:      { c: 'red',    t: 'Not reported' },
-    gfdl:      { c: 'red',    t: 'Not reported' },
-    dueDate: '—', dueDateRaw: null,
-    factorials: ['No fire', 'No N limitation', 'No BVOC'],
-    retune: 'If required — depends on variability in outputs',
-    blockers: 'Wetland data and data pre-processing',
-    followup: 'No response to overshoot deadline',
-  },
-  {
-    id: 'jsbach',
-    name: 'JSBACH',
-    poc: 'Beiyao Xu',
-    baseline:  { c: 'green',  t: 'Uploaded' },
-    co2:       { c: 'red',    t: 'Not reported' },
-    ukesm:     { c: 'green',  t: 'Uploaded' },
-    ipsl:      { c: 'green',  t: 'Uploaded' },
-    gfdl:      { c: 'green',  t: 'Uploaded' },
-    dueDate: 'Jul 20, 2026', dueDateRaw: '2026-07-20',
-    factorials: ['No N limitation', 'No fire'],
-    retune: 'If necessary',
-    blockers: 'Modelling time',
-    followup: 'Yes',
-  },
-  {
-    id: 'lpjml6',
-    name: 'LPJmL6',
-    poc: 'Sibyll Schaphoff',
-    baseline:  { c: 'yellow', t: 'In progress — spin-up' },
-    co2:       { c: 'red',    t: 'Not reported' },
-    ukesm:     { c: 'green',  t: 'Uploaded' },
-    ipsl:      { c: 'red',    t: 'Not reported' },
-    gfdl:      { c: 'red',    t: 'Not reported' },
-    dueDate: '—', dueDateRaw: null,
-    factorials: [],
-    retune: 'If necessary',
-    blockers: '—',
-    followup: '—',
-  },
-  {
-    id: 'elm',
-    name: 'ELM',
-    poc: 'Qing Zhu',
-    baseline:  { c: 'yellow', t: 'In progress — spin-up' },
-    co2:       { c: 'red',    t: 'Not reported' },
-    ukesm:     { c: 'red',    t: 'Not reported (no files on the bucket yet)' },
-    ipsl:      { c: 'red',    t: 'Not reported' },
-    gfdl:      { c: 'red',    t: 'Not reported' },
-    dueDate: '—', dueDateRaw: null,
-    factorials: [],
-    retune: '—',
-    blockers: '—',
-    followup: '—',
-  },
-  {
-    id: 'dvmdostem',
-    name: 'DVM-DOS-TEM',
-    poc: 'Elchin Jafarov / Helene Genet',
-    baseline:  { c: 'yellow', t: 'In progress — spin-up' },
-    co2:       { c: 'red',    t: 'Not reported' },
-    ukesm:     { c: 'red',    t: 'Not reported (no files on the bucket yet)' },
-    ipsl:      { c: 'red',    t: 'Not reported' },
-    gfdl:      { c: 'red',    t: 'Not reported' },
-    dueDate: 'Jul 31, 2026', dueDateRaw: '2026-07-31',
-    factorials: ['No permafrost', 'No fire', 'No wetland', 'No N limitation'],
-    retune: 'If necessary',
-    blockers: 'Data pre-processing for fire and wetland simulations',
-    followup: 'Yes',
-  },
-  {
-    id: 'orchidee-mict',
-    name: 'ORCHIDEE-MICT',
-    poc: 'Yi Xi / Julien Alléon',
-    baseline:  { c: 'red', t: 'No status — cluster down' },
-    co2:       { c: 'red', t: 'Not reported' },
-    ukesm:     { c: 'red', t: 'Not reported — BLOCKED: cluster down (1pct at risk)' },
-    ipsl:      { c: 'red', t: 'Not reported' },
-    gfdl:      { c: 'red', t: 'Not reported' },
-    dueDate: '—', dueDateRaw: null,
-    factorials: ['No permafrost', 'No wetland'],
-    retune: 'If necessary',
-    blockers: 'Cluster outage; modelling time',
-    followup: 'Yes',
-  },
-  {
-    id: 'beps',
-    name: 'BEPS',
-    poc: 'Mousong Wu',
-    baseline:  { c: 'blue',   t: 'Testing / blocked / special path' },
-    co2:       { c: 'red',    t: 'Not reported' },
-    ukesm:     { c: 'red',    t: 'Not reported (no files on the bucket yet)' },
-    ipsl:      { c: 'red',    t: 'Not reported' },
-    gfdl:      { c: 'red',    t: 'Not reported' },
-    dueDate: '—', dueDateRaw: null,
-    factorials: ['No fire', 'No permafrost'],
-    retune: 'If necessary',
-    blockers: 'Server fees for high-resolution long-term simulations (MPI)',
-    followup: 'Yes',
-  },
-  {
-    id: 'ibis',
-    name: 'IBIS',
-    poc: 'Min Chen',
-    baseline:  { c: 'blue',   t: 'Testing / blocked / special path' },
-    co2:       { c: 'red',    t: 'Not reported' },
-    ukesm:     { c: 'red',    t: 'Not reported (no files on the bucket yet)' },
-    ipsl:      { c: 'red',    t: 'Not reported' },
-    gfdl:      { c: 'red',    t: 'Not reported' },
-    dueDate: '—', dueDateRaw: null,
-    factorials: ['No fire', 'No wetland'],
-    retune: 'If necessary',
-    blockers: 'Model broken',
-    followup: '—',
-  },
-  {
-    id: 'cardamom-jpl',
-    name: 'CARDAMOM-JPL',
-    poc: 'Eren Bilir',
-    baseline:  { c: 'blue',   t: 'Testing / blocked / special path' },
-    co2:       { c: 'red',    t: 'Not reported' },
-    ukesm:     { c: 'red',    t: 'Not reported (no files on the bucket yet)' },
-    ipsl:      { c: 'red',    t: 'Not reported' },
-    gfdl:      { c: 'red',    t: 'Not reported' },
-    dueDate: 'Jul 31, 2026', dueDateRaw: '2026-07-31',
-    factorials: ['No fire'],
-    retune: 'Possible — would add time',
-    blockers: '—',
-    followup: '—',
-  },
-];
+"use strict";
 
-// ─────────────────────────────────────────────────────────────────────────────
-// STATE
-// ─────────────────────────────────────────────────────────────────────────────
-const API_URL = 'https://script.google.com/macros/s/AKfycbygglBneFsIkXCAqHKd8vp_AkC66r4WL0wS6ByAEcf0GT7ztOlCJGIV5MaineYQbDIn/exec';
-let state = {};
-let activeFilter = 'all';
-let popoverTarget = null;   // { modelId, field }
-let selectedStatus = null;
-
-function buildDefaultState(m) {
-  const s = {
-    co2:   { c: m.co2.c,   note: '' },
-    ukesm: { c: m.ukesm.c, note: '' },
-    ipsl:  { c: m.ipsl.c,  note: '' },
-    gfdl:  { c: m.gfdl.c,  note: '' },
-    os_ukesm: { c: 'red', note: '' },
-    os_ipsl:  { c: 'red', note: '' },
-    os_gfdl:  { c: 'red', note: '' },
-    factorials: {},
-    notes: '',
-    blockersEdit: null,
-    retuneEdit: null,
-    followupEdit: null,
-    dueDateEdit: null,
-    osDueDateEdit: null,
-    expanded: false,
-  };
-  s.factorialList = [...m.factorials];
-  m.factorials.forEach(f => { s.factorials[f] = { c: 'green', note: '' }; });
-  return s;
-}
-
-async function loadState() {
-  document.getElementById('last-updated').textContent = 'Loading...';
-  MODELS.forEach(m => { state[m.id] = buildDefaultState(m); });
-  try {
-    const res = await fetch(API_URL, { redirect: 'follow' });
-    const saved = await res.json();
-    MODELS.forEach(m => {
-      if (saved && saved[m.id]) {
-        state[m.id] = saved[m.id];
-        if (!state[m.id].co2) state[m.id].co2 = { c: m.co2.c, note: '' };
-        if (!state[m.id].factorials) state[m.id].factorials = {};
-        if (!state[m.id].factorialList) state[m.id].factorialList = [...m.factorials];
-        state[m.id].factorialList.forEach(f => {
-          if (!state[m.id].factorials[f]) state[m.id].factorials[f] = { c: 'green', note: '' };
-        });
-        if (!state[m.id].ukesm) state[m.id].ukesm = { c: m.ukesm.c, note: '' };
-        if (!state[m.id].ipsl)  state[m.id].ipsl  = { c: m.ipsl.c, note: '' };
-        if (!state[m.id].gfdl)  state[m.id].gfdl  = { c: m.gfdl.c, note: '' };
-        if (!state[m.id].os_ukesm) state[m.id].os_ukesm = { c: 'red', note: '' };
-        if (!state[m.id].os_ipsl)  state[m.id].os_ipsl  = { c: 'red', note: '' };
-        if (!state[m.id].os_gfdl)  state[m.id].os_gfdl  = { c: 'red', note: '' };
-        if (state[m.id].blockersEdit === undefined) state[m.id].blockersEdit = null;
-        if (state[m.id].retuneEdit === undefined) state[m.id].retuneEdit = null;
-        if (state[m.id].followupEdit === undefined) state[m.id].followupEdit = null;
-        if (state[m.id].dueDateEdit === undefined) state[m.id].dueDateEdit = null;
-        if (state[m.id].osDueDateEdit === undefined) state[m.id].osDueDateEdit = null;
-      }
-    });
-    document.getElementById('last-updated').textContent = 'Loaded';
-  } catch(e) {
-    console.warn('Could not load from API:', e);
-    document.getElementById('last-updated').textContent = 'Offline — changes won\'t sync';
-  }
-}
-
-let saveTimer = null;
-function saveState(modelId) {
-  document.getElementById('last-updated').textContent = 'Saving...';
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => {
-    fetch(API_URL, {
-      method: 'POST',
-      body: JSON.stringify({ modelId, state: state[modelId] }),
-      redirect: 'follow',
-      mode: 'no-cors'
-    }).then(() => {
-      const t = new Date();
-      const ts = t.toLocaleDateString('en-US', { month:'short', day:'numeric' })
-               + ' ' + t.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
-      document.getElementById('last-updated').textContent = 'Saved ' + ts;
-    }).catch(() => {
-      document.getElementById('last-updated').textContent = 'Save failed — check connection';
-    });
-  }, 600);
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// STATS + FILTER HELPERS
-// ─────────────────────────────────────────────────────────────────────────────
-function overallColor(modelId) {
-  const s = state[modelId];
-  const cols = [s.co2.c, s.ukesm.c, s.ipsl.c, s.gfdl.c];
-  if (cols.every(c => c === 'green')) return 'green';
-  if (cols.includes('red')) return 'red';
-  if (cols.includes('blue')) return 'blue';
-  if (cols.includes('gray')) return 'gray';
-  return 'yellow';
-}
-
-function updateStats() {
-  let g = 0, y = 0, r = 0, bl = 0, gr = 0;
-  MODELS.forEach(m => {
-    const o = overallColor(m.id);
-    if (o === 'green') g++; else if (o === 'red') r++; else if (o === 'blue') bl++; else if (o === 'gray') gr++; else y++;
-  });
-  document.getElementById('stat-green').textContent = g;
-  document.getElementById('stat-yellow').textContent = y;
-  document.getElementById('stat-red').textContent = r;
-  document.getElementById('stat-blue').textContent = bl;
-  document.getElementById('stat-gray').textContent = gr;
-}
-
-function dueDateHTML(m) {
-  const edited = state[m.id] && state[m.id].dueDateEdit;
-  if (edited) return `<span class="due-date">${esc(edited)}</span>`;
-  if (!m.dueDateRaw || m.dueDate === '—') return `<span class="due-date">—</span>`;
-  const d = new Date(m.dueDateRaw);
-  const now = new Date('2026-07-01');
-  const cls = d < now ? 'overdue' : 'upcoming';
-  return `<span class="due-date ${cls}">${m.dueDate}</span>`;
-}
-
-const LABEL_MAP = { green: 'Uploaded', yellow: 'In Progress', red: 'Not Reported', blue: 'Testing/Special', gray: 'N/A' };
-
-// ─────────────────────────────────────────────────────────────────────────────
-// RENDER
-// ─────────────────────────────────────────────────────────────────────────────
-function renderTable() {
-  const tbody = document.getElementById('table-body');
-  tbody.innerHTML = '';
-
-  MODELS.forEach(m => {
-    const s = state[m.id];
-    const overall = overallColor(m.id);
-
-    // Factorial tags
-    const factTags = s.factorialList.length === 0
-      ? `<span class="no-factorials">—</span>`
-      : s.factorialList.map(f => `<span class="factorial-tag green has-tip">
-          <span class="factorial-dot"></span>${esc(f)}<span class="tip">${esc(f)}</span>
-          <span class="factorial-remove" onclick="removeFactorial(event,'${m.id}','${encodeURIComponent(f)}')">×</span>
-        </span>`).join('');
-    const factHTML = factTags + `<span class="factorial-add" onclick="addFactorial(event,'${m.id}')">+ Add</span>`;
-
-    // Main row
-    const tr = document.createElement('tr');
-    tr.className = 'main-row';
-    tr.dataset.id = m.id;
-tr.innerHTML = `
-      <td><span class="model-name">${m.name}</span></td>
-      <td><span class="poc-name">${m.poc}</span></td>
-      <td class="status-cell co2-col">
-        <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','os_ukesm')">
-          <span class="status-dot dot-${s.os_ukesm.c}"></span>
-          <span class="tip">Overshoot UKESM</span>
-        </div>
-      </td>
-      <td class="status-cell co2-col">
-        <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','os_ipsl')">
-          <span class="status-dot dot-${s.os_ipsl.c}"></span>
-          <span class="tip">Overshoot IPSL</span>
-        </div>
-      </td>
-      <td class="status-cell co2-col">
-        <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','os_gfdl')">
-          <span class="status-dot dot-${s.os_gfdl.c}"></span>
-          <span class="tip">Overshoot GFDL</span>
-        </div>
-      </td>
-      <td class="status-cell overshoot-col">
-        <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','ukesm')">
-          <span class="status-dot dot-${s.ukesm.c}"></span>
-          <span class="tip">UKESM — ${esc(m.ukesm.t)}</span>
-        </div>
-      </td>
-      <td class="status-cell overshoot-col">
-        <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','ipsl')">
-          <span class="status-dot dot-${s.ipsl.c}"></span>
-          <span class="tip">IPSL — ${esc(m.ipsl.t)}</span>
-        </div>
-      </td>
-      <td class="status-cell overshoot-col">
-        <div class="status-dot-wrap has-tip" onclick="openPopover(event,'${m.id}','gfdl')">
-          <span class="status-dot dot-${s.gfdl.c}"></span>
-          <span class="tip">GFDL — ${esc(m.gfdl.t)}</span>
-        </div>
-      </td>
-      <td class="overshoot-col"><div class="factorials-cell">${factHTML}</div></td>
-      <td><input class="date-input" type="text" placeholder="month day, year"
-        value="${esc(showingCO2
-          ? (s.osDueDateEdit !== null ? s.osDueDateEdit : '')
-          : (s.dueDateEdit !== null ? s.dueDateEdit : (m.dueDate && m.dueDate !== '—' ? m.dueDate : '')))}"
-        oninput="saveFieldEdit('${m.id}','${showingCO2 ? 'osDueDateEdit' : 'dueDateEdit'}',this.value)"></td>
-      <td>
-        <button class="expand-btn ${s.expanded ? 'expanded' : ''}"
-          onclick="toggleExpand('${m.id}')" title="Show details">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M3 5L7 9L11 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-
-    // Detail row
-    const dr = document.createElement('tr');
-    dr.className = 'detail-row';
-    dr.id = `detail-${m.id}`;
-    if (!s.expanded) dr.classList.add('hidden');
-    dr.innerHTML = `
-      <td colspan="11">
-        <div class="detail-inner">
-          <div class="detail-field">
-            <label>Blockers</label>
-            <textarea class="notes-input"
-              placeholder="Enter blockers..."
-              oninput="saveFieldEdit('${m.id}','blockersEdit',this.value)"
-            >${esc(s.blockersEdit !== null ? s.blockersEdit : (m.blockers && m.blockers !== '—' ? m.blockers : ''))}</textarea>
-          </div>
-          <div class="detail-field">
-            <label>Re-tune</label>
-            <textarea class="notes-input"
-              placeholder="Enter re-tune info..."
-              oninput="saveFieldEdit('${m.id}','retuneEdit',this.value)"
-            >${esc(s.retuneEdit !== null ? s.retuneEdit : (m.retune && m.retune !== '—' ? m.retune : ''))}</textarea>
-          </div>
-          <div class="detail-field">
-            <label>Follow-up Status</label>
-            <textarea class="notes-input"
-              placeholder="Enter follow-up status..."
-              oninput="saveFieldEdit('${m.id}','followupEdit',this.value)"
-            >${esc(s.followupEdit !== null ? s.followupEdit : (m.followup && m.followup !== '—' ? m.followup : ''))}</textarea>
-          </div>
-          <div class="detail-field">
-            <label>Notes / Updates</label>
-            <textarea class="notes-input"
-              placeholder="Add a note for ${m.name}..."
-              oninput="saveNote('${m.id}',this.value)"
-            >${esc(s.notes || '')}</textarea>
-          </div>
-        </div>
-      </td>
-    `;
-    tbody.appendChild(dr);
-  });
-
-}
+var LABEL = { green: "Complete", yellow: "Partial", red: "None", gray: "Planned" };
+var TABLE_BODY = document.getElementById("table-body");
+var DATA = null;
 
 function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
- function applyColumnVisibility() {
-  document.querySelectorAll('.co2-col').forEach(el => {
-    el.classList.toggle('hidden-col', !showingCO2);
-  });
-  document.querySelectorAll('.overshoot-col').forEach(el => {
-    el.classList.toggle('hidden-col', showingCO2);
-  });
-} 
-// ─────────────────────────────────────────────────────────────────────────────
-// INTERACTIONS
-// ─────────────────────────────────────────────────────────────────────────────
-function toggleExpand(id) {
-  state[id].expanded = !state[id].expanded;
-  document.getElementById(`detail-${id}`).classList.toggle('hidden', !state[id].expanded);
-  const btn = document.querySelector(`[data-id="${id}"] .expand-btn`);
-  if (btn) btn.classList.toggle('expanded', state[id].expanded);
-  saveState(id);
+function fail(msg) {
+  var box = document.getElementById("load-error");
+  box.textContent = msg;
+  box.classList.remove("hidden");
 }
 
-function saveNote(id, val) {
-  state[id].notes = val;
-  saveState(id);
+// A single status dot with a tooltip. `compact` drops the text label (scenario columns).
+function dot(status, tip, compact) {
+  return '<div class="status-dot-wrap has-tip">' +
+           '<span class="status-dot dot-' + status + '"></span>' +
+           (compact ? "" : '<span class="status-mini-label">' + LABEL[status] + '</span>') +
+           '<span class="tip">' + esc(tip) + '</span>' +
+         '</div>';
 }
 
-function saveFieldEdit(id, field, val) {
-  state[id][field] = val;
-  saveState(id);
+// "ctrl/stable 24/24 complete · bgc/stable 18/24 partial"
+function runsText(runs, reference) {
+  return runs.map(function (r) {
+    return r.simulation + "/" + r.forcing + " " + r.vars + (reference ? "/" + reference : "") + " " + r.state;
+  }).join(" · ");
 }
-function addFactorial(event, modelId) {
-  event.stopPropagation();
-  const name = prompt('Enter new factorial name:');
-  if (!name || !name.trim()) return;
-  const trimmed = name.trim();
-  const s = state[modelId];
-  if (!s.factorialList.includes(trimmed)) {
-    s.factorialList.push(trimmed);
-    s.factorials[trimmed] = { c: 'green', note: '' };
+
+function cellTip(m, exp, column, title) {
+  var cell = m.status[exp][column];
+  if (!m.registered) {
+    if (column === "constant") {
+      return title + " — " + cell.files + " file" + (cell.files === 1 ? "" : "s") +
+             " on the bucket with no GCM token (no adapter to resolve them)";
+    }
+    return title + " — " + cell.files + " ESM-tagged file" + (cell.files === 1 ? "" : "s") +
+           " on the bucket (coarse, no adapter)";
   }
-  saveState(modelId);
-  renderTable();
-  applyColumnVisibility();
-}
-
-function removeFactorial(event, modelId, encodedName) {
-  event.stopPropagation();
-  const name = decodeURIComponent(encodedName);
-  const s = state[modelId];
-  s.factorialList = s.factorialList.filter(f => f !== name);
-  delete s.factorials[name];
-  saveState(modelId);
-  renderTable();
-  applyColumnVisibility();
-}
-
-function openPopover(event, modelId, field) {
-  event.stopPropagation();
-  popoverTarget = { modelId, field };
-
-  const m = MODELS.find(x => x.id === modelId);
-  const s = state[modelId];
-
-  let curColor, origText, simLabel;
-
-  if (field.startsWith('factorial_')) {
-    const fname = field.slice(10);
-    curColor  = s.factorials[fname] ? s.factorials[fname].c : 'yellow';
-    origText  = `Planned factorial for ${m.name}`;
-    simLabel  = `Factorial: ${fname}`;
-    document.getElementById('pop-note').value = s.factorials[fname] ? (s.factorials[fname].note || '') : '';
-  } else {
-    const labels = { co2: 'Climate Overshoot', ukesm: '1pct CO₂ — UKESM', ipsl: '1pct CO₂ — IPSL', gfdl: '1pct CO₂ — GFDL', os_ukesm: 'Overshoot — UKESM', os_ipsl: 'Overshoot — IPSL', os_gfdl: 'Overshoot — GFDL' };
-    const origMap = { co2: m.co2.t, ukesm: m.ukesm.t, ipsl: m.ipsl.t, gfdl: m.gfdl.t, os_ukesm: 'Climate Overshoot — UKESM', os_ipsl: 'Climate Overshoot — IPSL', os_gfdl: 'Climate Overshoot — GFDL' };
-    curColor  = s[field].c;
-    origText  = origMap[field] || '';
-    simLabel  = `Simulation: ${labels[field] || field}`;
-    document.getElementById('pop-note').value = s[field].note || '';
+  if (!m.mapped[exp]) {
+    return title + " — " + m.files[exp] + " file" + (m.files[exp] === 1 ? "" : "s") +
+           " on the bucket; the registry has no " + exp + " naming for this model yet";
   }
-
-  document.getElementById('pop-model').textContent   = m.name;
-  document.getElementById('pop-sim').textContent      = simLabel;
-  document.getElementById('pop-original').textContent = '📋 ' + origText;
-
-  selectedStatus = curColor;
-  document.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector(`.${curColor}-btn`).classList.add('active');
-
-  // Position
-  const pop   = document.getElementById('popover');
-  const over  = document.getElementById('popover-overlay');
-  pop.classList.remove('hidden');
-  over.classList.remove('hidden');
-
-  const tgt  = event.target.closest('.status-dot-wrap, .factorial-tag');
-  const rect = tgt ? tgt.getBoundingClientRect() : { top: event.clientY, left: event.clientX, bottom: event.clientY, right: event.clientX, width: 0, height: 0 };
-  const pw = 300, ph = pop.offsetHeight || 320;
-  let left = rect.right + 12;
-  if (left + pw > window.innerWidth - 12) left = rect.left - pw - 12;
-  let top = rect.top + rect.height / 2 - ph / 2;
-  if (top + ph > window.innerHeight - 12) top = window.innerHeight - ph - 12;
-  if (top < 70) top = 70;
-
-  pop.style.left = Math.max(10, left) + 'px';
-  pop.style.top  = top + 'px';
+  return title + " — required runs (variables present / model's fullest run): " +
+         runsText(cell.runs, m.reference[exp]);
 }
 
-function selectStatus(color) {
-  selectedStatus = color;
-  document.querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector(`.${color}-btn`).classList.add('active');
-}
-
-function savePopover() {
-  if (!popoverTarget || !selectedStatus) { closePopover(); return; }
-  const { modelId, field } = popoverTarget;
-  const note = document.getElementById('pop-note').value.trim();
-
-  if (field.startsWith('factorial_')) {
-    const fname = field.slice(10);
-    state[modelId].factorials[fname] = { c: selectedStatus, note };
-  } else {
-    state[modelId][field] = { c: selectedStatus, note };
+// One dot per overshoot scenario; the hover is the UKESM / IPSL / GFDL breakdown.
+function scenarioDot(m, name, required) {
+  var title = "Overshoot " + name + (required ? " (protocol-required)" : " (optional)");
+  if (!m.registered) {
+    var c = m.status.overshoot;
+    if (!m.files.overshoot) return dot("red", title + " — nothing uploaded", true);
+    return dot("red", title + " — " + m.files.overshoot + " overshoot files but no adapter to resolve them (UKESM-tagged " +
+               c.ukesm.files + ", IPSL " + c.ipsl.files + ", GFDL " + c.gfdl.files + ", untagged " + c.hist.files + ")", true);
   }
-
-saveState(modelId);
-  renderTable();
-  applyColumnVisibility();
-  closePopover();
+  if (!m.mapped.overshoot) {
+    return dot("red", title + " — " + m.files.overshoot + " file" + (m.files.overshoot === 1 ? "" : "s") +
+               " on the bucket; the registry has no overshoot naming for this model yet", true);
+  }
+  var sc = null;
+  m.status.overshoot.scenarios.forEach(function (x) { if (x.name === name) sc = x; });
+  if (!sc) return dot("red", title + " — not in the registry's simulation list", true);
+  var tip = title + " (variables present / model's fullest run): " + sc.runs.map(function (r) {
+    return r.forcing.toUpperCase() + " " + r.vars + "/" + m.reference.overshoot + " " + r.state;
+  }).join(" · ");
+  return dot(sc.status, tip, true);
 }
 
-function closePopover() {
-  document.getElementById('popover').classList.add('hidden');
-  document.getElementById('popover-overlay').classList.add('hidden');
-  popoverTarget = null;
-  selectedStatus = null;
+function chipsHTML(m) {
+  if (!m.chips.length) return '<span class="no-factorials">—</span>';
+  return m.chips.map(function (c) {
+    var tip = c.name + (c.runs.length
+      ? " — " + runsText(c.runs, m.reference["1pctCO2"])
+      : " — planned, nothing uploaded");
+    return '<span class="factorial-tag ' + c.status + ' has-tip">' +
+             '<span class="factorial-dot"></span>' + esc(c.name) +
+             '<span class="tip">' + esc(tip) + '</span></span>';
+  }).join("");
 }
 
-// Overshoot toggle
-let showingCO2 = false;
-
-document.getElementById('tab-1pct').addEventListener('click', () => {
-  showingCO2 = false;
-  renderTable();
-  applyColumnVisibility();
-  document.getElementById('tab-1pct').classList.add('active');
-  document.getElementById('tab-overshoot').classList.remove('active');
-});
-
-document.getElementById('tab-overshoot').addEventListener('click', () => {
-  showingCO2 = true;
-  renderTable();
-  applyColumnVisibility();
-  document.getElementById('tab-overshoot').classList.add('active');
-  document.getElementById('tab-1pct').classList.remove('active');
-});
-
-// Reset
-document.getElementById('reset-btn').addEventListener('click', () => {
-  if (!confirm('Reset all updates to the original spreadsheet values?')) return;
-  state = {};
-  MODELS.forEach(m => {
-    state[m.id] = buildDefaultState(m);
-    fetch(API_URL, {
-      method: 'POST',
-      body: JSON.stringify({ modelId: m.id, state: state[m.id] }),
-      redirect: 'follow',
-      mode: 'no-cors'
+// The full product for one experiment: rows = factorials, columns = every legal
+// (simulation, pattern), cells = variables present. This is the data the dots summarise.
+function gridHTML(m, exp) {
+  var grid = DATA.experiments[exp].grid;
+  var rows = m.factorials[exp].length ? m.factorials[exp] : ["baseline"];
+  if (rows.indexOf("baseline") < 0) rows = ["baseline"].concat(rows);
+  var byKey = {};
+  (m.runs[exp] || []).forEach(function (r) { byKey[r.factorial + "|" + r.simulation + "|" + r.forcing] = r.vars; });
+  var ref = m.reference[exp] || 0;
+  var html = '<div class="grid-wrap"><table class="run-grid"><thead><tr><th class="row-label">factorial</th>';
+  grid.forEach(function (c) { html += "<th>" + esc(c[0]) + "<br>" + esc(c[1]) + "</th>"; });
+  html += "</tr></thead><tbody>";
+  rows.forEach(function (f) {
+    html += '<tr><th class="row-label">' + esc(f) + "</th>";
+    grid.forEach(function (c) {
+      var n = byKey[f + "|" + c[0] + "|" + c[1]] || 0;
+      var cls = n === 0 ? "" : (ref && n >= DATA.complete_share * ref ? "complete" : "partial");
+      html += '<td class="' + cls + '">' + (n || "·") + "</td>";
     });
+    html += "</tr>";
   });
+  return html + "</tbody></table></div>";
+}
+
+function detailHTML(m) {
+  if (!m.registered) {
+    var c1 = m.status["1pctCO2"], c2 = m.status["overshoot"];
+    return '<div class="detail-field"><label>Bucket coverage (no registry adapter)</label><p>' +
+      "1pctCO2: " + m.files["1pctCO2"] + " files (UKESM-tagged " + c1.ukesm.files + ", IPSL " + c1.ipsl.files +
+      ", GFDL " + c1.gfdl.files + ", untagged " + c1.constant.files + ") · overshoot: " + m.files["overshoot"] +
+      " files (UKESM " + c2.ukesm.files + ", IPSL " + c2.ipsl.files + ", GFDL " + c2.gfdl.files +
+      ", untagged " + c2.hist.files + "). Planned factorials from the tracking spreadsheet." + "</p></div>";
+  }
+  var html = "";
+  ["1pctCO2", "overshoot"].forEach(function (exp) {
+    html += '<div class="grid-block"><p class="grid-title">' + exp + " · variables present per run (" + m.files[exp] + " files on the bucket)</p>";
+    if (!m.mapped[exp]) {
+      html += '<p class="grid-note">The registry has no ' + exp + " naming for this model yet.</p></div>";
+      return;
+    }
+    if (!(m.runs[exp] || []).length) {
+      html += '<p class="grid-note">Nothing uploaded.</p></div>';
+      return;
+    }
+    html += '<p class="grid-note">Fullest run: ' + m.reference[exp] + " of " + DATA.variables_total +
+            " requested variables. Green ≥ " + Math.round(DATA.complete_share * 100) + "% of that, amber below.</p>" +
+            gridHTML(m, exp) + "</div>";
+  });
+  return html;
+}
+
+function renderHeader() {
+  var os = DATA.experiments.overshoot;
+  var order = os.scenario_order;
+  document.getElementById("os-group-header").setAttribute("colspan", order.length);
+  var row = document.getElementById("sub-header-row");
+  order.forEach(function (name) {
+    var th = document.createElement("th");
+    var req = os.required.indexOf(name) >= 0;
+    th.className = "center sub-header scenario" + (req ? " req" : "");
+    th.title = req ? "protocol-required" : "optional";
+    th.textContent = name + (req ? "" : "");
+    row.appendChild(th);
+  });
+}
+
+function renderTable() {
+  TABLE_BODY.innerHTML = "";
+  var order = DATA.experiments.overshoot.scenario_order;
+  var required = DATA.experiments.overshoot.required;
+  var nCols = 2 + 4 + order.length + 2;
+  DATA.models.forEach(function (m) {
+    var s1 = m.status["1pctCO2"];
+
+    var tr = document.createElement("tr");
+    tr.className = "main-row";
+    var badge = "";
+    if (m.empty) {
+      badge = ' <span class="unreg-badge has-tip">nothing uploaded' +
+        '<span class="tip">No files on the WIEMIP bucket for this model yet.</span></span>';
+    } else if (!m.registered) {
+      badge = ' <span class="unreg-badge has-tip">no adapter' +
+        '<span class="tip">Files on the bucket but no registry adapter yet — coarse filename scan only.</span></span>';
+    }
+    var scenarioCells = order.map(function (name) {
+      return '<td class="status-cell scenario">' + scenarioDot(m, name, required.indexOf(name) >= 0) + "</td>";
+    }).join("");
+    tr.innerHTML =
+      "<td><span class=\"model-name\">" + esc(m.label) + "</span>" + badge + "</td>" +
+      "<td><span class=\"poc-name\">" + esc(m.poc) + "</span></td>" +
+      '<td class="status-cell">' + dot(s1.constant.status, cellTip(m, "1pctCO2", "constant", "1pctCO2 constant climate (ctrl + bgc, baseline)")) + "</td>" +
+      '<td class="status-cell">' + dot(s1.ukesm.status, cellTip(m, "1pctCO2", "ukesm", "1pctCO2 UKESM coupled run (baseline)")) + "</td>" +
+      '<td class="status-cell">' + dot(s1.ipsl.status, cellTip(m, "1pctCO2", "ipsl", "1pctCO2 IPSL coupled run (baseline)")) + "</td>" +
+      '<td class="status-cell">' + dot(s1.gfdl.status, cellTip(m, "1pctCO2", "gfdl", "1pctCO2 GFDL coupled run (baseline)")) + "</td>" +
+      scenarioCells +
+      '<td><div class="factorials-cell">' + chipsHTML(m) + "</div></td>" +
+      '<td><button class="expand-btn" type="button" title="Show the full run grid" aria-label="Show the full run grid">' +
+        '<svg width="14" height="14" viewBox="0 0 14 14" fill="none">' +
+        '<path d="M3 5L7 9L11 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>' +
+      "</button></td>";
+
+    var dr = document.createElement("tr");
+    dr.className = "detail-row hidden";
+    dr.innerHTML = "<td colspan=\"" + nCols + "\"><div class=\"detail-inner\">" + detailHTML(m) + "</div></td>";
+
+    var btn = tr.querySelector(".expand-btn");
+    btn.addEventListener("click", function () {
+      var open = dr.classList.toggle("hidden");
+      btn.classList.toggle("expanded", !open);
+    });
+
+    TABLE_BODY.appendChild(tr);
+    TABLE_BODY.appendChild(dr);
+  });
+}
+
+function init(data) {
+  DATA = data;
+  var st = data.stats;
+
+  document.getElementById("stat-models").textContent = st.models;
+  document.getElementById("stat-beta").textContent = st.beta_ready;
+  document.getElementById("stat-gamma").textContent = st.gamma_all_gcms;
+  document.getElementById("stat-os-hist").textContent = st.overshoot_hist;
+  document.getElementById("stat-os-all3").textContent = st.overshoot_all_gcms;
+  document.getElementById("stat-empty").textContent = st.empty;
+
+  var when = new Date(data.generated_at);
+  var whenStr = isNaN(when) ? data.generated_at : when.toISOString().slice(0, 10);
+  document.getElementById("last-updated").textContent = "Coverage as of " + whenStr;
+  document.getElementById("hero-meta").textContent =
+    "Source: wiemip_registry " + data.registry_version + " · " + data.variables_total +
+    " requested variables · generated " + whenStr;
+  document.getElementById("controls-eyebrow").textContent =
+    st.models + " modeling groups · " + st.registered + " with a registry adapter · " + st.empty + " with nothing uploaded";
+  var pct = Math.round(data.complete_share * 100);
+  var os = data.experiments.overshoot;
+  document.getElementById("derived-note").innerHTML =
+    "How the dots are computed: every legal request the registry can spell (experiment × " +
+    "factorial × simulation × GCM pattern × variable) is checked against the bucket, giving " +
+    "a variable count per run. A run is <strong>complete</strong> at ≥ " + pct + "% of the " +
+    "model's own fullest run, <strong>partial</strong> below that. <strong>1pctCO2</strong>: the " +
+    "ctrl + bgc dot needs both constant-climate runs; each GCM dot is that pattern's coupled " +
+    "run (rad and the _ndep twins sit in the run grid). <strong>Overshoot</strong>: one dot per " +
+    "scenario, green when it is complete under all three GCM patterns — hover for the UKESM / " +
+    "IPSL / GFDL counts; " + os.patternless.join(", ") + " carry no pattern token and take their " +
+    "best pattern; dark headers (" + os.required.join(", ") + ") are protocol-required, the rest optional" +
+    Object.keys(os.aliases || {}).map(function (a) { return "; " + a + " is the same simulation as " + os.aliases[a] + " and is folded into it"; }).join("") + ". " +
+    "<strong>Factorial</strong> chips are the adapter's declared factorials, coloured over that " +
+    "factorial's ctrl + bgc + cou × 3, grey when declared but nothing is uploaded. Models with " +
+    "no adapter are scanned by filename token only. Regenerate with " +
+    "<code>tools/build_progress.py --listing &lt;bucket listing&gt;</code>.";
+
+  renderHeader();
   renderTable();
-  document.getElementById('last-updated').textContent = 'Reset to original';
-});
+}
 
-// Close popover on Escape
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopover(); });
-
-// Scroll reveals
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.05 });
-document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
-// ─────────────────────────────────────────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────────────────────────────────────────
-(async () => {
-  await loadState();
-  renderTable();
-  applyColumnVisibility();
-})();
+fetch("./data.json", { cache: "no-cache" })
+  .then(function (r) {
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.json();
+  })
+  .then(init)
+  .catch(function (e) {
+    fail("Could not load progress data (" + e.message +
+         "). Regenerate it with tools/build_progress.py.");
+  });
 </script>
 </body>
 </html>

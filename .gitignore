@@ -1,2 +1,3 @@
-# Local-only data tooling (scrapes the private data bucket; not for the public site repo).
-tools/
+# Bucket-coverage tooling behind /progress-tracker and /model-results (run nightly by
+# .github/workflows/progress.yml). Listing the bucket needs read-only Wasabi credentials.
+tools/__pycache__/
