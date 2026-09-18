@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-09-18T16:52:05+00:00",
- "registry_version": "0.1.1.dev50+g349418839.d20260910",
+ "generated_at": "2026-09-18T16:56:53+00:00",
+ "registry_version": "0.1.1.dev63+g95811c316",
  "variables_total": 173,
  "gcm_forcings": [
   "ukesm",
@@ -8764,7 +8764,7 @@
    "empty": false,
    "poc": "Eleanor Burke",
    "files": {
-    "1pctCO2": 3560,
+    "1pctCO2": 3590,
     "overshoot": 4318
    },
    "mapped": {
@@ -8837,19 +8837,19 @@
       "factorial": "baseline",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "baseline",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "baseline",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "baseline",
@@ -9713,19 +9713,19 @@
       "factorial": "Fire0005",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "Fire0005",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "Fire0005",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "Fire0005",
@@ -9809,19 +9809,19 @@
       "factorial": "Fire0249",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "Fire0249",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "Fire0249",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "Fire0249",
@@ -9905,19 +9905,19 @@
       "factorial": "Fire0304",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "Fire0304",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "Fire0304",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "Fire0304",
@@ -10001,19 +10001,19 @@
       "factorial": "Fire0336",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "Fire0336",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "Fire0336",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "Fire0336",
