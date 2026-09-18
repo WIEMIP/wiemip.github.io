@@ -19,7 +19,7 @@
     <title>WIEMIP hub</title>
     <id>wiemip-motd-2026-09-08</id>
     <updated>2026-09-08T12:00:00Z</updated>
-    <summary>LPJ-EOSIM and BiomeE are re-running experiments and their data should be considered preliminary.</summary>
+    <summary>BiomeE data should be considered preliminary.</summary>
     <link rel="alternate" href="https://wiemip.github.io/docs/"/>
   </entry>
 </feed>
