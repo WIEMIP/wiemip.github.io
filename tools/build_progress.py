@@ -80,7 +80,6 @@ PLANNED_FACTORIALS = {
     "BiomeE": ["noFire", "noNitrogen"],
     "ELM": [],
     "ORCHIDEE_MICT": ["noPermafrost", "noWetland"],
-    "IBIS": ["noFire", "noWetland"],
     "CARDAMOM_JPL": ["noFire"],
 }
 
@@ -103,7 +102,6 @@ POC = {
     "DVM_DOS_TEM": "Elchin Jafarov / Helene Genet",
     "ORCHIDEE_MICT": "Yi Xi / Julien Alléon",
     "BEPS": "Mousong Wu",
-    "IBIS": "Min Chen",
     "CARDAMOM_JPL": "Eren Bilir",
 }
 # ---------------------------------------------------------------------------

@@ -48,6 +48,8 @@ GCM_FORCINGS = ["ukesm", "ipsl", "gfdl"]  # the three ESM driver patterns
 CONSTANT_CLIMATE_FORCING = "stable"       # what bgc / ctrl (and their _ndep twins) are requested under
 EXPERIMENTS = {"1pctCO2": DATA_ROOT / "1pctCO2" / "output", "overshoot": DATA_ROOT / "overshoot" / "output"}
 IGNORE_DIRS = {"extremes"}  # dirs under <exp>/output/ that are not a model
+# Groups dropped from the tracker (not participating); their bucket dirs, if any, are skipped.
+DROPPED_DIRS = {"UVIC", "CoLM", "GDSTEM", "KG-FM", "IBIS", "ModelE-SLSM", "VISIT-NIES"}
 # Bucket dir -> tracker key, where `dir.replace("-", "_")` is not the key build_progress
 # uses for POC / planned-factorial lookup.
 KEY_FOR_DIR = {"ORCHIDEE-MICT-CALIPSO": "ORCHIDEE_MICT"}
@@ -217,7 +219,7 @@ def main() -> None:
     registered_dirs = {m["dir"] for m in models}
     unregistered = [
         coarse_coverage(d, bucket)
-        for d in sorted(bucket.model_dirs() - registered_dirs - IGNORE_DIRS, key=str.lower)
+        for d in sorted(bucket.model_dirs() - registered_dirs - IGNORE_DIRS - DROPPED_DIRS, key=str.lower)
     ]
 
     print(
