@@ -19,6 +19,10 @@ if [[ ! -d $REGISTRY_REPO ]]; then
 fi
 
 cd "$REGISTRY_REPO"
+# pdoc prints set-valued constants (const.STOCKS, const.ANNUAL, ...) in iteration
+# order, which string-hash randomization reshuffles on every run. A fixed seed keeps
+# the output byte-identical between builds, so the nightly job only commits real changes.
+export PYTHONHASHSEED=0
 uv run --with pdoc pdoc wiemip_registry \
     --output-directory "$OUT" \
     --docformat markdown \

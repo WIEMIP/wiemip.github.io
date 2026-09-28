@@ -1,0 +1,54 @@
+# Nightly rebuild of /docs/api (pdoc) from the registry's main branch.
+#
+# Checks out WIEMIP/wiemip-data-registry@main beside the site, runs docs/build_api.sh
+# against it, and commits docs/api/ if anything changed. GitHub Pages then redeploys
+# from main. The registry repo is public, so no secrets are needed.
+#
+# docs/api/ is wiped before the build: pdoc never deletes a page, so a removed or
+# renamed module would otherwise keep a stale page forever.
+name: Update API docs
+
+on:
+  schedule:
+    - cron: "30 6 * * *"   # 06:30 UTC, after the progress tracker's 06:00 run
+  workflow_dispatch:       # "Run workflow" button for right-after-a-merge refreshes
+
+permissions:
+  contents: write
+
+concurrency:
+  group: api-docs
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check out the registry (source of the docstrings)
+        uses: actions/checkout@v4
+        with:
+          repository: WIEMIP/wiemip-data-registry
+          ref: main
+          path: registry
+          fetch-depth: 0   # hatch-vcs derives the package version from git history
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Build docs/api
+        env:
+          REGISTRY_REPO: ${{ github.workspace }}/registry
+        run: |
+          rm -rf docs/api
+          bash docs/build_api.sh
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/api
+          git commit -m "api docs: rebuilt from wiemip-data-registry@$(git -C registry rev-parse --short HEAD)" || { echo "nothing changed"; exit 0; }
+          git pull --rebase
+          git push
