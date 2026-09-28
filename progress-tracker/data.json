@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-27T11:44:31+00:00",
+ "generated_at": "2026-09-28T13:21:51+00:00",
  "registry_version": "0.1.1.dev74+g86264b506",
  "variables_total": 173,
  "gcm_forcings": [
@@ -299,7 +299,7 @@
  "stats": {
   "models": 20,
   "registered": 14,
-  "empty": 5,
+  "empty": 4,
   "beta_ready": 12,
   "gamma_all_gcms": 8,
   "overshoot_hist": 9,
@@ -9137,7 +9137,7 @@
    "empty": false,
    "poc": "Eleanor Burke",
    "files": {
-    "1pctCO2": 3590,
+    "1pctCO2": 3665,
     "overshoot": 4318
    },
    "mapped": {
@@ -9210,19 +9210,19 @@
       "factorial": "baseline",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "baseline",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "baseline",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "baseline",
@@ -10086,19 +10086,19 @@
       "factorial": "Fire0005",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "Fire0005",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "Fire0005",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "Fire0005",
@@ -10182,19 +10182,19 @@
       "factorial": "Fire0249",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "Fire0249",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "Fire0249",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "Fire0249",
@@ -10278,19 +10278,19 @@
       "factorial": "Fire0304",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "Fire0304",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "Fire0304",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "Fire0304",
@@ -10374,19 +10374,19 @@
       "factorial": "Fire0336",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "Fire0336",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "Fire0336",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 3
+      "vars": 8
      },
      {
       "factorial": "Fire0336",
@@ -12866,11 +12866,11 @@
    "label": "EDv3",
    "dir": "EDv3",
    "registered": false,
-   "empty": true,
+   "empty": false,
    "poc": "\u2014",
    "files": {
     "1pctCO2": 0,
-    "overshoot": 0
+    "overshoot": 126
    },
    "mapped": {
     "1pctCO2": false,
@@ -12903,8 +12903,8 @@
     },
     "overshoot": {
      "hist": {
-      "status": "red",
-      "files": 0
+      "status": "yellow",
+      "files": 53
      },
      "ukesm": {
       "status": "red",
@@ -12915,8 +12915,8 @@
       "files": 0
      },
      "gfdl": {
-      "status": "red",
-      "files": 0
+      "status": "green",
+      "files": 73
      },
      "scenarios": []
     }
