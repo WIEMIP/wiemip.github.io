@@ -122,7 +122,7 @@
 </span><span id="LPJmL6-32"><a href="#LPJmL6-32"><span class="linenos">32</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="LPJmL6-33"><a href="#LPJmL6-33"><span class="linenos">33</span></a>        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;cLitter&quot;</span><span class="p">,</span> <span class="s2">&quot;cVeg&quot;</span><span class="p">,</span> <span class="s2">&quot;cSoil&quot;</span><span class="p">]</span>
 </span><span id="LPJmL6-34"><a href="#LPJmL6-34"><span class="linenos">34</span></a>
-</span><span id="LPJmL6-35"><a href="#LPJmL6-35"><span class="linenos">35</span></a>    <span class="n">yearly</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;alt&quot;</span><span class="p">,</span> <span class="s2">&quot;fNHarvest&quot;</span><span class="p">}</span>
+</span><span id="LPJmL6-35"><a href="#LPJmL6-35"><span class="linenos">35</span></a>    <span class="n">yearly</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;alt&quot;</span><span class="p">,</span> <span class="s2">&quot;fNHarvest&quot;</span><span class="p">,</span> <span class="s2">&quot;cLeafpft&quot;</span><span class="p">,</span> <span class="s2">&quot;cRootpft&quot;</span><span class="p">,</span> <span class="s2">&quot;cWoodpft&quot;</span><span class="p">}</span>
 </span><span id="LPJmL6-36"><a href="#LPJmL6-36"><span class="linenos">36</span></a>
 </span><span id="LPJmL6-37"><a href="#LPJmL6-37"><span class="linenos">37</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_get_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wiemip_variable</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span><span id="LPJmL6-38"><a href="#LPJmL6-38"><span class="linenos">38</span></a>        <span class="k">return</span> <span class="n">wiemip_variable</span>
@@ -167,16 +167,17 @@
 </span><span id="LPJmL6-77"><a href="#LPJmL6-77"><span class="linenos">77</span></a>        <span class="n">da</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">mask_fill</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_variable</span><span class="p">(</span><span class="n">variable</span><span class="p">)])</span>
 </span><span id="LPJmL6-78"><a href="#LPJmL6-78"><span class="linenos">78</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="p">(</span><span class="n">ds</span><span class="p">))</span>
 </span><span id="LPJmL6-79"><a href="#LPJmL6-79"><span class="linenos">79</span></a>
-</span><span id="LPJmL6-80"><a href="#LPJmL6-80"><span class="linenos">80</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
-</span><span id="LPJmL6-81"><a href="#LPJmL6-81"><span class="linenos">81</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Computed spherical cell area [m²]; ocean cells drop out via the data&#39;s</span>
-</span><span id="LPJmL6-82"><a href="#LPJmL6-82"><span class="linenos">82</span></a><span class="sd">        NaN mask (no land-fraction raster shipped).&quot;&quot;&quot;</span>
-</span><span id="LPJmL6-83"><a href="#LPJmL6-83"><span class="linenos">83</span></a>        <span class="n">ref</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span>
-</span><span id="LPJmL6-84"><a href="#LPJmL6-84"><span class="linenos">84</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="s2">&quot;1pctCO2&quot;</span><span class="p">,</span> <span class="s2">&quot;bgc&quot;</span><span class="p">,</span> <span class="s2">&quot;ukesm&quot;</span><span class="p">,</span> <span class="s2">&quot;baseline&quot;</span><span class="p">,</span> <span class="s2">&quot;cVeg&quot;</span><span class="p">),</span>
-</span><span id="LPJmL6-85"><a href="#LPJmL6-85"><span class="linenos">85</span></a>            <span class="n">decode_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DECODE</span><span class="p">,</span>
-</span><span id="LPJmL6-86"><a href="#LPJmL6-86"><span class="linenos">86</span></a>        <span class="p">)</span>
-</span><span id="LPJmL6-87"><a href="#LPJmL6-87"><span class="linenos">87</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">spherical_area</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">)</span>
-</span><span id="LPJmL6-88"><a href="#LPJmL6-88"><span class="linenos">88</span></a>        <span class="n">ref</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span id="LPJmL6-89"><a href="#LPJmL6-89"><span class="linenos">89</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">rename_latlon</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">)</span>
+</span><span id="LPJmL6-80"><a href="#LPJmL6-80"><span class="linenos">80</span></a>    <span class="nd">@property</span>
+</span><span id="LPJmL6-81"><a href="#LPJmL6-81"><span class="linenos">81</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="LPJmL6-82"><a href="#LPJmL6-82"><span class="linenos">82</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="s2">&quot;1pctCO2&quot;</span><span class="p">,</span> <span class="s2">&quot;bgc&quot;</span><span class="p">,</span> <span class="s2">&quot;ukesm&quot;</span><span class="p">,</span> <span class="s2">&quot;baseline&quot;</span><span class="p">,</span> <span class="s2">&quot;cVeg&quot;</span><span class="p">)</span>
+</span><span id="LPJmL6-83"><a href="#LPJmL6-83"><span class="linenos">83</span></a>
+</span><span id="LPJmL6-84"><a href="#LPJmL6-84"><span class="linenos">84</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
+</span><span id="LPJmL6-85"><a href="#LPJmL6-85"><span class="linenos">85</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Computed spherical cell area [m²]; ocean cells drop out via the data&#39;s</span>
+</span><span id="LPJmL6-86"><a href="#LPJmL6-86"><span class="linenos">86</span></a><span class="sd">        NaN mask (no land-fraction raster shipped).&quot;&quot;&quot;</span>
+</span><span id="LPJmL6-87"><a href="#LPJmL6-87"><span class="linenos">87</span></a>        <span class="n">ref</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_area_weight_path</span><span class="p">,</span> <span class="n">decode_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DECODE</span><span class="p">)</span>
+</span><span id="LPJmL6-88"><a href="#LPJmL6-88"><span class="linenos">88</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">spherical_area</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">)</span>
+</span><span id="LPJmL6-89"><a href="#LPJmL6-89"><span class="linenos">89</span></a>        <span class="n">ref</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span id="LPJmL6-90"><a href="#LPJmL6-90"><span class="linenos">90</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">rename_latlon</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -255,7 +256,7 @@ variable) by name, and a combination that wasn't uploaded simply fails when
                             <div id="LPJmL6.yearly" class="classattr">
                                 <div class="attr variable">
             <span class="name">yearly</span>        =
-<span class="default_value">{&#39;alt&#39;, &#39;fNHarvest&#39;}</span>
+<span class="default_value">{&#39;cRootpft&#39;, &#39;cWoodpft&#39;, &#39;alt&#39;, &#39;cLeafpft&#39;, &#39;fNHarvest&#39;}</span>
 
         
     </div>
@@ -286,8 +287,7 @@ rather than guessing a layout. Like <code><a href="#LPJmL6.one_pct_path">one_pct
 — what exists is decided by <code><a href="#LPJmL6.read">read()</a></code>.</p>
 
 <p>Most groups ran a single overshoot configuration, so <code>factorial</code> is None by
-default and those adapters ignore it. JULES is the exception: it repeated the
-whole scenario set under five fire configs, so the factorial picks the run.</p>
+default and those adapters ignore it. However factorials can pass through to overshoots by name.</p>
 </div>
 
 
@@ -395,7 +395,10 @@ not here. Returns an unweighted DataArray.</p>
                                 <dl>
                                     <div><dt><a href="core.html#WIEAdapter">wiemip_registry.core.WIEAdapter</a></dt>
                                 <dd id="LPJmL6.OVERSHOOT_FACTORIALS" class="variable"><a href="core.html#WIEAdapter.OVERSHOOT_FACTORIALS">OVERSHOOT_FACTORIALS</a></dd>
+                <dd id="LPJmL6.PROVISIONAL_DATA" class="variable"><a href="core.html#WIEAdapter.PROVISIONAL_DATA">PROVISIONAL_DATA</a></dd>
                 <dd id="LPJmL6.factorials" class="variable"><a href="core.html#WIEAdapter.factorials">factorials</a></dd>
+                <dd id="LPJmL6.provisional_data" class="variable"><a href="core.html#WIEAdapter.provisional_data">provisional_data</a></dd>
+                <dd id="LPJmL6.is_provisional" class="function"><a href="core.html#WIEAdapter.is_provisional">is_provisional</a></dd>
                 <dd id="LPJmL6.paths" class="function"><a href="core.html#WIEAdapter.paths">paths</a></dd>
                 <dd id="LPJmL6.path" class="function"><a href="core.html#WIEAdapter.path">path</a></dd>
                 <dd id="LPJmL6.weights" class="function"><a href="core.html#WIEAdapter.weights">weights</a></dd>
