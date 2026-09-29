@@ -103,6 +103,8 @@ POC = {
     "ORCHIDEE_MICT": "Yi Xi / Julien Alléon",
     "BEPS": "Mousong Wu",
     "CARDAMOM_JPL": "Eren Bilir",
+    "EDv3": "Lei Ma / George Hurtt",
+    "OSCAR": "Thomas Gasser",
 }
 # ---------------------------------------------------------------------------
 

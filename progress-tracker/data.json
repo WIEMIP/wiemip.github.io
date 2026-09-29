@@ -12859,7 +12859,7 @@
    "dir": "EDv3",
    "registered": true,
    "empty": false,
-   "poc": "\u2014",
+   "poc": "Lei Ma / George Hurtt",
    "files": {
     "1pctCO2": 0,
     "overshoot": 378
@@ -13551,7 +13551,7 @@
    "dir": "OSCAR",
    "registered": false,
    "empty": true,
-   "poc": "\u2014",
+   "poc": "Thomas Gasser",
    "files": {
     "1pctCO2": 0,
     "overshoot": 0

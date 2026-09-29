@@ -82,19 +82,20 @@ nav {
 .hero {
   position: relative;
   background: linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 60%, var(--blue) 100%);
-  padding: 96px 32px 80px;
+  padding: 76px 0 36px;
   overflow: hidden;
 }
 .hero::after {
   content: '';
   position: absolute;
   bottom: -1px; left: 0; right: 0;
-  height: 80px;
+  height: 36px;
   background: linear-gradient(180deg, transparent, var(--blue-pale));
   pointer-events: none;
 }
-.container { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
-.hero-inner { position: relative; z-index: 1; max-width: 860px; }
+/* full window width so every table column shows without sideways scrolling */
+.container { margin: 0 auto; padding: 0 32px; }
+.hero-inner { position: relative; z-index: 1; }
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -108,80 +109,25 @@ nav {
   color: var(--blue-light);
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
-.hero h1 {
-  font-size: clamp(30px, 4vw, 46px);
-  font-weight: 300;
-  color: var(--blue-light);
-  line-height: 1.15;
-  letter-spacing: -0.5px;
-  margin-bottom: 14px;
-}
-.hero h1 strong { font-weight: 700; color: white; }
 .hero p {
   font-size: 15px;
   color: rgba(206,230,250,0.8);
   line-height: 1.7;
-  max-width: 640px;
-  margin-bottom: 28px;
+  max-width: 900px;
+  margin-bottom: 8px;
 }
-.hero-meta {
+.hero .hero-meta {
   font-size: 11px;
   color: rgba(206,230,250,0.5);
-  margin-bottom: 28px;
+  margin-bottom: 16px;
   letter-spacing: 0.3px;
 }
 
-/* HERO STATS */
-.hero-stats { display: flex; gap: 12px; flex-wrap: wrap; }
-.hero-stat {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 12px;
-  padding: 12px 20px;
-  text-align: center;
-  min-width: 90px;
-}
-.hero-stat-num {
-  font-size: 26px;
-  font-weight: 800;
-  color: white;
-  letter-spacing: -0.5px;
-  display: block;
-  line-height: 1;
-}
-.hero-stat-label {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: rgba(206,230,250,0.55);
-  margin-top: 4px;
-  display: block;
-}
-.hero-stat.green .hero-stat-num { color: #5ee6c8; }
-.hero-stat.yellow .hero-stat-num { color: #fbbf24; }
-.hero-stat.red .hero-stat-num { color: #fc8181; }
-.hero-stat.blue .hero-stat-num { color: #90c7f0; }
-
 /* MAIN SECTION */
-.tracker-section { position: relative; z-index: 1; padding: 40px 0 80px; }
+.tracker-section { position: relative; z-index: 1; padding: 16px 0 48px; }
 
-.section-controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 18px;
-  flex-wrap: wrap;
-}
-.section-eyebrow {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--blue);
-}
 
 /* TABLE */
 .table-wrapper {
@@ -199,7 +145,7 @@ th.group-header { background: var(--blue-pale) !important; color: var(--blue) !i
 th.sub-header { background: var(--gray-100) !important; font-size: 10px; border-left: 1px solid var(--blue-light); }
 th.sub-header:last-of-type { border-right: 1px solid var(--blue-light); }
 th {
-  padding: 11px 14px;
+  padding: 8px 10px;
   text-align: left;
   font-size: 10px;
   font-weight: 700;
@@ -209,12 +155,12 @@ th {
   white-space: nowrap;
 }
 th.center { text-align: center; }
-td { padding: 13px 14px; border-bottom: 1px solid var(--gray-100); vertical-align: middle; }
+td { padding: 6px 10px; border-bottom: 1px solid var(--gray-100); vertical-align: middle; }
 tbody tr:last-child > td { border-bottom: none; }
 tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s; }
 
 .model-name { font-weight: 700; font-size: 13px; color: var(--navy); white-space: nowrap; }
-.poc-name { font-size: 12px; color: var(--text-light); max-width: 150px; line-height: 1.4; }
+.poc-name { font-size: 12px; color: var(--text-light); line-height: 1.4; white-space: nowrap; }
 .unreg-badge {
   display: inline-block;
   margin-left: 7px;
@@ -252,22 +198,14 @@ tbody tr.main-row:hover > td { background: #f5fbff; transition: background 0.15s
 .dot-yellow { background: var(--amber); box-shadow: 0 0 0 3px rgba(232,147,11,0.18); }
 .dot-red { background: var(--coral); box-shadow: 0 0 0 3px rgba(235,65,65,0.18); }
 .dot-gray { background: #94a3b8; box-shadow: 0 0 0 3px rgba(148,163,184,0.18); }
-.status-mini-label {
-  font-size: 9px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  color: var(--text-light);
-  white-space: nowrap;
-}
 
 /* FACTORIALS */
-.factorials-cell { display: flex; flex-wrap: wrap; gap: 5px; max-width: 230px; }
+.factorials-cell { display: flex; flex-wrap: wrap; gap: 3px; width: 308px; }
 .factorial-tag {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 3px 8px 3px 5px;
+  padding: 2px 6px 2px 4px;
   border-radius: 100px;
   font-size: 10px;
   font-weight: 700;
@@ -397,8 +335,6 @@ footer a { color: var(--blue); }
 }
 @media (max-width: 600px) {
   .detail-inner { grid-template-columns: 1fr; }
-  .hero-stats { gap: 8px; }
-  .hero-stat { min-width: 70px; padding: 10px 12px; }
 }
 
 /* RUN GRID (detail row) */
@@ -447,39 +383,12 @@ td.status-cell.scenario .status-dot { width: 13px; height: 13px; }
   <div class="container">
     <div class="hero-inner">
       <div class="hero-badge">🌍 WIEMIP · Submission progress</div>
-      <h1>Model submission <strong>progress</strong></h1>
       <p>Live status for the WIEMIP <strong>1pctCO2</strong> and <strong>overshoot</strong>
         experiments, derived from the files each group has actually uploaded to the data
         bucket. Every experiment × factorial × simulation × GCM pattern × variable the
         <code>wiemip_registry</code> package can name is checked against the bucket; the dots
-        summarise those counts. Nothing here is set by hand except the point of contact.</p>
+        summarise those counts.</p>
       <p class="hero-meta" id="hero-meta"></p>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <span class="hero-stat-num" id="stat-models">—</span>
-          <span class="hero-stat-label">Models</span>
-        </div>
-        <div class="hero-stat green">
-          <span class="hero-stat-num" id="stat-beta">—</span>
-          <span class="hero-stat-label">β inputs (ctrl + bgc)</span>
-        </div>
-        <div class="hero-stat blue">
-          <span class="hero-stat-num" id="stat-gamma">—</span>
-          <span class="hero-stat-label">γ on all 3 GCMs</span>
-        </div>
-        <div class="hero-stat green">
-          <span class="hero-stat-num" id="stat-os-hist">—</span>
-          <span class="hero-stat-label">Overshoot hist</span>
-        </div>
-        <div class="hero-stat blue">
-          <span class="hero-stat-num" id="stat-os-all3">—</span>
-          <span class="hero-stat-label">Overshoot · all 3 GCMs</span>
-        </div>
-        <div class="hero-stat red">
-          <span class="hero-stat-num" id="stat-empty">—</span>
-          <span class="hero-stat-label">Nothing uploaded</span>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -490,26 +399,22 @@ td.status-cell.scenario .status-dot { width: 13px; height: 13px; }
 
     <div id="load-error" class="load-error hidden"></div>
 
-    <div class="section-controls">
-      <span class="section-eyebrow" id="controls-eyebrow">Modeling groups</span>
-    </div>
-
     <div class="table-wrapper">
       <table>
         <thead>
           <tr>
-            <th rowspan="2" style="min-width:130px">Model</th>
-            <th rowspan="2" style="min-width:150px">Point of Contact</th>
-            <th colspan="4" class="group-header" style="min-width:360px">1pctCO2</th>
+            <th rowspan="2" style="width:1%">Model</th>
+            <th rowspan="2" style="width:1%">Point of Contact</th>
+            <th rowspan="2" style="width:1%">Factorials</th>
+            <th colspan="4" class="group-header">1pctCO2</th>
             <th colspan="11" class="group-header" id="os-group-header">Overshoot scenarios</th>
-            <th rowspan="2" style="min-width:220px">Factorials (1pctCO2, from the adapter)</th>
-            <th rowspan="2" style="width:44px"></th>
+            <th rowspan="2" style="width:1%"></th>
           </tr>
           <tr id="sub-header-row">
-            <th class="center sub-header" style="min-width:90px">ctrl + bgc</th>
-            <th class="center sub-header" style="min-width:90px">UKESM cou</th>
-            <th class="center sub-header" style="min-width:90px">IPSL cou</th>
-            <th class="center sub-header" style="min-width:90px">GFDL cou</th>
+            <th class="center sub-header">ctrl + bgc</th>
+            <th class="center sub-header">UKESM cou</th>
+            <th class="center sub-header">IPSL cou</th>
+            <th class="center sub-header">GFDL cou</th>
           </tr>
         </thead>
         <tbody id="table-body"></tbody>
@@ -539,7 +444,6 @@ td.status-cell.scenario .status-dot { width: 13px; height: 13px; }
 <script>
 "use strict";
 
-var LABEL = { green: "Complete", yellow: "Partial", red: "None", gray: "Planned" };
 var TABLE_BODY = document.getElementById("table-body");
 var DATA = null;
 
@@ -555,11 +459,10 @@ function fail(msg) {
   box.classList.remove("hidden");
 }
 
-// A single status dot with a tooltip. `compact` drops the text label (scenario columns).
-function dot(status, tip, compact) {
+// A single status dot with a tooltip.
+function dot(status, tip) {
   return '<div class="status-dot-wrap has-tip">' +
            '<span class="status-dot dot-' + status + '"></span>' +
-           (compact ? "" : '<span class="status-mini-label">' + LABEL[status] + '</span>') +
            '<span class="tip">' + esc(tip) + '</span>' +
          '</div>';
 }
@@ -594,21 +497,21 @@ function scenarioDot(m, name, required) {
   var title = "Overshoot " + name + (required ? " (protocol-required)" : " (optional)");
   if (!m.registered) {
     var c = m.status.overshoot;
-    if (!m.files.overshoot) return dot("red", title + " — nothing uploaded", true);
+    if (!m.files.overshoot) return dot("red", title + " — nothing uploaded");
     return dot("red", title + " — " + m.files.overshoot + " overshoot files but no adapter to resolve them (UKESM-tagged " +
-               c.ukesm.files + ", IPSL " + c.ipsl.files + ", GFDL " + c.gfdl.files + ", untagged " + c.hist.files + ")", true);
+               c.ukesm.files + ", IPSL " + c.ipsl.files + ", GFDL " + c.gfdl.files + ", untagged " + c.hist.files + ")");
   }
   if (!m.mapped.overshoot) {
     return dot("red", title + " — " + m.files.overshoot + " file" + (m.files.overshoot === 1 ? "" : "s") +
-               " on the bucket; the registry has no overshoot naming for this model yet", true);
+               " on the bucket; the registry has no overshoot naming for this model yet");
   }
   var sc = null;
   m.status.overshoot.scenarios.forEach(function (x) { if (x.name === name) sc = x; });
-  if (!sc) return dot("red", title + " — not in the registry's simulation list", true);
+  if (!sc) return dot("red", title + " — not in the registry's simulation list");
   var tip = title + " (variables present / model's fullest run): " + sc.runs.map(function (r) {
     return r.forcing.toUpperCase() + " " + r.vars + "/" + m.reference.overshoot + " " + r.state;
   }).join(" · ");
-  return dot(sc.status, tip, true);
+  return dot(sc.status, tip);
 }
 
 function chipsHTML(m) {
@@ -713,12 +616,12 @@ function renderTable() {
     tr.innerHTML =
       "<td><span class=\"model-name\">" + esc(m.label) + "</span>" + badge + "</td>" +
       "<td><span class=\"poc-name\">" + esc(m.poc) + "</span></td>" +
+      '<td><div class="factorials-cell">' + chipsHTML(m) + "</div></td>" +
       '<td class="status-cell">' + dot(s1.constant.status, cellTip(m, "1pctCO2", "constant", "1pctCO2 constant climate (ctrl + bgc, baseline)")) + "</td>" +
       '<td class="status-cell">' + dot(s1.ukesm.status, cellTip(m, "1pctCO2", "ukesm", "1pctCO2 UKESM coupled run (baseline)")) + "</td>" +
       '<td class="status-cell">' + dot(s1.ipsl.status, cellTip(m, "1pctCO2", "ipsl", "1pctCO2 IPSL coupled run (baseline)")) + "</td>" +
       '<td class="status-cell">' + dot(s1.gfdl.status, cellTip(m, "1pctCO2", "gfdl", "1pctCO2 GFDL coupled run (baseline)")) + "</td>" +
       scenarioCells +
-      '<td><div class="factorials-cell">' + chipsHTML(m) + "</div></td>" +
       '<td><button class="expand-btn" type="button" title="Show the full run grid" aria-label="Show the full run grid">' +
         '<svg width="14" height="14" viewBox="0 0 14 14" fill="none">' +
         '<path d="M3 5L7 9L11 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>' +
@@ -741,23 +644,12 @@ function renderTable() {
 
 function init(data) {
   DATA = data;
-  var st = data.stats;
-
-  document.getElementById("stat-models").textContent = st.models;
-  document.getElementById("stat-beta").textContent = st.beta_ready;
-  document.getElementById("stat-gamma").textContent = st.gamma_all_gcms;
-  document.getElementById("stat-os-hist").textContent = st.overshoot_hist;
-  document.getElementById("stat-os-all3").textContent = st.overshoot_all_gcms;
-  document.getElementById("stat-empty").textContent = st.empty;
-
   var when = new Date(data.generated_at);
   var whenStr = isNaN(when) ? data.generated_at : when.toISOString().slice(0, 10);
   document.getElementById("last-updated").textContent = "Coverage as of " + whenStr;
   document.getElementById("hero-meta").textContent =
     "Source: wiemip_registry " + data.registry_version + " · " + data.variables_total +
     " requested variables · generated " + whenStr;
-  document.getElementById("controls-eyebrow").textContent =
-    st.models + " modeling groups · " + st.registered + " with a registry adapter · " + st.empty + " with nothing uploaded";
   var pct = Math.round(data.complete_share * 100);
   var os = data.experiments.overshoot;
   document.getElementById("derived-note").innerHTML =
