@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-10-08T13:06:16+00:00",
- "registry_version": "0.1.1.dev102+g5a5ce0389",
+ "generated_at": "2026-10-09T12:52:47+00:00",
+ "registry_version": "0.1.1.dev103+g0c2b10e05",
  "variables_total": 175,
  "gcm_forcings": [
   "ukesm",
@@ -14497,7 +14497,7 @@
    "empty": false,
    "poc": "Yi Xi / Julien All\u00e9on",
    "files": {
-    "1pctCO2": 1,
+    "1pctCO2": 6,
     "overshoot": 0
    },
    "mapped": {
@@ -14517,7 +14517,7 @@
     "1pctCO2": {
      "constant": {
       "status": "yellow",
-      "files": 1
+      "files": 6
      },
      "ukesm": {
       "status": "red",
