@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-10-13T13:52:56+00:00",
- "registry_version": "0.1.1.dev105+gcf258bb9a",
+ "generated_at": "2026-10-14T11:30:35+00:00",
+ "registry_version": "0.1.1.dev109+g1e46f0fb8",
  "variables_total": 175,
  "gcm_forcings": [
   "ukesm",
@@ -297,12 +297,12 @@
   ]
  },
  "stats": {
-  "models": 20,
-  "registered": 17,
+  "models": 21,
+  "registered": 18,
   "empty": 2,
-  "beta_ready": 15,
+  "beta_ready": 16,
   "gamma_all_gcms": 9,
-  "overshoot_hist": 12,
+  "overshoot_hist": 13,
   "overshoot_all_gcms": 9
  },
  "models": [
@@ -3307,6 +3307,529 @@
      ]
     }
    ]
+  },
+  {
+   "key": "CoLM",
+   "label": "CoLM",
+   "dir": "CoLM",
+   "registered": true,
+   "empty": false,
+   "poc": "\u2014",
+   "files": {
+    "1pctCO2": 175,
+    "overshoot": 265
+   },
+   "mapped": {
+    "1pctCO2": true,
+    "overshoot": true
+   },
+   "reference": {
+    "1pctCO2": 42,
+    "overshoot": 42
+   },
+   "factorials": {
+    "1pctCO2": [
+     "baseline"
+    ],
+    "overshoot": []
+   },
+   "runs": {
+    "1pctCO2": [
+     {
+      "factorial": "baseline",
+      "simulation": "bgc",
+      "forcing": "stable",
+      "vars": 42
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "cou",
+      "forcing": "ukesm",
+      "vars": 41
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "ctrl",
+      "forcing": "stable",
+      "vars": 42
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "rad",
+      "forcing": "ukesm",
+      "vars": 42
+     }
+    ],
+    "overshoot": [
+     {
+      "factorial": "baseline",
+      "simulation": "l",
+      "forcing": "ukesm",
+      "vars": 42
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "hl",
+      "forcing": "ukesm",
+      "vars": 42
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "hl_cf",
+      "forcing": "ukesm",
+      "vars": 42
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "m",
+      "forcing": "ukesm",
+      "vars": 42
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "hist",
+      "forcing": "ukesm",
+      "vars": 42
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "hist",
+      "forcing": "ipsl",
+      "vars": 42
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "hist",
+      "forcing": "gfdl",
+      "vars": 42
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "ctrl",
+      "forcing": "ukesm",
+      "vars": 42
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "ctrl",
+      "forcing": "ipsl",
+      "vars": 42
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "ctrl",
+      "forcing": "gfdl",
+      "vars": 42
+     }
+    ]
+   },
+   "status": {
+    "1pctCO2": {
+     "constant": {
+      "status": "green",
+      "runs": [
+       {
+        "simulation": "ctrl",
+        "forcing": "stable",
+        "vars": 42,
+        "state": "complete"
+       },
+       {
+        "simulation": "bgc",
+        "forcing": "stable",
+        "vars": 42,
+        "state": "complete"
+       }
+      ]
+     },
+     "ukesm": {
+      "status": "green",
+      "runs": [
+       {
+        "simulation": "cou",
+        "forcing": "ukesm",
+        "vars": 41,
+        "state": "complete"
+       }
+      ]
+     },
+     "ipsl": {
+      "status": "red",
+      "runs": [
+       {
+        "simulation": "cou",
+        "forcing": "ipsl",
+        "vars": 0,
+        "state": "absent"
+       }
+      ]
+     },
+     "gfdl": {
+      "status": "red",
+      "runs": [
+       {
+        "simulation": "cou",
+        "forcing": "gfdl",
+        "vars": 0,
+        "state": "absent"
+       }
+      ]
+     }
+    },
+    "overshoot": {
+     "hist": {
+      "status": "green",
+      "runs": [
+       {
+        "simulation": "hist",
+        "forcing": "any pattern",
+        "vars": 42,
+        "state": "complete"
+       }
+      ]
+     },
+     "ukesm": {
+      "status": "green",
+      "runs": [
+       {
+        "simulation": "l",
+        "forcing": "ukesm",
+        "vars": 42,
+        "state": "complete"
+       },
+       {
+        "simulation": "hl",
+        "forcing": "ukesm",
+        "vars": 42,
+        "state": "complete"
+       },
+       {
+        "simulation": "hl_cf",
+        "forcing": "ukesm",
+        "vars": 42,
+        "state": "complete"
+       },
+       {
+        "simulation": "m",
+        "forcing": "ukesm",
+        "vars": 42,
+        "state": "complete"
+       }
+      ]
+     },
+     "ipsl": {
+      "status": "red",
+      "runs": [
+       {
+        "simulation": "l",
+        "forcing": "ipsl",
+        "vars": 0,
+        "state": "absent"
+       },
+       {
+        "simulation": "hl",
+        "forcing": "ipsl",
+        "vars": 0,
+        "state": "absent"
+       },
+       {
+        "simulation": "hl_cf",
+        "forcing": "ipsl",
+        "vars": 0,
+        "state": "absent"
+       },
+       {
+        "simulation": "m",
+        "forcing": "ipsl",
+        "vars": 0,
+        "state": "absent"
+       }
+      ]
+     },
+     "gfdl": {
+      "status": "red",
+      "runs": [
+       {
+        "simulation": "l",
+        "forcing": "gfdl",
+        "vars": 0,
+        "state": "absent"
+       },
+       {
+        "simulation": "hl",
+        "forcing": "gfdl",
+        "vars": 0,
+        "state": "absent"
+       },
+       {
+        "simulation": "hl_cf",
+        "forcing": "gfdl",
+        "vars": 0,
+        "state": "absent"
+       },
+       {
+        "simulation": "m",
+        "forcing": "gfdl",
+        "vars": 0,
+        "state": "absent"
+       }
+      ]
+     },
+     "scenarios": [
+      {
+       "name": "hist",
+       "status": "green",
+       "runs": [
+        {
+         "simulation": "hist",
+         "forcing": "ukesm",
+         "vars": 42,
+         "state": "complete"
+        },
+        {
+         "simulation": "hist",
+         "forcing": "ipsl",
+         "vars": 42,
+         "state": "complete"
+        },
+        {
+         "simulation": "hist",
+         "forcing": "gfdl",
+         "vars": 42,
+         "state": "complete"
+        }
+       ],
+       "required": true
+      },
+      {
+       "name": "ctrl",
+       "status": "green",
+       "runs": [
+        {
+         "simulation": "ctrl",
+         "forcing": "ukesm",
+         "vars": 42,
+         "state": "complete"
+        },
+        {
+         "simulation": "ctrl",
+         "forcing": "ipsl",
+         "vars": 42,
+         "state": "complete"
+        },
+        {
+         "simulation": "ctrl",
+         "forcing": "gfdl",
+         "vars": 42,
+         "state": "complete"
+        }
+       ],
+       "required": false
+      },
+      {
+       "name": "vl",
+       "status": "red",
+       "runs": [
+        {
+         "simulation": "vl",
+         "forcing": "ukesm",
+         "vars": 0,
+         "state": "absent"
+        },
+        {
+         "simulation": "vl",
+         "forcing": "ipsl",
+         "vars": 0,
+         "state": "absent"
+        },
+        {
+         "simulation": "vl",
+         "forcing": "gfdl",
+         "vars": 0,
+         "state": "absent"
+        }
+       ],
+       "required": false
+      },
+      {
+       "name": "vl_cf",
+       "status": "red",
+       "runs": [
+        {
+         "simulation": "vl_cf",
+         "forcing": "ukesm",
+         "vars": 0,
+         "state": "absent"
+        },
+        {
+         "simulation": "vl_cf",
+         "forcing": "ipsl",
+         "vars": 0,
+         "state": "absent"
+        },
+        {
+         "simulation": "vl_cf",
+         "forcing": "gfdl",
+         "vars": 0,
+         "state": "absent"
+        }
+       ],
+       "required": false
+      },
+      {
+       "name": "l",
+       "status": "yellow",
+       "runs": [
+        {
+         "simulation": "l",
+         "forcing": "ukesm",
+         "vars": 42,
+         "state": "complete"
+        },
+        {
+         "simulation": "l",
+         "forcing": "ipsl",
+         "vars": 0,
+         "state": "absent"
+        },
+        {
+         "simulation": "l",
+         "forcing": "gfdl",
+         "vars": 0,
+         "state": "absent"
+        }
+       ],
+       "required": true
+      },
+      {
+       "name": "m",
+       "status": "yellow",
+       "runs": [
+        {
+         "simulation": "m",
+         "forcing": "ukesm",
+         "vars": 42,
+         "state": "complete"
+        },
+        {
+         "simulation": "m",
+         "forcing": "ipsl",
+         "vars": 0,
+         "state": "absent"
+        },
+        {
+         "simulation": "m",
+         "forcing": "gfdl",
+         "vars": 0,
+         "state": "absent"
+        }
+       ],
+       "required": true
+      },
+      {
+       "name": "ml",
+       "status": "red",
+       "runs": [
+        {
+         "simulation": "ml",
+         "forcing": "ukesm",
+         "vars": 0,
+         "state": "absent"
+        },
+        {
+         "simulation": "ml",
+         "forcing": "ipsl",
+         "vars": 0,
+         "state": "absent"
+        },
+        {
+         "simulation": "ml",
+         "forcing": "gfdl",
+         "vars": 0,
+         "state": "absent"
+        }
+       ],
+       "required": false
+      },
+      {
+       "name": "ml_cf",
+       "status": "red",
+       "runs": [
+        {
+         "simulation": "ml_cf",
+         "forcing": "ukesm",
+         "vars": 0,
+         "state": "absent"
+        },
+        {
+         "simulation": "ml_cf",
+         "forcing": "ipsl",
+         "vars": 0,
+         "state": "absent"
+        },
+        {
+         "simulation": "ml_cf",
+         "forcing": "gfdl",
+         "vars": 0,
+         "state": "absent"
+        }
+       ],
+       "required": false
+      },
+      {
+       "name": "hl",
+       "status": "yellow",
+       "runs": [
+        {
+         "simulation": "hl",
+         "forcing": "ukesm",
+         "vars": 42,
+         "state": "complete"
+        },
+        {
+         "simulation": "hl",
+         "forcing": "ipsl",
+         "vars": 0,
+         "state": "absent"
+        },
+        {
+         "simulation": "hl",
+         "forcing": "gfdl",
+         "vars": 0,
+         "state": "absent"
+        }
+       ],
+       "required": true
+      },
+      {
+       "name": "hl_cf",
+       "status": "yellow",
+       "runs": [
+        {
+         "simulation": "hl_cf",
+         "forcing": "ukesm",
+         "vars": 42,
+         "state": "complete"
+        },
+        {
+         "simulation": "hl_cf",
+         "forcing": "ipsl",
+         "vars": 0,
+         "state": "absent"
+        },
+        {
+         "simulation": "hl_cf",
+         "forcing": "gfdl",
+         "vars": 0,
+         "state": "absent"
+        }
+       ],
+       "required": true
+      }
+     ]
+    }
+   },
+   "chips": []
   },
   {
    "key": "DLEM",
@@ -13647,6 +14170,12 @@
     "overshoot": [
      {
       "factorial": "baseline",
+      "simulation": "l",
+      "forcing": "ukesm",
+      "vars": 25
+     },
+     {
+      "factorial": "baseline",
       "simulation": "m",
       "forcing": "ukesm",
       "vars": 25
@@ -13760,8 +14289,8 @@
        {
         "simulation": "l",
         "forcing": "ukesm",
-        "vars": 0,
-        "state": "absent"
+        "vars": 25,
+        "state": "complete"
        },
        {
         "simulation": "hl",
@@ -13944,13 +14473,13 @@
       },
       {
        "name": "l",
-       "status": "red",
+       "status": "yellow",
        "runs": [
         {
          "simulation": "l",
          "forcing": "ukesm",
-         "vars": 0,
-         "state": "absent"
+         "vars": 25,
+         "state": "complete"
         },
         {
          "simulation": "l",
