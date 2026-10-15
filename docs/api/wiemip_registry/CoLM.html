@@ -29,12 +29,51 @@
                    pattern=".+" required>
 
     
-    
-                <h2>Submodules</h2>
-            <ul>
-                    <li><a href="CoLM/convert.html">convert</a></li>
-            </ul>
+                <h2>API Documentation</h2>
+                <ul class="memberlist">
+            <li>
+                    <a class="class" href="#CoLM">CoLM</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#CoLM.model">model</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CoLM.DECODE">DECODE</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CoLM.FACTORIALS">FACTORIALS</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CoLM.LAYERED_VARIABLES">LAYERED_VARIABLES</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CoLM.ANNUAL">ANNUAL</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#CoLM.land_carbon_variables">land_carbon_variables</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#CoLM.one_pct_path">one_pct_path</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#CoLM.overshoot_path">overshoot_path</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#CoLM.read">read</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CoLM.LAT">LAT</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#CoLM.LON">LON</a>
+                        </li>
+                </ul>
 
+            </li>
+    </ul>
+
+
+    
                 <footer>WIEMIP · wiemip_registry</footer>
 
             <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
@@ -52,10 +91,352 @@
 <a href="./../wiemip_registry.html">wiemip_registry</a><wbr>.CoLM    </h1>
 
                 
-                
-                
-                
+                        <input id="mod-CoLM-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+
+                        <label class="view-source-button" for="mod-CoLM-view-source"><span>View Source</span></label>
+
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos">1</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">wiemip_registry.CoLM.convert</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoLM</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos">2</span></a>
+</span><span id="L-3"><a href="#L-3"><span class="linenos">3</span></a><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;CoLM&quot;</span><span class="p">]</span>
+</span></pre></div>
+
+
             </section>
+                <section id="CoLM">
+                            <input id="CoLM-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">CoLM</span><wbr>(<span class="base"><a href="core.html#WIEAdapter">wiemip_registry.core.WIEAdapter</a></span>):
+
+                <label class="view-source-button" for="CoLM-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CoLM"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CoLM-16"><a href="#CoLM-16"><span class="linenos">16</span></a><span class="k">class</span><span class="w"> </span><span class="nc">CoLM</span><span class="p">(</span><span class="n">core</span><span class="o">.</span><span class="n">WIEAdapter</span><span class="p">):</span>
+</span><span id="CoLM-17"><a href="#CoLM-17"><span class="linenos">17</span></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">MODEL</span>
+</span><span id="CoLM-18"><a href="#CoLM-18"><span class="linenos">18</span></a>    <span class="n">LAT</span><span class="p">,</span> <span class="n">LON</span> <span class="o">=</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span>
+</span><span id="CoLM-19"><a href="#CoLM-19"><span class="linenos">19</span></a>    <span class="n">DECODE</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="CoLM-20"><a href="#CoLM-20"><span class="linenos">20</span></a>    <span class="n">FACTORIALS</span> <span class="o">=</span> <span class="p">{</span><span class="n">Factorial</span><span class="o">.</span><span class="n">baseline</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}</span>
+</span><span id="CoLM-21"><a href="#CoLM-21"><span class="linenos">21</span></a>    <span class="n">LAYERED_VARIABLES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;soilT&quot;</span><span class="p">,</span> <span class="s2">&quot;soilIce&quot;</span><span class="p">,</span> <span class="s2">&quot;mrsoLayer&quot;</span><span class="p">,</span> <span class="s2">&quot;cSoilLayers&quot;</span><span class="p">}</span>
+</span><span id="CoLM-22"><a href="#CoLM-22"><span class="linenos">22</span></a>
+</span><span id="CoLM-23"><a href="#CoLM-23"><span class="linenos">23</span></a>    <span class="c1"># annual on disk but not in const.ANNUAL</span>
+</span><span id="CoLM-24"><a href="#CoLM-24"><span class="linenos">24</span></a>    <span class="n">ANNUAL</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;burntArea&quot;</span><span class="p">}</span>
+</span><span id="CoLM-25"><a href="#CoLM-25"><span class="linenos">25</span></a>
+</span><span id="CoLM-26"><a href="#CoLM-26"><span class="linenos">26</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">land_carbon_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="CoLM-27"><a href="#CoLM-27"><span class="linenos">27</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CoLM-28"><a href="#CoLM-28"><span class="linenos">28</span></a><span class="sd">        Unconfirmed. Assuming cLitter, cVeg, and cSoil.</span>
+</span><span id="CoLM-29"><a href="#CoLM-29"><span class="linenos">29</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CoLM-30"><a href="#CoLM-30"><span class="linenos">30</span></a>        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;cLitter&quot;</span><span class="p">,</span> <span class="s2">&quot;cVeg&quot;</span><span class="p">,</span> <span class="s2">&quot;cSoil&quot;</span><span class="p">]</span>
+</span><span id="CoLM-31"><a href="#CoLM-31"><span class="linenos">31</span></a>
+</span><span id="CoLM-32"><a href="#CoLM-32"><span class="linenos">32</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_cadence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="CoLM-33"><a href="#CoLM-33"><span class="linenos">33</span></a>        <span class="k">return</span> <span class="s2">&quot;yr&quot;</span> <span class="k">if</span> <span class="n">variable</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ANNUAL</span> <span class="ow">or</span> <span class="n">core</span><span class="o">.</span><span class="n">is_annual</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;mon&quot;</span>
+</span><span id="CoLM-34"><a href="#CoLM-34"><span class="linenos">34</span></a>
+</span><span id="CoLM-35"><a href="#CoLM-35"><span class="linenos">35</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_fname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="CoLM-36"><a href="#CoLM-36"><span class="linenos">36</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">run</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">variable</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_cadence</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span><span class="si">}</span><span class="s2">_1.nc&quot;</span>
+</span><span id="CoLM-37"><a href="#CoLM-37"><span class="linenos">37</span></a>
+</span><span id="CoLM-38"><a href="#CoLM-38"><span class="linenos">38</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">one_pct_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="CoLM-39"><a href="#CoLM-39"><span class="linenos">39</span></a>        <span class="n">run</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">forcing</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">simulation</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="CoLM-40"><a href="#CoLM-40"><span class="linenos">40</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span>
+</span><span id="CoLM-41"><a href="#CoLM-41"><span class="linenos">41</span></a>            <span class="n">_OUTPUT</span>
+</span><span id="CoLM-42"><a href="#CoLM-42"><span class="linenos">42</span></a>            <span class="o">/</span> <span class="s2">&quot;1pctCO2&quot;</span>
+</span><span id="CoLM-43"><a href="#CoLM-43"><span class="linenos">43</span></a>            <span class="o">/</span> <span class="s2">&quot;output&quot;</span>
+</span><span id="CoLM-44"><a href="#CoLM-44"><span class="linenos">44</span></a>            <span class="o">/</span> <span class="n">MODEL</span>
+</span><span id="CoLM-45"><a href="#CoLM-45"><span class="linenos">45</span></a>            <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">run</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="CoLM-46"><a href="#CoLM-46"><span class="linenos">46</span></a>            <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fname</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span>
+</span><span id="CoLM-47"><a href="#CoLM-47"><span class="linenos">47</span></a>        <span class="p">)</span>
+</span><span id="CoLM-48"><a href="#CoLM-48"><span class="linenos">48</span></a>
+</span><span id="CoLM-49"><a href="#CoLM-49"><span class="linenos">49</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">overshoot_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">variable</span><span class="p">,</span> <span class="n">factorial</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="CoLM-50"><a href="#CoLM-50"><span class="linenos">50</span></a>        <span class="n">run</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="CoLM-51"><a href="#CoLM-51"><span class="linenos">51</span></a>            <span class="n">simulation</span>
+</span><span id="CoLM-52"><a href="#CoLM-52"><span class="linenos">52</span></a>            <span class="k">if</span> <span class="n">simulation</span> <span class="ow">in</span> <span class="n">_CRUJRA_FORCED_SIMULATIONS</span>
+</span><span id="CoLM-53"><a href="#CoLM-53"><span class="linenos">53</span></a>            <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">forcing</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">simulation</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="CoLM-54"><a href="#CoLM-54"><span class="linenos">54</span></a>        <span class="p">)</span>
+</span><span id="CoLM-55"><a href="#CoLM-55"><span class="linenos">55</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span>
+</span><span id="CoLM-56"><a href="#CoLM-56"><span class="linenos">56</span></a>            <span class="n">_OUTPUT</span>
+</span><span id="CoLM-57"><a href="#CoLM-57"><span class="linenos">57</span></a>            <span class="o">/</span> <span class="s2">&quot;overshoot&quot;</span>
+</span><span id="CoLM-58"><a href="#CoLM-58"><span class="linenos">58</span></a>            <span class="o">/</span> <span class="s2">&quot;output&quot;</span>
+</span><span id="CoLM-59"><a href="#CoLM-59"><span class="linenos">59</span></a>            <span class="o">/</span> <span class="n">MODEL</span>
+</span><span id="CoLM-60"><a href="#CoLM-60"><span class="linenos">60</span></a>            <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">run</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="CoLM-61"><a href="#CoLM-61"><span class="linenos">61</span></a>            <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fname</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span>
+</span><span id="CoLM-62"><a href="#CoLM-62"><span class="linenos">62</span></a>        <span class="p">)</span>
+</span><span id="CoLM-63"><a href="#CoLM-63"><span class="linenos">63</span></a>
+</span><span id="CoLM-64"><a href="#CoLM-64"><span class="linenos">64</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ds</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="CoLM-65"><a href="#CoLM-65"><span class="linenos">65</span></a>        <span class="n">time</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">to_datetime64</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</span><span id="CoLM-66"><a href="#CoLM-66"><span class="linenos">66</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cadence</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;yr&quot;</span><span class="p">:</span>
+</span><span id="CoLM-67"><a href="#CoLM-67"><span class="linenos">67</span></a>            <span class="k">return</span> <span class="n">time</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">timedelta64</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">)</span>
+</span><span id="CoLM-68"><a href="#CoLM-68"><span class="linenos">68</span></a>        <span class="k">return</span> <span class="n">time</span>
+</span><span id="CoLM-69"><a href="#CoLM-69"><span class="linenos">69</span></a>
+</span><span id="CoLM-70"><a href="#CoLM-70"><span class="linenos">70</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span>
+</span><span id="CoLM-71"><a href="#CoLM-71"><span class="linenos">71</span></a>        <span class="bp">self</span><span class="p">,</span> <span class="n">experiment</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span>
+</span><span id="CoLM-72"><a href="#CoLM-72"><span class="linenos">72</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
+</span><span id="CoLM-73"><a href="#CoLM-73"><span class="linenos">73</span></a>        <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span>
+</span><span id="CoLM-74"><a href="#CoLM-74"><span class="linenos">74</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">experiment</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span><span class="p">),</span>
+</span><span id="CoLM-75"><a href="#CoLM-75"><span class="linenos">75</span></a>            <span class="n">decode_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DECODE</span><span class="p">,</span>
+</span><span id="CoLM-76"><a href="#CoLM-76"><span class="linenos">76</span></a>        <span class="p">)</span>
+</span><span id="CoLM-77"><a href="#CoLM-77"><span class="linenos">77</span></a>        <span class="n">da</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">mask_fill</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="n">variable</span><span class="p">])</span>
+</span><span id="CoLM-78"><a href="#CoLM-78"><span class="linenos">78</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">variable</span><span class="p">))</span>
+</span><span id="CoLM-79"><a href="#CoLM-79"><span class="linenos">79</span></a>
+</span><span id="CoLM-80"><a href="#CoLM-80"><span class="linenos">80</span></a>    <span class="nd">@property</span>
+</span><span id="CoLM-81"><a href="#CoLM-81"><span class="linenos">81</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="CoLM-82"><a href="#CoLM-82"><span class="linenos">82</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span>
+</span><span id="CoLM-83"><a href="#CoLM-83"><span class="linenos">83</span></a>            <span class="n">_OUTPUT</span>
+</span><span id="CoLM-84"><a href="#CoLM-84"><span class="linenos">84</span></a>            <span class="o">/</span> <span class="s2">&quot;1pctCO2&quot;</span>
+</span><span id="CoLM-85"><a href="#CoLM-85"><span class="linenos">85</span></a>            <span class="o">/</span> <span class="s2">&quot;output&quot;</span>
+</span><span id="CoLM-86"><a href="#CoLM-86"><span class="linenos">86</span></a>            <span class="o">/</span> <span class="n">MODEL</span>
+</span><span id="CoLM-87"><a href="#CoLM-87"><span class="linenos">87</span></a>            <span class="o">/</span> <span class="s2">&quot;CoLM_stable_bgc&quot;</span>
+</span><span id="CoLM-88"><a href="#CoLM-88"><span class="linenos">88</span></a>            <span class="o">/</span> <span class="s2">&quot;CoLM_stable_bgc_sftlf_fx_1.nc&quot;</span>
+</span><span id="CoLM-89"><a href="#CoLM-89"><span class="linenos">89</span></a>        <span class="p">)</span>
+</span><span id="CoLM-90"><a href="#CoLM-90"><span class="linenos">90</span></a>
+</span><span id="CoLM-91"><a href="#CoLM-91"><span class="linenos">91</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
+</span><span id="CoLM-92"><a href="#CoLM-92"><span class="linenos">92</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Spherical cell area × land fraction (`sftlf`, shipped in %).&quot;&quot;&quot;</span>
+</span><span id="CoLM-93"><a href="#CoLM-93"><span class="linenos">93</span></a>        <span class="n">ref</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_area_weight_path</span><span class="p">)</span>
+</span><span id="CoLM-94"><a href="#CoLM-94"><span class="linenos">94</span></a>        <span class="n">cell</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">spherical_area</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">)</span>
+</span><span id="CoLM-95"><a href="#CoLM-95"><span class="linenos">95</span></a>        <span class="n">weights</span> <span class="o">=</span> <span class="p">(</span><span class="n">cell</span> <span class="o">*</span> <span class="n">ref</span><span class="p">[</span><span class="s2">&quot;sftlf&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</span><span id="CoLM-96"><a href="#CoLM-96"><span class="linenos">96</span></a>        <span class="n">ref</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span id="CoLM-97"><a href="#CoLM-97"><span class="linenos">97</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">rename_latlon</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Contract that each model must fill out. This converts whatever naming
+convention was uploaded to the WIE-MIP S3 bucket into something callable in
+Python.</p>
+
+<p>Subclasses implement the three abstract hooks (<code><a href="#CoLM.path">path</a></code>, <code><a href="#CoLM.read">read</a></code>,
+<code>_compute_weights</code>). There is no per-model "what exists" schema: the namespace
+lets a user select any (experiment, model, forcing, simulation, factorial,
+variable) by name, and a combination that wasn't uploaded simply fails when
+<code><a href="#CoLM.read">read()</a></code> tries to open the file.</p>
+</div>
+
+
+                            <div id="CoLM.model" class="classattr">
+                                <div class="attr variable">
+            <span class="name">model</span>        =
+<span class="default_value">&#39;CoLM&#39;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#CoLM.model"></a>
+    
+    
+
+                            </div>
+                            <div id="CoLM.DECODE" class="classattr">
+                                <div class="attr variable">
+            <span class="name">DECODE</span>        =
+<span class="default_value">True</span>
+
+        
+    </div>
+    <a class="headerlink" href="#CoLM.DECODE"></a>
+    
+    
+
+                            </div>
+                            <div id="CoLM.FACTORIALS" class="classattr">
+                                <div class="attr variable">
+            <span class="name">FACTORIALS</span>        =
+<span class="default_value">{&#39;baseline&#39;: &#39;&#39;}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#CoLM.FACTORIALS"></a>
+    
+    
+
+                            </div>
+                            <div id="CoLM.LAYERED_VARIABLES" class="classattr">
+                                <div class="attr variable">
+            <span class="name">LAYERED_VARIABLES</span>        =
+<span class="default_value">{&#39;mrsoLayer&#39;, &#39;cSoilLayers&#39;, &#39;soilIce&#39;, &#39;soilT&#39;}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#CoLM.LAYERED_VARIABLES"></a>
+    
+    
+
+                            </div>
+                            <div id="CoLM.ANNUAL" class="classattr">
+                                <div class="attr variable">
+            <span class="name">ANNUAL</span>        =
+<span class="default_value">{&#39;burntArea&#39;}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#CoLM.ANNUAL"></a>
+    
+    
+
+                            </div>
+                            <div id="CoLM.land_carbon_variables" class="classattr">
+                                        <input id="CoLM.land_carbon_variables-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">land_carbon_variables</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">) -> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>:</span></span>
+
+                <label class="view-source-button" for="CoLM.land_carbon_variables-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CoLM.land_carbon_variables"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CoLM.land_carbon_variables-26"><a href="#CoLM.land_carbon_variables-26"><span class="linenos">26</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">land_carbon_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="CoLM.land_carbon_variables-27"><a href="#CoLM.land_carbon_variables-27"><span class="linenos">27</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CoLM.land_carbon_variables-28"><a href="#CoLM.land_carbon_variables-28"><span class="linenos">28</span></a><span class="sd">        Unconfirmed. Assuming cLitter, cVeg, and cSoil.</span>
+</span><span id="CoLM.land_carbon_variables-29"><a href="#CoLM.land_carbon_variables-29"><span class="linenos">29</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="CoLM.land_carbon_variables-30"><a href="#CoLM.land_carbon_variables-30"><span class="linenos">30</span></a>        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;cLitter&quot;</span><span class="p">,</span> <span class="s2">&quot;cVeg&quot;</span><span class="p">,</span> <span class="s2">&quot;cSoil&quot;</span><span class="p">]</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Unconfirmed. Assuming cLitter, cVeg, and cSoil.</p>
+</div>
+
+
+                            </div>
+                            <div id="CoLM.one_pct_path" class="classattr">
+                                        <input id="CoLM.one_pct_path-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">one_pct_path</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">simulation</span>, </span><span class="param"><span class="n">forcing</span>, </span><span class="param"><span class="n">factorial</span>, </span><span class="param"><span class="n">variable</span></span><span class="return-annotation">) -> <span class="nb">str</span>:</span></span>
+
+                <label class="view-source-button" for="CoLM.one_pct_path-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CoLM.one_pct_path"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CoLM.one_pct_path-38"><a href="#CoLM.one_pct_path-38"><span class="linenos">38</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">one_pct_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="CoLM.one_pct_path-39"><a href="#CoLM.one_pct_path-39"><span class="linenos">39</span></a>        <span class="n">run</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">forcing</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">simulation</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="CoLM.one_pct_path-40"><a href="#CoLM.one_pct_path-40"><span class="linenos">40</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span>
+</span><span id="CoLM.one_pct_path-41"><a href="#CoLM.one_pct_path-41"><span class="linenos">41</span></a>            <span class="n">_OUTPUT</span>
+</span><span id="CoLM.one_pct_path-42"><a href="#CoLM.one_pct_path-42"><span class="linenos">42</span></a>            <span class="o">/</span> <span class="s2">&quot;1pctCO2&quot;</span>
+</span><span id="CoLM.one_pct_path-43"><a href="#CoLM.one_pct_path-43"><span class="linenos">43</span></a>            <span class="o">/</span> <span class="s2">&quot;output&quot;</span>
+</span><span id="CoLM.one_pct_path-44"><a href="#CoLM.one_pct_path-44"><span class="linenos">44</span></a>            <span class="o">/</span> <span class="n">MODEL</span>
+</span><span id="CoLM.one_pct_path-45"><a href="#CoLM.one_pct_path-45"><span class="linenos">45</span></a>            <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">run</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="CoLM.one_pct_path-46"><a href="#CoLM.one_pct_path-46"><span class="linenos">46</span></a>            <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fname</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span>
+</span><span id="CoLM.one_pct_path-47"><a href="#CoLM.one_pct_path-47"><span class="linenos">47</span></a>        <span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Build the .nc path on the mounted S3 bucket by transforming the axis
+tokens into THIS model's upload naming convention.</p>
+</div>
+
+
+                            </div>
+                            <div id="CoLM.overshoot_path" class="classattr">
+                                        <input id="CoLM.overshoot_path-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">overshoot_path</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">simulation</span>, </span><span class="param"><span class="n">forcing</span>, </span><span class="param"><span class="n">variable</span>, </span><span class="param"><span class="n">factorial</span><span class="o">=</span><span class="kc">None</span></span><span class="return-annotation">) -> <span class="nb">str</span>:</span></span>
+
+                <label class="view-source-button" for="CoLM.overshoot_path-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CoLM.overshoot_path"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CoLM.overshoot_path-49"><a href="#CoLM.overshoot_path-49"><span class="linenos">49</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">overshoot_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">variable</span><span class="p">,</span> <span class="n">factorial</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="CoLM.overshoot_path-50"><a href="#CoLM.overshoot_path-50"><span class="linenos">50</span></a>        <span class="n">run</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="CoLM.overshoot_path-51"><a href="#CoLM.overshoot_path-51"><span class="linenos">51</span></a>            <span class="n">simulation</span>
+</span><span id="CoLM.overshoot_path-52"><a href="#CoLM.overshoot_path-52"><span class="linenos">52</span></a>            <span class="k">if</span> <span class="n">simulation</span> <span class="ow">in</span> <span class="n">_CRUJRA_FORCED_SIMULATIONS</span>
+</span><span id="CoLM.overshoot_path-53"><a href="#CoLM.overshoot_path-53"><span class="linenos">53</span></a>            <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">forcing</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">simulation</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="CoLM.overshoot_path-54"><a href="#CoLM.overshoot_path-54"><span class="linenos">54</span></a>        <span class="p">)</span>
+</span><span id="CoLM.overshoot_path-55"><a href="#CoLM.overshoot_path-55"><span class="linenos">55</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span>
+</span><span id="CoLM.overshoot_path-56"><a href="#CoLM.overshoot_path-56"><span class="linenos">56</span></a>            <span class="n">_OUTPUT</span>
+</span><span id="CoLM.overshoot_path-57"><a href="#CoLM.overshoot_path-57"><span class="linenos">57</span></a>            <span class="o">/</span> <span class="s2">&quot;overshoot&quot;</span>
+</span><span id="CoLM.overshoot_path-58"><a href="#CoLM.overshoot_path-58"><span class="linenos">58</span></a>            <span class="o">/</span> <span class="s2">&quot;output&quot;</span>
+</span><span id="CoLM.overshoot_path-59"><a href="#CoLM.overshoot_path-59"><span class="linenos">59</span></a>            <span class="o">/</span> <span class="n">MODEL</span>
+</span><span id="CoLM.overshoot_path-60"><a href="#CoLM.overshoot_path-60"><span class="linenos">60</span></a>            <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">MODEL</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">run</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="CoLM.overshoot_path-61"><a href="#CoLM.overshoot_path-61"><span class="linenos">61</span></a>            <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fname</span><span class="p">(</span><span class="n">run</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span>
+</span><span id="CoLM.overshoot_path-62"><a href="#CoLM.overshoot_path-62"><span class="linenos">62</span></a>        <span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Overshoot-experiment path. Overridden per model once that model's overshoot
+upload naming is known; until then asking for an overshoot path raises here
+rather than guessing a layout. Like <code><a href="#CoLM.one_pct_path">one_pct_path</a></code> it's a pure string transform
+— what exists is decided by <code><a href="#CoLM.read">read()</a></code>.</p>
+
+<p>Most groups ran a single overshoot configuration, so <code>factorial</code> is None by
+default and those adapters ignore it. However factorials can pass through to overshoots by name.</p>
+</div>
+
+
+                            </div>
+                            <div id="CoLM.read" class="classattr">
+                                        <input id="CoLM.read-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">read</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="bp">self</span>,</span><span class="param">	<span class="n">experiment</span>,</span><span class="param">	<span class="n">simulation</span>,</span><span class="param">	<span class="n">forcing</span>,</span><span class="param">	<span class="n">factorial</span>,</span><span class="param">	<span class="n">variable</span></span><span class="return-annotation">) -> <span class="n">xarray</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">dataarray</span><span class="o">.</span><span class="n">DataArray</span>:</span></span>
+
+                <label class="view-source-button" for="CoLM.read-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CoLM.read"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CoLM.read-70"><a href="#CoLM.read-70"><span class="linenos">70</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span>
+</span><span id="CoLM.read-71"><a href="#CoLM.read-71"><span class="linenos">71</span></a>        <span class="bp">self</span><span class="p">,</span> <span class="n">experiment</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span>
+</span><span id="CoLM.read-72"><a href="#CoLM.read-72"><span class="linenos">72</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
+</span><span id="CoLM.read-73"><a href="#CoLM.read-73"><span class="linenos">73</span></a>        <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span>
+</span><span id="CoLM.read-74"><a href="#CoLM.read-74"><span class="linenos">74</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">experiment</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span><span class="p">),</span>
+</span><span id="CoLM.read-75"><a href="#CoLM.read-75"><span class="linenos">75</span></a>            <span class="n">decode_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DECODE</span><span class="p">,</span>
+</span><span id="CoLM.read-76"><a href="#CoLM.read-76"><span class="linenos">76</span></a>        <span class="p">)</span>
+</span><span id="CoLM.read-77"><a href="#CoLM.read-77"><span class="linenos">77</span></a>        <span class="n">da</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">mask_fill</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="n">variable</span><span class="p">])</span>
+</span><span id="CoLM.read-78"><a href="#CoLM.read-78"><span class="linenos">78</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">variable</span><span class="p">))</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Open one variable and STANDARDIZE its layout: canonical dims
+('time', 'lat', 'lon'[, level]), pd.DateTime <code>time</code> coord, sentinel fills
+masked to NaN. Units stay NATIVE — unit conversion happens in <code>WIEFile</code>,
+not here. Returns an unweighted DataArray.</p>
+</div>
+
+
+                            </div>
+                            <div id="CoLM.LAT" class="classattr">
+                                <div class="attr variable">
+            <span class="name">LAT</span>        =
+<span class="default_value">&#39;latitude&#39;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#CoLM.LAT"></a>
+    
+    
+
+                            </div>
+                            <div id="CoLM.LON" class="classattr">
+                                <div class="attr variable">
+            <span class="name">LON</span>        =
+<span class="default_value">&#39;longitude&#39;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#CoLM.LON"></a>
+    
+    
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="core.html#WIEAdapter">wiemip_registry.core.WIEAdapter</a></dt>
+                                <dd id="CoLM.OVERSHOOT_FACTORIALS" class="variable"><a href="core.html#WIEAdapter.OVERSHOOT_FACTORIALS">OVERSHOOT_FACTORIALS</a></dd>
+                <dd id="CoLM.PROVISIONAL_DATA" class="variable"><a href="core.html#WIEAdapter.PROVISIONAL_DATA">PROVISIONAL_DATA</a></dd>
+                <dd id="CoLM.factorials" class="variable"><a href="core.html#WIEAdapter.factorials">factorials</a></dd>
+                <dd id="CoLM.provisional_data" class="variable"><a href="core.html#WIEAdapter.provisional_data">provisional_data</a></dd>
+                <dd id="CoLM.is_provisional" class="function"><a href="core.html#WIEAdapter.is_provisional">is_provisional</a></dd>
+                <dd id="CoLM.paths" class="function"><a href="core.html#WIEAdapter.paths">paths</a></dd>
+                <dd id="CoLM.path" class="function"><a href="core.html#WIEAdapter.path">path</a></dd>
+                <dd id="CoLM.weights" class="function"><a href="core.html#WIEAdapter.weights">weights</a></dd>
+                <dd id="CoLM.weight_dataarray" class="function"><a href="core.html#WIEAdapter.weight_dataarray">weight_dataarray</a></dd>
+                <dd id="CoLM.to_pgc" class="function"><a href="core.html#WIEAdapter.to_pgc">to_pgc</a></dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
     </main>
 <script>
     function escapeHTML(html) {
