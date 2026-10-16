@@ -163,8 +163,17 @@
                         <li>
                                 <a class="variable" href="#OvershootSimulation.ml_cf">ml_cf</a>
                         </li>
+                        <li>
+                                <a class="variable" href="#OvershootSimulation.vl_1p5_ctap">vl_1p5_ctap</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#OvershootSimulation.vl_cf_polmip">vl_cf_polmip</a>
+                        </li>
                 </ul>
 
+            </li>
+            <li>
+                    <a class="variable" href="#SCENARIO_COLORS">SCENARIO_COLORS</a>
             </li>
             <li>
                     <a class="class" href="#Factorial">Factorial</a>
@@ -378,48 +387,74 @@
 </span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>    <span class="c1"># ScenarioMIP and both LPX-Bern and VISIT-UT submitted ml (+ VISIT-UT ml_cf).</span>
 </span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a>    <span class="n">ml</span> <span class="o">=</span> <span class="mi">16</span>
 </span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a>    <span class="n">ml_cf</span> <span class="o">=</span> <span class="mi">17</span>
-</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a>
-</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a>
-</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Factorial</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a>    <span class="c1"># VL variants, added 2026-10-15</span>
+</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a>    <span class="n">vl_1p5_ctap</span> <span class="o">=</span> <span class="mi">18</span>
+</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a>    <span class="n">vl_cf_polmip</span> <span class="o">=</span> <span class="mi">19</span>
 </span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a>
-</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a>    <span class="n">baseline</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a>    <span class="n">noFire</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a>    <span class="c1"># no nitrogen limitation</span>
-</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a>    <span class="n">noNitrogen</span> <span class="o">=</span> <span class="mi">2</span>
-</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a>    <span class="n">noPermafrost</span> <span class="o">=</span> <span class="mi">3</span>
-</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a>    <span class="n">noFire_noNitrogen</span> <span class="o">=</span> <span class="mi">4</span>
-</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a>    <span class="n">noFire_noPermafrost</span> <span class="o">=</span> <span class="mi">5</span>
-</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a>    <span class="n">noBVOC</span> <span class="o">=</span> <span class="mi">6</span>
-</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a>
-</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a>
-</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Experiment</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-</span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a>    <span class="n">one_percent_co2</span> <span class="o">=</span> <span class="s2">&quot;one_pct_co2&quot;</span>
-</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a>    <span class="n">overshoot</span> <span class="o">=</span> <span class="s2">&quot;overshoot&quot;</span>
-</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a>
-</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a>
-</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a><span class="n">extra_factorials</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-</span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a>    <span class="c1"># fire</span>
-</span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a>    <span class="s2">&quot;Fire0005&quot;</span><span class="p">,</span>
-</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a>    <span class="s2">&quot;Fire0249&quot;</span><span class="p">,</span>
-</span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a>    <span class="s2">&quot;Fire0304&quot;</span><span class="p">,</span>
-</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a>    <span class="s2">&quot;Fire0336&quot;</span><span class="p">,</span>
-</span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a>    <span class="s2">&quot;noBVOC&quot;</span><span class="p">,</span>
-</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a>    <span class="s2">&quot;noDynVeg&quot;</span><span class="p">,</span>
-</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a>    <span class="s2">&quot;noPermafrostC&quot;</span><span class="p">,</span>
-</span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a>    <span class="s2">&quot;noPermafrostCN&quot;</span><span class="p">,</span>
-</span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a>    <span class="s2">&quot;noPermafrostCNNinorg&quot;</span><span class="p">,</span>
-</span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a>    <span class="s2">&quot;addPermafrostC&quot;</span><span class="p">,</span>
-</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a>    <span class="s2">&quot;addPermafrostCN&quot;</span><span class="p">,</span>
-</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a>    <span class="s2">&quot;addPermafrostCNNinorg&quot;</span><span class="p">,</span>
-</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a>    <span class="s2">&quot;noNitrogen_addPermafrostC&quot;</span><span class="p">,</span>
-</span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a>    <span class="s2">&quot;noNitrogen_noPermafrostC&quot;</span><span class="p">,</span>
-</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a>    <span class="s2">&quot;flat&quot;</span><span class="p">,</span>
-</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a>    <span class="s2">&quot;noWetland&quot;</span><span class="p">,</span>
-</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a>    <span class="s2">&quot;noFire_noWetland&quot;</span><span class="p">,</span>
-</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a>    <span class="s2">&quot;dynVeg&quot;</span><span class="p">,</span>
-</span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a>    <span class="s2">&quot;dynVeg_noNitrogen&quot;</span><span class="p">,</span>
-</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a>    <span class="s2">&quot;dynVeg_noFire_noNitrogen&quot;</span><span class="p">,</span>
-</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a><span class="p">)</span>
+</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a>
+</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a><span class="c1"># Line colors for the overshoot runs. The scenario hexes are the ScenarioMIP-CMIP7</span>
+</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a><span class="c1"># paper&#39;s own (van Vuuren et al. 2026, GMD 19:2627; `scenario_colors` in</span>
+</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a><span class="c1"># github.com/chrisroadmap/cmip7-scenariomip scripts/plotting.py). A counterfactual</span>
+</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a><span class="c1"># shares its scenario&#39;s color, so draw `_cf` runs dashed to tell them apart.</span>
+</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a><span class="c1"># hist and the controls are not ScenarioMIP scenarios: black and grey.</span>
+</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a><span class="n">SCENARIO_COLORS</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a>    <span class="s2">&quot;vl&quot;</span><span class="p">:</span> <span class="s2">&quot;#16188F&quot;</span><span class="p">,</span>
+</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a>    <span class="s2">&quot;vl_cf&quot;</span><span class="p">:</span> <span class="s2">&quot;#16188F&quot;</span><span class="p">,</span>
+</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a>    <span class="c1"># VL variants, not in ScenarioMIP&#39;s palette: lighter blues off VL&#39;s navy.</span>
+</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a>    <span class="s2">&quot;vl_1p5_ctap&quot;</span><span class="p">:</span> <span class="s2">&quot;#3f6fd8&quot;</span><span class="p">,</span>
+</span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a>    <span class="s2">&quot;vl_cf_polmip&quot;</span><span class="p">:</span> <span class="s2">&quot;#6cb4ee&quot;</span><span class="p">,</span>
+</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a>    <span class="s2">&quot;l&quot;</span><span class="p">:</span> <span class="s2">&quot;#20A359&quot;</span><span class="p">,</span>
+</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a>    <span class="s2">&quot;ml&quot;</span><span class="p">:</span> <span class="s2">&quot;#dec820&quot;</span><span class="p">,</span>
+</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a>    <span class="s2">&quot;ml_cf&quot;</span><span class="p">:</span> <span class="s2">&quot;#dec820&quot;</span><span class="p">,</span>
+</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a>    <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="s2">&quot;#fc7b03&quot;</span><span class="p">,</span>
+</span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a>    <span class="s2">&quot;hl&quot;</span><span class="p">:</span> <span class="s2">&quot;#E744F6&quot;</span><span class="p">,</span>
+</span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a>    <span class="s2">&quot;hl_cf&quot;</span><span class="p">:</span> <span class="s2">&quot;#E744F6&quot;</span><span class="p">,</span>
+</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a>    <span class="s2">&quot;hist&quot;</span><span class="p">:</span> <span class="s2">&quot;#000000&quot;</span><span class="p">,</span>
+</span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a>    <span class="s2">&quot;hist_ctrl&quot;</span><span class="p">:</span> <span class="s2">&quot;#9a9993&quot;</span><span class="p">,</span>
+</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a>    <span class="s2">&quot;ctrl&quot;</span><span class="p">:</span> <span class="s2">&quot;#9a9993&quot;</span><span class="p">,</span>
+</span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a><span class="p">}</span>
+</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a>
+</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a>
+</span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Factorial</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a>
+</span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a>    <span class="n">baseline</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a>    <span class="n">noFire</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a>    <span class="c1"># no nitrogen limitation</span>
+</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a>    <span class="n">noNitrogen</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a>    <span class="n">noPermafrost</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a>    <span class="n">noFire_noNitrogen</span> <span class="o">=</span> <span class="mi">4</span>
+</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a>    <span class="n">noFire_noPermafrost</span> <span class="o">=</span> <span class="mi">5</span>
+</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a>    <span class="n">noBVOC</span> <span class="o">=</span> <span class="mi">6</span>
+</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a>
+</span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a>
+</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Experiment</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a>    <span class="n">one_percent_co2</span> <span class="o">=</span> <span class="s2">&quot;one_pct_co2&quot;</span>
+</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a>    <span class="n">overshoot</span> <span class="o">=</span> <span class="s2">&quot;overshoot&quot;</span>
+</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a>
+</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>
+</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a><span class="n">extra_factorials</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a>    <span class="c1"># fire</span>
+</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a>    <span class="s2">&quot;Fire0005&quot;</span><span class="p">,</span>
+</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a>    <span class="s2">&quot;Fire0249&quot;</span><span class="p">,</span>
+</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a>    <span class="s2">&quot;Fire0304&quot;</span><span class="p">,</span>
+</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a>    <span class="s2">&quot;Fire0336&quot;</span><span class="p">,</span>
+</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a>    <span class="s2">&quot;noBVOC&quot;</span><span class="p">,</span>
+</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a>    <span class="s2">&quot;noDynVeg&quot;</span><span class="p">,</span>
+</span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a>    <span class="s2">&quot;noPermafrostC&quot;</span><span class="p">,</span>
+</span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a>    <span class="s2">&quot;noPermafrostCN&quot;</span><span class="p">,</span>
+</span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a>    <span class="s2">&quot;noPermafrostCNNinorg&quot;</span><span class="p">,</span>
+</span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a>    <span class="s2">&quot;addPermafrostC&quot;</span><span class="p">,</span>
+</span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a>    <span class="s2">&quot;addPermafrostCN&quot;</span><span class="p">,</span>
+</span><span id="L-204"><a href="#L-204"><span class="linenos">204</span></a>    <span class="s2">&quot;addPermafrostCNNinorg&quot;</span><span class="p">,</span>
+</span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a>    <span class="s2">&quot;noNitrogen_addPermafrostC&quot;</span><span class="p">,</span>
+</span><span id="L-206"><a href="#L-206"><span class="linenos">206</span></a>    <span class="s2">&quot;noNitrogen_noPermafrostC&quot;</span><span class="p">,</span>
+</span><span id="L-207"><a href="#L-207"><span class="linenos">207</span></a>    <span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+</span><span id="L-208"><a href="#L-208"><span class="linenos">208</span></a>    <span class="s2">&quot;noWetland&quot;</span><span class="p">,</span>
+</span><span id="L-209"><a href="#L-209"><span class="linenos">209</span></a>    <span class="s2">&quot;noFire_noWetland&quot;</span><span class="p">,</span>
+</span><span id="L-210"><a href="#L-210"><span class="linenos">210</span></a>    <span class="s2">&quot;dynVeg&quot;</span><span class="p">,</span>
+</span><span id="L-211"><a href="#L-211"><span class="linenos">211</span></a>    <span class="s2">&quot;dynVeg_noNitrogen&quot;</span><span class="p">,</span>
+</span><span id="L-212"><a href="#L-212"><span class="linenos">212</span></a>    <span class="s2">&quot;dynVeg_noFire_noNitrogen&quot;</span><span class="p">,</span>
+</span><span id="L-213"><a href="#L-213"><span class="linenos">213</span></a><span class="p">)</span>
 </span></pre></div>
 
 
@@ -828,6 +863,9 @@
 </span><span id="OvershootSimulation-144"><a href="#OvershootSimulation-144"><span class="linenos">144</span></a>    <span class="c1"># ScenarioMIP and both LPX-Bern and VISIT-UT submitted ml (+ VISIT-UT ml_cf).</span>
 </span><span id="OvershootSimulation-145"><a href="#OvershootSimulation-145"><span class="linenos">145</span></a>    <span class="n">ml</span> <span class="o">=</span> <span class="mi">16</span>
 </span><span id="OvershootSimulation-146"><a href="#OvershootSimulation-146"><span class="linenos">146</span></a>    <span class="n">ml_cf</span> <span class="o">=</span> <span class="mi">17</span>
+</span><span id="OvershootSimulation-147"><a href="#OvershootSimulation-147"><span class="linenos">147</span></a>    <span class="c1"># VL variants, added 2026-10-15</span>
+</span><span id="OvershootSimulation-148"><a href="#OvershootSimulation-148"><span class="linenos">148</span></a>    <span class="n">vl_1p5_ctap</span> <span class="o">=</span> <span class="mi">18</span>
+</span><span id="OvershootSimulation-149"><a href="#OvershootSimulation-149"><span class="linenos">149</span></a>    <span class="n">vl_cf_polmip</span> <span class="o">=</span> <span class="mi">19</span>
 </span></pre></div>
 
 
@@ -965,6 +1003,43 @@
     
 
                             </div>
+                            <div id="OvershootSimulation.vl_1p5_ctap" class="classattr">
+                                <div class="attr variable">
+            <span class="name">vl_1p5_ctap</span>        =
+<span class="default_value">&lt;<a href="#OvershootSimulation.vl_1p5_ctap">OvershootSimulation.vl_1p5_ctap</a>: 18&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#OvershootSimulation.vl_1p5_ctap"></a>
+    
+    
+
+                            </div>
+                            <div id="OvershootSimulation.vl_cf_polmip" class="classattr">
+                                <div class="attr variable">
+            <span class="name">vl_cf_polmip</span>        =
+<span class="default_value">&lt;<a href="#OvershootSimulation.vl_cf_polmip">OvershootSimulation.vl_cf_polmip</a>: 19&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#OvershootSimulation.vl_cf_polmip"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="SCENARIO_COLORS">
+                    <div class="attr variable">
+            <span class="name">SCENARIO_COLORS</span>        =
+<input id="SCENARIO_COLORS-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+            <label class="view-value-button pdoc-button" for="SCENARIO_COLORS-view-value"></label><span class="default_value">{&#39;vl&#39;: &#39;#16188F&#39;, &#39;vl_cf&#39;: &#39;#16188F&#39;, &#39;vl_1p5_ctap&#39;: &#39;#3f6fd8&#39;, &#39;vl_cf_polmip&#39;: &#39;#6cb4ee&#39;, &#39;l&#39;: &#39;#20A359&#39;, &#39;ml&#39;: &#39;#dec820&#39;, &#39;ml_cf&#39;: &#39;#dec820&#39;, &#39;m&#39;: &#39;#fc7b03&#39;, &#39;hl&#39;: &#39;#E744F6&#39;, &#39;hl_cf&#39;: &#39;#E744F6&#39;, &#39;hist&#39;: &#39;#000000&#39;, &#39;hist_ctrl&#39;: &#39;#9a9993&#39;, &#39;ctrl&#39;: &#39;#9a9993&#39;}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SCENARIO_COLORS"></a>
+    
+    
+
                 </section>
                 <section id="Factorial">
                             <input id="Factorial-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
@@ -977,16 +1052,16 @@
 
     </div>
     <a class="headerlink" href="#Factorial"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Factorial-149"><a href="#Factorial-149"><span class="linenos">149</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Factorial</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-</span><span id="Factorial-150"><a href="#Factorial-150"><span class="linenos">150</span></a>
-</span><span id="Factorial-151"><a href="#Factorial-151"><span class="linenos">151</span></a>    <span class="n">baseline</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="Factorial-152"><a href="#Factorial-152"><span class="linenos">152</span></a>    <span class="n">noFire</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span id="Factorial-153"><a href="#Factorial-153"><span class="linenos">153</span></a>    <span class="c1"># no nitrogen limitation</span>
-</span><span id="Factorial-154"><a href="#Factorial-154"><span class="linenos">154</span></a>    <span class="n">noNitrogen</span> <span class="o">=</span> <span class="mi">2</span>
-</span><span id="Factorial-155"><a href="#Factorial-155"><span class="linenos">155</span></a>    <span class="n">noPermafrost</span> <span class="o">=</span> <span class="mi">3</span>
-</span><span id="Factorial-156"><a href="#Factorial-156"><span class="linenos">156</span></a>    <span class="n">noFire_noNitrogen</span> <span class="o">=</span> <span class="mi">4</span>
-</span><span id="Factorial-157"><a href="#Factorial-157"><span class="linenos">157</span></a>    <span class="n">noFire_noPermafrost</span> <span class="o">=</span> <span class="mi">5</span>
-</span><span id="Factorial-158"><a href="#Factorial-158"><span class="linenos">158</span></a>    <span class="n">noBVOC</span> <span class="o">=</span> <span class="mi">6</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Factorial-175"><a href="#Factorial-175"><span class="linenos">175</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Factorial</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="Factorial-176"><a href="#Factorial-176"><span class="linenos">176</span></a>
+</span><span id="Factorial-177"><a href="#Factorial-177"><span class="linenos">177</span></a>    <span class="n">baseline</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="Factorial-178"><a href="#Factorial-178"><span class="linenos">178</span></a>    <span class="n">noFire</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="Factorial-179"><a href="#Factorial-179"><span class="linenos">179</span></a>    <span class="c1"># no nitrogen limitation</span>
+</span><span id="Factorial-180"><a href="#Factorial-180"><span class="linenos">180</span></a>    <span class="n">noNitrogen</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span id="Factorial-181"><a href="#Factorial-181"><span class="linenos">181</span></a>    <span class="n">noPermafrost</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span id="Factorial-182"><a href="#Factorial-182"><span class="linenos">182</span></a>    <span class="n">noFire_noNitrogen</span> <span class="o">=</span> <span class="mi">4</span>
+</span><span id="Factorial-183"><a href="#Factorial-183"><span class="linenos">183</span></a>    <span class="n">noFire_noPermafrost</span> <span class="o">=</span> <span class="mi">5</span>
+</span><span id="Factorial-184"><a href="#Factorial-184"><span class="linenos">184</span></a>    <span class="n">noBVOC</span> <span class="o">=</span> <span class="mi">6</span>
 </span></pre></div>
 
 
@@ -1088,9 +1163,9 @@
 
     </div>
     <a class="headerlink" href="#Experiment"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment-161"><a href="#Experiment-161"><span class="linenos">161</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Experiment</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-</span><span id="Experiment-162"><a href="#Experiment-162"><span class="linenos">162</span></a>    <span class="n">one_percent_co2</span> <span class="o">=</span> <span class="s2">&quot;one_pct_co2&quot;</span>
-</span><span id="Experiment-163"><a href="#Experiment-163"><span class="linenos">163</span></a>    <span class="n">overshoot</span> <span class="o">=</span> <span class="s2">&quot;overshoot&quot;</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment-187"><a href="#Experiment-187"><span class="linenos">187</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Experiment</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="Experiment-188"><a href="#Experiment-188"><span class="linenos">188</span></a>    <span class="n">one_percent_co2</span> <span class="o">=</span> <span class="s2">&quot;one_pct_co2&quot;</span>
+</span><span id="Experiment-189"><a href="#Experiment-189"><span class="linenos">189</span></a>    <span class="n">overshoot</span> <span class="o">=</span> <span class="s2">&quot;overshoot&quot;</span>
 </span></pre></div>
 
 

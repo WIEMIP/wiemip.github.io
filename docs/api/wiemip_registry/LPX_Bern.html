@@ -65,6 +65,9 @@
                                 <a class="function" href="#LPX_Bern.read">read</a>
                         </li>
                         <li>
+                                <a class="variable" href="#LPX_Bern.area_weight_path">area_weight_path</a>
+                        </li>
+                        <li>
                                 <a class="variable" href="#LPX_Bern.LAT">LAT</a>
                         </li>
                         <li>
@@ -202,12 +205,12 @@
 </span><span id="LPX_Bern-117"><a href="#LPX_Bern-117"><span class="linenos">117</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="p">(</span><span class="n">ds</span><span class="p">))</span>
 </span><span id="LPX_Bern-118"><a href="#LPX_Bern-118"><span class="linenos">118</span></a>
 </span><span id="LPX_Bern-119"><a href="#LPX_Bern-119"><span class="linenos">119</span></a>    <span class="nd">@property</span>
-</span><span id="LPX_Bern-120"><a href="#LPX_Bern-120"><span class="linenos">120</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="LPX_Bern-120"><a href="#LPX_Bern-120"><span class="linenos">120</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="LPX_Bern-121"><a href="#LPX_Bern-121"><span class="linenos">121</span></a>        <span class="k">return</span> <span class="n">_OUTPUT</span> <span class="o">/</span> <span class="s2">&quot;1pctCO2&quot;</span> <span class="o">/</span> <span class="s2">&quot;output&quot;</span> <span class="o">/</span> <span class="s2">&quot;LPX-Bern&quot;</span> <span class="o">/</span> <span class="s2">&quot;gridcell_area.nc&quot;</span>
 </span><span id="LPX_Bern-122"><a href="#LPX_Bern-122"><span class="linenos">122</span></a>
 </span><span id="LPX_Bern-123"><a href="#LPX_Bern-123"><span class="linenos">123</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
 </span><span id="LPX_Bern-124"><a href="#LPX_Bern-124"><span class="linenos">124</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Provided land-only grid-cell area raster [m²] (LPX-Bern README).&quot;&quot;&quot;</span>
-</span><span id="LPX_Bern-125"><a href="#LPX_Bern-125"><span class="linenos">125</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_area_weight_path</span><span class="p">)[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span>
+</span><span id="LPX_Bern-125"><a href="#LPX_Bern-125"><span class="linenos">125</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">area_weight_path</span><span class="p">)[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span>
 </span><span id="LPX_Bern-126"><a href="#LPX_Bern-126"><span class="linenos">126</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">rename_latlon</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">)</span>
 </span></pre></div>
 
@@ -425,6 +428,26 @@ convention but they're duplicates so it's OK.</p>
 ('time', 'lat', 'lon'[, level]), pd.DateTime <code>time</code> coord, sentinel fills
 masked to NaN. Units stay NATIVE — unit conversion happens in <code>WIEFile</code>,
 not here. Returns an unweighted DataArray.</p>
+</div>
+
+
+                            </div>
+                            <div id="LPX_Bern.area_weight_path" class="classattr">
+                                        <input id="LPX_Bern.area_weight_path-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">area_weight_path</span>
+
+                <label class="view-source-button" for="LPX_Bern.area_weight_path-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#LPX_Bern.area_weight_path"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="LPX_Bern.area_weight_path-119"><a href="#LPX_Bern.area_weight_path-119"><span class="linenos">119</span></a>    <span class="nd">@property</span>
+</span><span id="LPX_Bern.area_weight_path-120"><a href="#LPX_Bern.area_weight_path-120"><span class="linenos">120</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="LPX_Bern.area_weight_path-121"><a href="#LPX_Bern.area_weight_path-121"><span class="linenos">121</span></a>        <span class="k">return</span> <span class="n">_OUTPUT</span> <span class="o">/</span> <span class="s2">&quot;1pctCO2&quot;</span> <span class="o">/</span> <span class="s2">&quot;output&quot;</span> <span class="o">/</span> <span class="s2">&quot;LPX-Bern&quot;</span> <span class="o">/</span> <span class="s2">&quot;gridcell_area.nc&quot;</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>The path to the raster that contains the spatial weights for each model.</p>
 </div>
 
 

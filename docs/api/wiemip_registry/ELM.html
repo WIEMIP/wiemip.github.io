@@ -56,6 +56,9 @@
                                 <a class="function" href="#ELM.read">read</a>
                         </li>
                         <li>
+                                <a class="variable" href="#ELM.area_weight_path">area_weight_path</a>
+                        </li>
+                        <li>
                                 <a class="variable" href="#ELM.LAT">LAT</a>
                         </li>
                         <li>
@@ -159,12 +162,12 @@
 </span><span id="ELM-72"><a href="#ELM-72"><span class="linenos">72</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="p">(</span><span class="n">ds</span><span class="p">))</span>
 </span><span id="ELM-73"><a href="#ELM-73"><span class="linenos">73</span></a>
 </span><span id="ELM-74"><a href="#ELM-74"><span class="linenos">74</span></a>    <span class="nd">@property</span>
-</span><span id="ELM-75"><a href="#ELM-75"><span class="linenos">75</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="ELM-75"><a href="#ELM-75"><span class="linenos">75</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="ELM-76"><a href="#ELM-76"><span class="linenos">76</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">_OUTPUT</span> <span class="o">/</span> <span class="s2">&quot;1pctCO2&quot;</span> <span class="o">/</span> <span class="s2">&quot;output&quot;</span> <span class="o">/</span> <span class="n">MODEL</span> <span class="o">/</span> <span class="s2">&quot;landfrac.360x720.nc&quot;</span><span class="p">)</span>
 </span><span id="ELM-77"><a href="#ELM-77"><span class="linenos">77</span></a>
 </span><span id="ELM-78"><a href="#ELM-78"><span class="linenos">78</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
 </span><span id="ELM-79"><a href="#ELM-79"><span class="linenos">79</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Land area per cell [m²] from the shipped `area` (km²) and `landfrac`.&quot;&quot;&quot;</span>
-</span><span id="ELM-80"><a href="#ELM-80"><span class="linenos">80</span></a>        <span class="n">ref</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_area_weight_path</span><span class="p">)</span>
+</span><span id="ELM-80"><a href="#ELM-80"><span class="linenos">80</span></a>        <span class="n">ref</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">area_weight_path</span><span class="p">)</span>
 </span><span id="ELM-81"><a href="#ELM-81"><span class="linenos">81</span></a>        <span class="n">weights</span> <span class="o">=</span> <span class="p">(</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e6</span> <span class="o">*</span> <span class="n">ref</span><span class="p">[</span><span class="s2">&quot;landfrac&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 </span><span id="ELM-82"><a href="#ELM-82"><span class="linenos">82</span></a>        <span class="n">ref</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </span><span id="ELM-83"><a href="#ELM-83"><span class="linenos">83</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">rename_latlon</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">)</span>
@@ -310,6 +313,26 @@ tokens into THIS model's upload naming convention.</p>
 ('time', 'lat', 'lon'[, level]), pd.DateTime <code>time</code> coord, sentinel fills
 masked to NaN. Units stay NATIVE — unit conversion happens in <code>WIEFile</code>,
 not here. Returns an unweighted DataArray.</p>
+</div>
+
+
+                            </div>
+                            <div id="ELM.area_weight_path" class="classattr">
+                                        <input id="ELM.area_weight_path-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">area_weight_path</span>
+
+                <label class="view-source-button" for="ELM.area_weight_path-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#ELM.area_weight_path"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ELM.area_weight_path-74"><a href="#ELM.area_weight_path-74"><span class="linenos">74</span></a>    <span class="nd">@property</span>
+</span><span id="ELM.area_weight_path-75"><a href="#ELM.area_weight_path-75"><span class="linenos">75</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="ELM.area_weight_path-76"><a href="#ELM.area_weight_path-76"><span class="linenos">76</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">_OUTPUT</span> <span class="o">/</span> <span class="s2">&quot;1pctCO2&quot;</span> <span class="o">/</span> <span class="s2">&quot;output&quot;</span> <span class="o">/</span> <span class="n">MODEL</span> <span class="o">/</span> <span class="s2">&quot;landfrac.360x720.nc&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>The path to the raster that contains the spatial weights for each model.</p>
 </div>
 
 

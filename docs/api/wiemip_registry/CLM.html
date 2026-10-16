@@ -65,6 +65,9 @@
                                 <a class="function" href="#CLM.read">read</a>
                         </li>
                         <li>
+                                <a class="variable" href="#CLM.area_weight_path">area_weight_path</a>
+                        </li>
+                        <li>
                                 <a class="variable" href="#CLM.LAT">LAT</a>
                         </li>
                         <li>
@@ -271,13 +274,13 @@
 </span><span id="CLM-214"><a href="#CLM-214"><span class="linenos">214</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_one</span><span class="p">(</span><span class="n">experiment</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span>
 </span><span id="CLM-215"><a href="#CLM-215"><span class="linenos">215</span></a>
 </span><span id="CLM-216"><a href="#CLM-216"><span class="linenos">216</span></a>    <span class="nd">@property</span>
-</span><span id="CLM-217"><a href="#CLM-217"><span class="linenos">217</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="CLM-217"><a href="#CLM-217"><span class="linenos">217</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="CLM-218"><a href="#CLM-218"><span class="linenos">218</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="s2">&quot;1pctCO2&quot;</span><span class="p">,</span> <span class="s2">&quot;bgc&quot;</span><span class="p">,</span> <span class="s2">&quot;ukesm&quot;</span><span class="p">,</span> <span class="s2">&quot;baseline&quot;</span><span class="p">,</span> <span class="s2">&quot;cVeg&quot;</span><span class="p">)</span>
 </span><span id="CLM-219"><a href="#CLM-219"><span class="linenos">219</span></a>
 </span><span id="CLM-220"><a href="#CLM-220"><span class="linenos">220</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
 </span><span id="CLM-221"><a href="#CLM-221"><span class="linenos">221</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Land area per cell [m²] from the shipped `area` (km²) and `landfrac`.&quot;&quot;&quot;</span>
 </span><span id="CLM-222"><a href="#CLM-222"><span class="linenos">222</span></a>        <span class="n">ref</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span>
-</span><span id="CLM-223"><a href="#CLM-223"><span class="linenos">223</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_area_weight_path</span><span class="p">,</span>
+</span><span id="CLM-223"><a href="#CLM-223"><span class="linenos">223</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">area_weight_path</span><span class="p">,</span>
 </span><span id="CLM-224"><a href="#CLM-224"><span class="linenos">224</span></a>            <span class="n">decode_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DECODE</span><span class="p">,</span>
 </span><span id="CLM-225"><a href="#CLM-225"><span class="linenos">225</span></a>        <span class="p">)</span>
 </span><span id="CLM-226"><a href="#CLM-226"><span class="linenos">226</span></a>        <span class="n">weights</span> <span class="o">=</span> <span class="n">ref</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e6</span> <span class="o">*</span> <span class="n">ref</span><span class="p">[</span><span class="s2">&quot;landfrac&quot;</span><span class="p">]</span>
@@ -531,6 +534,26 @@ time chunks, so the default just wraps <code><a href="#CLM.path">path</a></code>
 ('time', 'lat', 'lon'[, level]), pd.DateTime <code>time</code> coord, sentinel fills
 masked to NaN. Units stay NATIVE — unit conversion happens in <code>WIEFile</code>,
 not here. Returns an unweighted DataArray.</p>
+</div>
+
+
+                            </div>
+                            <div id="CLM.area_weight_path" class="classattr">
+                                        <input id="CLM.area_weight_path-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">area_weight_path</span>
+
+                <label class="view-source-button" for="CLM.area_weight_path-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CLM.area_weight_path"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CLM.area_weight_path-216"><a href="#CLM.area_weight_path-216"><span class="linenos">216</span></a>    <span class="nd">@property</span>
+</span><span id="CLM.area_weight_path-217"><a href="#CLM.area_weight_path-217"><span class="linenos">217</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="CLM.area_weight_path-218"><a href="#CLM.area_weight_path-218"><span class="linenos">218</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="s2">&quot;1pctCO2&quot;</span><span class="p">,</span> <span class="s2">&quot;bgc&quot;</span><span class="p">,</span> <span class="s2">&quot;ukesm&quot;</span><span class="p">,</span> <span class="s2">&quot;baseline&quot;</span><span class="p">,</span> <span class="s2">&quot;cVeg&quot;</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>The path to the raster that contains the spatial weights for each model.</p>
 </div>
 
 

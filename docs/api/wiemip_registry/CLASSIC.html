@@ -68,6 +68,9 @@
                                 <a class="function" href="#CLASSIC.read">read</a>
                         </li>
                         <li>
+                                <a class="variable" href="#CLASSIC.area_weight_path">area_weight_path</a>
+                        </li>
+                        <li>
                                 <a class="variable" href="#CLASSIC.LAT">LAT</a>
                         </li>
                         <li>
@@ -217,7 +220,7 @@
 </span><span id="CLASSIC-197"><a href="#CLASSIC-197"><span class="linenos">197</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="p">(</span><span class="n">ds</span><span class="p">))</span>
 </span><span id="CLASSIC-198"><a href="#CLASSIC-198"><span class="linenos">198</span></a>
 </span><span id="CLASSIC-199"><a href="#CLASSIC-199"><span class="linenos">199</span></a>    <span class="nd">@property</span>
-</span><span id="CLASSIC-200"><a href="#CLASSIC-200"><span class="linenos">200</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="CLASSIC-200"><a href="#CLASSIC-200"><span class="linenos">200</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="CLASSIC-201"><a href="#CLASSIC-201"><span class="linenos">201</span></a>        <span class="k">return</span> <span class="p">(</span>
 </span><span id="CLASSIC-202"><a href="#CLASSIC-202"><span class="linenos">202</span></a>            <span class="n">_OUTPUT</span>
 </span><span id="CLASSIC-203"><a href="#CLASSIC-203"><span class="linenos">203</span></a>            <span class="o">/</span> <span class="s2">&quot;1pctCO2&quot;</span>
@@ -241,7 +244,7 @@
 </span><span id="CLASSIC-221"><a href="#CLASSIC-221"><span class="linenos">221</span></a>        <span class="p">)</span>
 </span><span id="CLASSIC-222"><a href="#CLASSIC-222"><span class="linenos">222</span></a>        <span class="n">cell</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">spherical_area</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">)</span>
 </span><span id="CLASSIC-223"><a href="#CLASSIC-223"><span class="linenos">223</span></a>        <span class="n">ref</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span id="CLASSIC-224"><a href="#CLASSIC-224"><span class="linenos">224</span></a>        <span class="n">sftlf</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_area_weight_path</span><span class="p">)[</span><span class="s2">&quot;sftlf&quot;</span><span class="p">]</span>
+</span><span id="CLASSIC-224"><a href="#CLASSIC-224"><span class="linenos">224</span></a>        <span class="n">sftlf</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">area_weight_path</span><span class="p">)[</span><span class="s2">&quot;sftlf&quot;</span><span class="p">]</span>
 </span><span id="CLASSIC-225"><a href="#CLASSIC-225"><span class="linenos">225</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">rename_latlon</span><span class="p">(</span>
 </span><span id="CLASSIC-226"><a href="#CLASSIC-226"><span class="linenos">226</span></a>            <span class="p">(</span><span class="n">cell</span> <span class="o">*</span> <span class="n">sftlf</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span>
 </span><span id="CLASSIC-227"><a href="#CLASSIC-227"><span class="linenos">227</span></a>        <span class="p">)</span>
@@ -500,6 +503,33 @@ time chunks, so the default just wraps <code><a href="#CLASSIC.path">path</a></c
 ('time', 'lat', 'lon'[, level]), pd.DateTime <code>time</code> coord, sentinel fills
 masked to NaN. Units stay NATIVE — unit conversion happens in <code>WIEFile</code>,
 not here. Returns an unweighted DataArray.</p>
+</div>
+
+
+                            </div>
+                            <div id="CLASSIC.area_weight_path" class="classattr">
+                                        <input id="CLASSIC.area_weight_path-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">area_weight_path</span>
+
+                <label class="view-source-button" for="CLASSIC.area_weight_path-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#CLASSIC.area_weight_path"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CLASSIC.area_weight_path-199"><a href="#CLASSIC.area_weight_path-199"><span class="linenos">199</span></a>    <span class="nd">@property</span>
+</span><span id="CLASSIC.area_weight_path-200"><a href="#CLASSIC.area_weight_path-200"><span class="linenos">200</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="CLASSIC.area_weight_path-201"><a href="#CLASSIC.area_weight_path-201"><span class="linenos">201</span></a>        <span class="k">return</span> <span class="p">(</span>
+</span><span id="CLASSIC.area_weight_path-202"><a href="#CLASSIC.area_weight_path-202"><span class="linenos">202</span></a>            <span class="n">_OUTPUT</span>
+</span><span id="CLASSIC.area_weight_path-203"><a href="#CLASSIC.area_weight_path-203"><span class="linenos">203</span></a>            <span class="o">/</span> <span class="s2">&quot;1pctCO2&quot;</span>
+</span><span id="CLASSIC.area_weight_path-204"><a href="#CLASSIC.area_weight_path-204"><span class="linenos">204</span></a>            <span class="o">/</span> <span class="s2">&quot;output&quot;</span>
+</span><span id="CLASSIC.area_weight_path-205"><a href="#CLASSIC.area_weight_path-205"><span class="linenos">205</span></a>            <span class="o">/</span> <span class="s2">&quot;CLASSIC&quot;</span>
+</span><span id="CLASSIC.area_weight_path-206"><a href="#CLASSIC.area_weight_path-206"><span class="linenos">206</span></a>            <span class="o">/</span> <span class="s2">&quot;CLASSIC_stable_1pctCO2-BGC&quot;</span>
+</span><span id="CLASSIC.area_weight_path-207"><a href="#CLASSIC.area_weight_path-207"><span class="linenos">207</span></a>            <span class="o">/</span> <span class="s2">&quot;CLASSIC_1pctCO2-BGC_land_fraction_ann_1deg.nc&quot;</span>
+</span><span id="CLASSIC.area_weight_path-208"><a href="#CLASSIC.area_weight_path-208"><span class="linenos">208</span></a>        <span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>The path to the raster that contains the spatial weights for each model.</p>
 </div>
 
 

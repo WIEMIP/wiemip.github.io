@@ -62,6 +62,9 @@
                                 <a class="function" href="#EDv3.read">read</a>
                         </li>
                         <li>
+                                <a class="variable" href="#EDv3.area_weight_path">area_weight_path</a>
+                        </li>
+                        <li>
                                 <a class="variable" href="#EDv3.LAT">LAT</a>
                         </li>
                         <li>
@@ -163,7 +166,7 @@
 </span><span id="EDv3-63"><a href="#EDv3-63"><span class="linenos">63</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 </span><span id="EDv3-64"><a href="#EDv3-64"><span class="linenos">64</span></a>
 </span><span id="EDv3-65"><a href="#EDv3-65"><span class="linenos">65</span></a>    <span class="nd">@property</span>
-</span><span id="EDv3-66"><a href="#EDv3-66"><span class="linenos">66</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="EDv3-66"><a href="#EDv3-66"><span class="linenos">66</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="EDv3-67"><a href="#EDv3-67"><span class="linenos">67</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span>
 </span><span id="EDv3-68"><a href="#EDv3-68"><span class="linenos">68</span></a>            <span class="n">_OUTPUT</span>
 </span><span id="EDv3-69"><a href="#EDv3-69"><span class="linenos">69</span></a>            <span class="o">/</span> <span class="s2">&quot;overshoot&quot;</span>
@@ -174,7 +177,7 @@
 </span><span id="EDv3-74"><a href="#EDv3-74"><span class="linenos">74</span></a>        <span class="p">)</span>
 </span><span id="EDv3-75"><a href="#EDv3-75"><span class="linenos">75</span></a>
 </span><span id="EDv3-76"><a href="#EDv3-76"><span class="linenos">76</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
-</span><span id="EDv3-77"><a href="#EDv3-77"><span class="linenos">77</span></a>        <span class="n">ref</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_area_weight_path</span><span class="p">)</span>
+</span><span id="EDv3-77"><a href="#EDv3-77"><span class="linenos">77</span></a>        <span class="n">ref</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">area_weight_path</span><span class="p">)</span>
 </span><span id="EDv3-78"><a href="#EDv3-78"><span class="linenos">78</span></a>        <span class="n">land_area</span> <span class="o">=</span> <span class="n">ref</span><span class="p">[</span><span class="s2">&quot;landArea&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 </span><span id="EDv3-79"><a href="#EDv3-79"><span class="linenos">79</span></a>        <span class="n">ref</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </span><span id="EDv3-80"><a href="#EDv3-80"><span class="linenos">80</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">rename_latlon</span><span class="p">(</span><span class="n">land_area</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">)</span>
@@ -364,6 +367,33 @@ default and those adapters ignore it. However factorials can pass through to ove
 ('time', 'lat', 'lon'[, level]), pd.DateTime <code>time</code> coord, sentinel fills
 masked to NaN. Units stay NATIVE — unit conversion happens in <code>WIEFile</code>,
 not here. Returns an unweighted DataArray.</p>
+</div>
+
+
+                            </div>
+                            <div id="EDv3.area_weight_path" class="classattr">
+                                        <input id="EDv3.area_weight_path-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">area_weight_path</span>
+
+                <label class="view-source-button" for="EDv3.area_weight_path-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#EDv3.area_weight_path"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="EDv3.area_weight_path-65"><a href="#EDv3.area_weight_path-65"><span class="linenos">65</span></a>    <span class="nd">@property</span>
+</span><span id="EDv3.area_weight_path-66"><a href="#EDv3.area_weight_path-66"><span class="linenos">66</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="EDv3.area_weight_path-67"><a href="#EDv3.area_weight_path-67"><span class="linenos">67</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span>
+</span><span id="EDv3.area_weight_path-68"><a href="#EDv3.area_weight_path-68"><span class="linenos">68</span></a>            <span class="n">_OUTPUT</span>
+</span><span id="EDv3.area_weight_path-69"><a href="#EDv3.area_weight_path-69"><span class="linenos">69</span></a>            <span class="o">/</span> <span class="s2">&quot;overshoot&quot;</span>
+</span><span id="EDv3.area_weight_path-70"><a href="#EDv3.area_weight_path-70"><span class="linenos">70</span></a>            <span class="o">/</span> <span class="s2">&quot;output&quot;</span>
+</span><span id="EDv3.area_weight_path-71"><a href="#EDv3.area_weight_path-71"><span class="linenos">71</span></a>            <span class="o">/</span> <span class="n">MODEL</span>
+</span><span id="EDv3.area_weight_path-72"><a href="#EDv3.area_weight_path-72"><span class="linenos">72</span></a>            <span class="o">/</span> <span class="s2">&quot;overshoot_crujra_hist&quot;</span>
+</span><span id="EDv3.area_weight_path-73"><a href="#EDv3.area_weight_path-73"><span class="linenos">73</span></a>            <span class="o">/</span> <span class="s2">&quot;EDv3_crujra_hist_landFrac_fx_05.nc&quot;</span>
+</span><span id="EDv3.area_weight_path-74"><a href="#EDv3.area_weight_path-74"><span class="linenos">74</span></a>        <span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>The path to the raster that contains the spatial weights for each model.</p>
 </div>
 
 

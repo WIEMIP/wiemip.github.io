@@ -56,6 +56,9 @@
                                 <a class="function" href="#BiomeE.read">read</a>
                         </li>
                         <li>
+                                <a class="variable" href="#BiomeE.area_weight_path">area_weight_path</a>
+                        </li>
+                        <li>
                                 <a class="variable" href="#BiomeE.LAT">LAT</a>
                         </li>
                         <li>
@@ -153,12 +156,12 @@
 </span><span id="BiomeE-59"><a href="#BiomeE-59"><span class="linenos">59</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="p">(</span><span class="n">ds</span><span class="p">))</span>
 </span><span id="BiomeE-60"><a href="#BiomeE-60"><span class="linenos">60</span></a>
 </span><span id="BiomeE-61"><a href="#BiomeE-61"><span class="linenos">61</span></a>    <span class="nd">@property</span>
-</span><span id="BiomeE-62"><a href="#BiomeE-62"><span class="linenos">62</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="BiomeE-62"><a href="#BiomeE-62"><span class="linenos">62</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="BiomeE-63"><a href="#BiomeE-63"><span class="linenos">63</span></a>        <span class="k">return</span> <span class="n">_OUTPUT</span> <span class="o">/</span> <span class="s2">&quot;1pctCO2&quot;</span> <span class="o">/</span> <span class="s2">&quot;output&quot;</span> <span class="o">/</span> <span class="s2">&quot;BiomeE&quot;</span> <span class="o">/</span> <span class="s2">&quot;veg_area.nc&quot;</span>
 </span><span id="BiomeE-64"><a href="#BiomeE-64"><span class="linenos">64</span></a>
 </span><span id="BiomeE-65"><a href="#BiomeE-65"><span class="linenos">65</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
 </span><span id="BiomeE-66"><a href="#BiomeE-66"><span class="linenos">66</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Provided vegetated-area raster [m²] (BiomeE README recipe).&quot;&quot;&quot;</span>
-</span><span id="BiomeE-67"><a href="#BiomeE-67"><span class="linenos">67</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_area_weight_path</span><span class="p">)[</span><span class="s2">&quot;veg_area&quot;</span><span class="p">]</span>
+</span><span id="BiomeE-67"><a href="#BiomeE-67"><span class="linenos">67</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">area_weight_path</span><span class="p">)[</span><span class="s2">&quot;veg_area&quot;</span><span class="p">]</span>
 </span><span id="BiomeE-68"><a href="#BiomeE-68"><span class="linenos">68</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">drop_vars</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 </span><span id="BiomeE-69"><a href="#BiomeE-69"><span class="linenos">69</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">rename_latlon</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">)</span>
 </span></pre></div>
@@ -309,6 +312,26 @@ tokens into THIS model's upload naming convention.</p>
 ('time', 'lat', 'lon'[, level]), pd.DateTime <code>time</code> coord, sentinel fills
 masked to NaN. Units stay NATIVE — unit conversion happens in <code>WIEFile</code>,
 not here. Returns an unweighted DataArray.</p>
+</div>
+
+
+                            </div>
+                            <div id="BiomeE.area_weight_path" class="classattr">
+                                        <input id="BiomeE.area_weight_path-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">area_weight_path</span>
+
+                <label class="view-source-button" for="BiomeE.area_weight_path-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#BiomeE.area_weight_path"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BiomeE.area_weight_path-61"><a href="#BiomeE.area_weight_path-61"><span class="linenos">61</span></a>    <span class="nd">@property</span>
+</span><span id="BiomeE.area_weight_path-62"><a href="#BiomeE.area_weight_path-62"><span class="linenos">62</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="BiomeE.area_weight_path-63"><a href="#BiomeE.area_weight_path-63"><span class="linenos">63</span></a>        <span class="k">return</span> <span class="n">_OUTPUT</span> <span class="o">/</span> <span class="s2">&quot;1pctCO2&quot;</span> <span class="o">/</span> <span class="s2">&quot;output&quot;</span> <span class="o">/</span> <span class="s2">&quot;BiomeE&quot;</span> <span class="o">/</span> <span class="s2">&quot;veg_area.nc&quot;</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>The path to the raster that contains the spatial weights for each model.</p>
 </div>
 
 
