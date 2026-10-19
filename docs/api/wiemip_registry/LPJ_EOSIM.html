@@ -119,28 +119,30 @@
 
     </div>
     <a class="headerlink" href="#LPJ_EOSIM"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="LPJ_EOSIM-29"><a href="#LPJ_EOSIM-29"><span class="linenos"> 29</span></a><span class="k">class</span><span class="w"> </span><span class="nc">LPJ_EOSIM</span><span class="p">(</span><span class="n">core</span><span class="o">.</span><span class="n">WIEAdapter</span><span class="p">):</span>
-</span><span id="LPJ_EOSIM-30"><a href="#LPJ_EOSIM-30"><span class="linenos"> 30</span></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">MODEL</span>
-</span><span id="LPJ_EOSIM-31"><a href="#LPJ_EOSIM-31"><span class="linenos"> 31</span></a>    <span class="n">LAT</span><span class="p">,</span> <span class="n">LON</span> <span class="o">=</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span>
-</span><span id="LPJ_EOSIM-32"><a href="#LPJ_EOSIM-32"><span class="linenos"> 32</span></a>    <span class="n">DECODE</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># gregorian &quot;days since 1850-01-01&quot; -&gt; datetime64 directly</span>
-</span><span id="LPJ_EOSIM-33"><a href="#LPJ_EOSIM-33"><span class="linenos"> 33</span></a>    <span class="c1"># All five uploaded 2026-09-16. noPermafrost omits the soil-thermal set</span>
-</span><span id="LPJ_EOSIM-34"><a href="#LPJ_EOSIM-34"><span class="linenos"> 34</span></a>    <span class="c1"># (alt/soilIce/soilMoist/soilT) and noFire the fire diagnostics + wind, so those</span>
-</span><span id="LPJ_EOSIM-35"><a href="#LPJ_EOSIM-35"><span class="linenos"> 35</span></a>    <span class="c1"># runs carry 74 / 67 of the 78 variables; noDynVeg exists for stable_bgc,</span>
-</span><span id="LPJ_EOSIM-36"><a href="#LPJ_EOSIM-36"><span class="linenos"> 36</span></a>    <span class="c1"># ukesm_cou and ukesm_rad only.</span>
-</span><span id="LPJ_EOSIM-37"><a href="#LPJ_EOSIM-37"><span class="linenos"> 37</span></a>    <span class="n">FACTORIALS</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="LPJ_EOSIM-38"><a href="#LPJ_EOSIM-38"><span class="linenos"> 38</span></a>        <span class="n">Factorial</span><span class="o">.</span><span class="n">baseline</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-</span><span id="LPJ_EOSIM-39"><a href="#LPJ_EOSIM-39"><span class="linenos"> 39</span></a>        <span class="n">Factorial</span><span class="o">.</span><span class="n">noFire</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="s2">&quot;_noFire&quot;</span><span class="p">,</span>
-</span><span id="LPJ_EOSIM-40"><a href="#LPJ_EOSIM-40"><span class="linenos"> 40</span></a>        <span class="n">Factorial</span><span class="o">.</span><span class="n">noNitrogen</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="s2">&quot;_noNitrogen&quot;</span><span class="p">,</span>
-</span><span id="LPJ_EOSIM-41"><a href="#LPJ_EOSIM-41"><span class="linenos"> 41</span></a>        <span class="n">Factorial</span><span class="o">.</span><span class="n">noPermafrost</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="s2">&quot;_noPermafrost&quot;</span><span class="p">,</span>
-</span><span id="LPJ_EOSIM-42"><a href="#LPJ_EOSIM-42"><span class="linenos"> 42</span></a>        <span class="s2">&quot;noDynVeg&quot;</span><span class="p">:</span> <span class="s2">&quot;_noDynVeg&quot;</span><span class="p">,</span>
-</span><span id="LPJ_EOSIM-43"><a href="#LPJ_EOSIM-43"><span class="linenos"> 43</span></a>    <span class="p">}</span>
-</span><span id="LPJ_EOSIM-44"><a href="#LPJ_EOSIM-44"><span class="linenos"> 44</span></a>
-</span><span id="LPJ_EOSIM-45"><a href="#LPJ_EOSIM-45"><span class="linenos"> 45</span></a>    <span class="c1"># Cadence overrides of const.ANNUAL (verified on the bucket, 2026-08-28</span>
-</span><span id="LPJ_EOSIM-46"><a href="#LPJ_EOSIM-46"><span class="linenos"> 46</span></a>    <span class="c1"># upload): wetfrac and nInorgSoil arrive monthly, docFlux annual.</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="LPJ_EOSIM-27"><a href="#LPJ_EOSIM-27"><span class="linenos"> 27</span></a><span class="k">class</span><span class="w"> </span><span class="nc">LPJ_EOSIM</span><span class="p">(</span><span class="n">core</span><span class="o">.</span><span class="n">WIEAdapter</span><span class="p">):</span>
+</span><span id="LPJ_EOSIM-28"><a href="#LPJ_EOSIM-28"><span class="linenos"> 28</span></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">MODEL</span>
+</span><span id="LPJ_EOSIM-29"><a href="#LPJ_EOSIM-29"><span class="linenos"> 29</span></a>    <span class="n">LAT</span><span class="p">,</span> <span class="n">LON</span> <span class="o">=</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span>
+</span><span id="LPJ_EOSIM-30"><a href="#LPJ_EOSIM-30"><span class="linenos"> 30</span></a>    <span class="n">DECODE</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># gregorian &quot;days since 1850-01-01&quot; -&gt; datetime64 directly</span>
+</span><span id="LPJ_EOSIM-31"><a href="#LPJ_EOSIM-31"><span class="linenos"> 31</span></a>    <span class="c1"># All five uploaded 2026-09-16. noPermafrost omits the soil-thermal set</span>
+</span><span id="LPJ_EOSIM-32"><a href="#LPJ_EOSIM-32"><span class="linenos"> 32</span></a>    <span class="c1"># (alt/soilIce/soilMoist/soilT) and noFire the fire diagnostics + wind, so those</span>
+</span><span id="LPJ_EOSIM-33"><a href="#LPJ_EOSIM-33"><span class="linenos"> 33</span></a>    <span class="c1"># runs carry 74 / 67 of the 78 variables; noDynVeg exists for stable_bgc,</span>
+</span><span id="LPJ_EOSIM-34"><a href="#LPJ_EOSIM-34"><span class="linenos"> 34</span></a>    <span class="c1"># ukesm_cou and ukesm_rad only.</span>
+</span><span id="LPJ_EOSIM-35"><a href="#LPJ_EOSIM-35"><span class="linenos"> 35</span></a>    <span class="n">FACTORIALS</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="LPJ_EOSIM-36"><a href="#LPJ_EOSIM-36"><span class="linenos"> 36</span></a>        <span class="n">Factorial</span><span class="o">.</span><span class="n">baseline</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span id="LPJ_EOSIM-37"><a href="#LPJ_EOSIM-37"><span class="linenos"> 37</span></a>        <span class="n">Factorial</span><span class="o">.</span><span class="n">noFire</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="s2">&quot;_noFire&quot;</span><span class="p">,</span>
+</span><span id="LPJ_EOSIM-38"><a href="#LPJ_EOSIM-38"><span class="linenos"> 38</span></a>        <span class="n">Factorial</span><span class="o">.</span><span class="n">noNitrogen</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="s2">&quot;_noNitrogen&quot;</span><span class="p">,</span>
+</span><span id="LPJ_EOSIM-39"><a href="#LPJ_EOSIM-39"><span class="linenos"> 39</span></a>        <span class="n">Factorial</span><span class="o">.</span><span class="n">noPermafrost</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="s2">&quot;_noPermafrost&quot;</span><span class="p">,</span>
+</span><span id="LPJ_EOSIM-40"><a href="#LPJ_EOSIM-40"><span class="linenos"> 40</span></a>        <span class="s2">&quot;noDynVeg&quot;</span><span class="p">:</span> <span class="s2">&quot;_noDynVeg&quot;</span><span class="p">,</span>
+</span><span id="LPJ_EOSIM-41"><a href="#LPJ_EOSIM-41"><span class="linenos"> 41</span></a>    <span class="p">}</span>
+</span><span id="LPJ_EOSIM-42"><a href="#LPJ_EOSIM-42"><span class="linenos"> 42</span></a>
+</span><span id="LPJ_EOSIM-43"><a href="#LPJ_EOSIM-43"><span class="linenos"> 43</span></a>    <span class="c1"># Cadence overrides of const.ANNUAL (verified on the bucket, 2026-08-28</span>
+</span><span id="LPJ_EOSIM-44"><a href="#LPJ_EOSIM-44"><span class="linenos"> 44</span></a>    <span class="c1"># upload): wetfrac and nInorgSoil arrive monthly, docFlux annual.</span>
+</span><span id="LPJ_EOSIM-45"><a href="#LPJ_EOSIM-45"><span class="linenos"> 45</span></a>    <span class="c1"># fN2OFire (overshoot only, 2026-10-16 upload) is annual: LPJ has no</span>
+</span><span id="LPJ_EOSIM-46"><a href="#LPJ_EOSIM-46"><span class="linenos"> 46</span></a>    <span class="c1"># monthly fire_n2o.</span>
 </span><span id="LPJ_EOSIM-47"><a href="#LPJ_EOSIM-47"><span class="linenos"> 47</span></a>    <span class="n">LAYERED_VARIABLES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;soilT&quot;</span><span class="p">,</span> <span class="s2">&quot;soilIce&quot;</span><span class="p">,</span> <span class="s2">&quot;soilMoist&quot;</span><span class="p">}</span>
 </span><span id="LPJ_EOSIM-48"><a href="#LPJ_EOSIM-48"><span class="linenos"> 48</span></a>
 </span><span id="LPJ_EOSIM-49"><a href="#LPJ_EOSIM-49"><span class="linenos"> 49</span></a>    <span class="n">MONTHLY</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;wetfrac&quot;</span><span class="p">,</span> <span class="s2">&quot;nInorgSoil&quot;</span><span class="p">}</span>
-</span><span id="LPJ_EOSIM-50"><a href="#LPJ_EOSIM-50"><span class="linenos"> 50</span></a>    <span class="n">ANNUAL</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;docFlux&quot;</span><span class="p">}</span>
+</span><span id="LPJ_EOSIM-50"><a href="#LPJ_EOSIM-50"><span class="linenos"> 50</span></a>    <span class="n">ANNUAL</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;docFlux&quot;</span><span class="p">,</span> <span class="s2">&quot;fN2OFire&quot;</span><span class="p">}</span>
 </span><span id="LPJ_EOSIM-51"><a href="#LPJ_EOSIM-51"><span class="linenos"> 51</span></a>
 </span><span id="LPJ_EOSIM-52"><a href="#LPJ_EOSIM-52"><span class="linenos"> 52</span></a>    <span class="c1"># band validation: firerosTotal means reach 8e6 m s-1 (cells up to 2.5e10), ceiling is 1e6</span>
 </span><span id="LPJ_EOSIM-53"><a href="#LPJ_EOSIM-53"><span class="linenos"> 53</span></a>    <span class="n">PROVISIONAL_DATA</span> <span class="o">=</span> <span class="p">(</span>
@@ -290,7 +292,7 @@ variable) by name, and a combination that wasn't uploaded simply fails when
                             <div id="LPJ_EOSIM.ANNUAL" class="classattr">
                                 <div class="attr variable">
             <span class="name">ANNUAL</span>        =
-<span class="default_value">{&#39;docFlux&#39;}</span>
+<span class="default_value">{&#39;docFlux&#39;, &#39;fN2OFire&#39;}</span>
 
         
     </div>
