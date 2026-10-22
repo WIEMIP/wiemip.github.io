@@ -9,6 +9,7 @@ Static site for **https://wiemip.github.io**:
 | `/docs`                    | Docs for the `wiemip_registry` data tooling. Built from markdown — see below. |
 | `/docs/api`                | API reference, generated from docstrings by pdoc. |
 | `/progress-tracker`        | Bucket-derived submission progress, both experiments. `progress-tracker/data.json` is regenerated nightly — see §4. |
+| `/updates`                 | The weekly update emails, newest first. Built from markdown — see §5. |
 
 Every page works with **zero configuration**.
 
@@ -128,3 +129,17 @@ instead, which needs the box up and a working SSM profile in `~/.ssh/config`.
 
 The old hand-maintained tracker (spreadsheet defaults + click-edits saved to a Google Apps
 Script) was removed on 2026-09-18; it is in the git history if anyone needs the notes.
+
+---
+
+## 5. Weekly updates (`/updates`)
+
+Same markdown-in, HTML-out setup as the docs. Each week:
+
+1. Paste a `## <day> <Month> <year>` block at the top of `updates/updates.md`: the email
+   text verbatim, minus the greeting and sign-off.
+2. Run `uv run --with markdown python updates/build_updates.py`.
+3. Commit `updates/updates.md` and `updates/index.html`.
+
+Every `## ` heading becomes a sidebar link. The page is public: leave out meeting links
+with passcodes, passwords, personal email addresses and links to private Google docs.
