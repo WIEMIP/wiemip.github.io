@@ -105,6 +105,7 @@ POC = {
     "CARDAMOM_JPL": "Eren Bilir",
     "EDv3": "Lei Ma / George Hurtt",
     "OSCAR": "Thomas Gasser",
+    "CoLM": "Qian Zhang",
 }
 # ---------------------------------------------------------------------------
 
