@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-25T11:02:10+00:00",
+ "generated_at": "2026-10-26T12:33:58+00:00",
  "registry_version": "0.1.1.dev148+g74ef800cd",
  "variables_total": 175,
  "gcm_forcings": [
@@ -6268,7 +6268,7 @@
    "empty": false,
    "poc": "Qing Zhu",
    "files": {
-    "1pctCO2": 545,
+    "1pctCO2": 889,
     "overshoot": 0
    },
    "mapped": {
@@ -6388,13 +6388,13 @@
       "factorial": "noFire",
       "simulation": "bgc",
       "forcing": "stable",
-      "vars": 27
+      "vars": 78
      },
      {
       "factorial": "noFire",
       "simulation": "cou",
       "forcing": "ukesm",
-      "vars": 1
+      "vars": 62
      },
      {
       "factorial": "noFire",
@@ -6412,13 +6412,13 @@
       "factorial": "noFire",
       "simulation": "ctrl",
       "forcing": "stable",
-      "vars": 27
+      "vars": 78
      },
      {
       "factorial": "noFire",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 1
+      "vars": 62
      },
      {
       "factorial": "noFire",
@@ -6897,19 +6897,19 @@
       {
        "simulation": "ctrl",
        "forcing": "stable",
-       "vars": 27,
-       "state": "partial"
+       "vars": 78,
+       "state": "complete"
       },
       {
        "simulation": "bgc",
        "forcing": "stable",
-       "vars": 27,
-       "state": "partial"
+       "vars": 78,
+       "state": "complete"
       },
       {
        "simulation": "cou",
        "forcing": "ukesm",
-       "vars": 1,
+       "vars": 62,
        "state": "partial"
       },
       {
@@ -16271,8 +16271,8 @@
    "empty": false,
    "poc": "Prashant Paudel / Benjamin Smith",
    "files": {
-    "1pctCO2": 227,
-    "overshoot": 73
+    "1pctCO2": 230,
+    "overshoot": 97
    },
    "mapped": {
     "1pctCO2": true,
