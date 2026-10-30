@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-10-29T12:35:50+00:00",
- "registry_version": "0.1.1.dev165+g58b28e80a",
+ "generated_at": "2026-10-30T12:27:45+00:00",
+ "registry_version": "0.1.1.dev176+g7add92ce8",
  "variables_total": 175,
  "gcm_forcings": [
   "ukesm",
@@ -2571,7 +2571,7 @@
    "poc": "Rosie Fisher",
    "files": {
     "1pctCO2": 539,
-    "overshoot": 684
+    "overshoot": 744
    },
    "mapped": {
     "1pctCO2": true,
@@ -5903,13 +5903,13 @@
       "factorial": "baseline",
       "simulation": "bgc_ndep",
       "forcing": "stable",
-      "vars": 78
+      "vars": 91
      },
      {
       "factorial": "baseline",
       "simulation": "cou_ndep",
       "forcing": "ukesm",
-      "vars": 62
+      "vars": 89
      },
      {
       "factorial": "baseline",
@@ -5927,7 +5927,7 @@
       "factorial": "baseline",
       "simulation": "rad_ndep",
       "forcing": "ukesm",
-      "vars": 62
+      "vars": 89
      },
      {
       "factorial": "baseline",
@@ -5945,7 +5945,7 @@
       "factorial": "baseline",
       "simulation": "ctrl_ndep",
       "forcing": "stable",
-      "vars": 78
+      "vars": 91
      },
      {
       "factorial": "noFire",
@@ -6500,7 +6500,7 @@
    "poc": "Beiyao Xu",
    "files": {
     "1pctCO2": 1512,
-    "overshoot": 2472
+    "overshoot": 2643
    },
    "mapped": {
     "1pctCO2": true,
@@ -7188,6 +7188,24 @@
       "vars": 57
      },
      {
+      "factorial": "baseline",
+      "simulation": "vl_cf_polmip",
+      "forcing": "ukesm",
+      "vars": 57
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "vl_cf_polmip",
+      "forcing": "ipsl",
+      "vars": 57
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "vl_cf_polmip",
+      "forcing": "gfdl",
+      "vars": 57
+     },
+     {
       "factorial": "dynVeg",
       "simulation": "l",
       "forcing": "ukesm",
@@ -7771,6 +7789,31 @@
         }
        ],
        "required": true
+      },
+      {
+       "name": "vl_cf_polmip",
+       "status": "green",
+       "runs": [
+        {
+         "simulation": "vl_cf_polmip",
+         "forcing": "ukesm",
+         "vars": 57,
+         "state": "complete"
+        },
+        {
+         "simulation": "vl_cf_polmip",
+         "forcing": "ipsl",
+         "vars": 57,
+         "state": "complete"
+        },
+        {
+         "simulation": "vl_cf_polmip",
+         "forcing": "gfdl",
+         "vars": 57,
+         "state": "complete"
+        }
+       ],
+       "required": false
       }
      ]
     }
@@ -9536,7 +9579,7 @@
    "empty": false,
    "poc": "Hyuna Kim",
    "files": {
-    "1pctCO2": 3622,
+    "1pctCO2": 3621,
     "overshoot": 22498
    },
    "mapped": {
@@ -9616,7 +9659,7 @@
       "factorial": "baseline",
       "simulation": "cou_ndep",
       "forcing": "ukesm",
-      "vars": 71
+      "vars": 70
      },
      {
       "factorial": "baseline",
@@ -11790,7 +11833,7 @@
    "poc": "Akihiko Ito",
    "files": {
     "1pctCO2": 486,
-    "overshoot": 821
+    "overshoot": 822
    },
    "mapped": {
     "1pctCO2": true,
@@ -15895,7 +15938,7 @@
    "empty": false,
    "poc": "Prashant Paudel / Benjamin Smith",
    "files": {
-    "1pctCO2": 229,
+    "1pctCO2": 227,
     "overshoot": 147
    },
    "mapped": {
@@ -15944,7 +15987,7 @@
       "factorial": "baseline",
       "simulation": "bgc_ndep",
       "forcing": "stable",
-      "vars": 23
+      "vars": 21
      },
      {
       "factorial": "baseline",
@@ -15993,6 +16036,18 @@
      {
       "factorial": "baseline",
       "simulation": "l",
+      "forcing": "ukesm",
+      "vars": 25
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "hl",
+      "forcing": "ukesm",
+      "vars": 25
+     },
+     {
+      "factorial": "baseline",
+      "simulation": "hl_cf",
       "forcing": "ukesm",
       "vars": 25
      },
@@ -16106,7 +16161,7 @@
       ]
      },
      "ukesm": {
-      "status": "yellow",
+      "status": "green",
       "runs": [
        {
         "simulation": "l",
@@ -16117,14 +16172,14 @@
        {
         "simulation": "hl",
         "forcing": "ukesm",
-        "vars": 0,
-        "state": "absent"
+        "vars": 25,
+        "state": "complete"
        },
        {
         "simulation": "hl_cf",
         "forcing": "ukesm",
-        "vars": 0,
-        "state": "absent"
+        "vars": 25,
+        "state": "complete"
        },
        {
         "simulation": "m",
@@ -16395,13 +16450,13 @@
       },
       {
        "name": "hl",
-       "status": "red",
+       "status": "yellow",
        "runs": [
         {
          "simulation": "hl",
          "forcing": "ukesm",
-         "vars": 0,
-         "state": "absent"
+         "vars": 25,
+         "state": "complete"
         },
         {
          "simulation": "hl",
@@ -16420,13 +16475,13 @@
       },
       {
        "name": "hl_cf",
-       "status": "red",
+       "status": "yellow",
        "runs": [
         {
          "simulation": "hl_cf",
          "forcing": "ukesm",
-         "vars": 0,
-         "state": "absent"
+         "vars": 25,
+         "state": "complete"
         },
         {
          "simulation": "hl_cf",
