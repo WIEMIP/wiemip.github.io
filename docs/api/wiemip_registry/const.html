@@ -199,6 +199,9 @@
                         <li>
                                 <a class="variable" href="#Factorial.noBVOC">noBVOC</a>
                         </li>
+                        <li>
+                                <a class="variable" href="#Factorial.noDynVeg">noDynVeg</a>
+                        </li>
                 </ul>
 
             </li>
@@ -425,21 +428,21 @@
 </span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a>    <span class="n">noFire_noNitrogen</span> <span class="o">=</span> <span class="mi">4</span>
 </span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a>    <span class="n">noFire_noPermafrost</span> <span class="o">=</span> <span class="mi">5</span>
 </span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a>    <span class="n">noBVOC</span> <span class="o">=</span> <span class="mi">6</span>
-</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a>
+</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a>    <span class="n">noDynVeg</span> <span class="o">=</span> <span class="mi">7</span>
 </span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a>
-</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Experiment</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a>    <span class="n">one_percent_co2</span> <span class="o">=</span> <span class="s2">&quot;one_pct_co2&quot;</span>
-</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a>    <span class="n">overshoot</span> <span class="o">=</span> <span class="s2">&quot;overshoot&quot;</span>
-</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a>
+</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a>
+</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Experiment</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a>    <span class="n">one_percent_co2</span> <span class="o">=</span> <span class="s2">&quot;one_pct_co2&quot;</span>
+</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a>    <span class="n">overshoot</span> <span class="o">=</span> <span class="s2">&quot;overshoot&quot;</span>
 </span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>
-</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a><span class="n">extra_factorials</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a>    <span class="c1"># fire</span>
-</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a>    <span class="s2">&quot;Fire0005&quot;</span><span class="p">,</span>
-</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a>    <span class="s2">&quot;Fire0249&quot;</span><span class="p">,</span>
-</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a>    <span class="s2">&quot;Fire0304&quot;</span><span class="p">,</span>
-</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a>    <span class="s2">&quot;Fire0336&quot;</span><span class="p">,</span>
-</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a>    <span class="s2">&quot;noBVOC&quot;</span><span class="p">,</span>
-</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a>    <span class="s2">&quot;noDynVeg&quot;</span><span class="p">,</span>
+</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a>
+</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a><span class="n">extra_factorials</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a>    <span class="c1"># fire</span>
+</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a>    <span class="s2">&quot;Fire0005&quot;</span><span class="p">,</span>
+</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a>    <span class="s2">&quot;Fire0249&quot;</span><span class="p">,</span>
+</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a>    <span class="s2">&quot;Fire0304&quot;</span><span class="p">,</span>
+</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a>    <span class="s2">&quot;Fire0336&quot;</span><span class="p">,</span>
+</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a>    <span class="s2">&quot;noBVOC&quot;</span><span class="p">,</span>
 </span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a>    <span class="s2">&quot;noPermafrostC&quot;</span><span class="p">,</span>
 </span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a>    <span class="s2">&quot;noPermafrostCN&quot;</span><span class="p">,</span>
 </span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a>    <span class="s2">&quot;noPermafrostCNNinorg&quot;</span><span class="p">,</span>
@@ -1062,6 +1065,7 @@
 </span><span id="Factorial-182"><a href="#Factorial-182"><span class="linenos">182</span></a>    <span class="n">noFire_noNitrogen</span> <span class="o">=</span> <span class="mi">4</span>
 </span><span id="Factorial-183"><a href="#Factorial-183"><span class="linenos">183</span></a>    <span class="n">noFire_noPermafrost</span> <span class="o">=</span> <span class="mi">5</span>
 </span><span id="Factorial-184"><a href="#Factorial-184"><span class="linenos">184</span></a>    <span class="n">noBVOC</span> <span class="o">=</span> <span class="mi">6</span>
+</span><span id="Factorial-185"><a href="#Factorial-185"><span class="linenos">185</span></a>    <span class="n">noDynVeg</span> <span class="o">=</span> <span class="mi">7</span>
 </span></pre></div>
 
 
@@ -1151,6 +1155,18 @@
     
 
                             </div>
+                            <div id="Factorial.noDynVeg" class="classattr">
+                                <div class="attr variable">
+            <span class="name">noDynVeg</span>        =
+<span class="default_value">&lt;<a href="#Factorial.noDynVeg">Factorial.noDynVeg</a>: 7&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Factorial.noDynVeg"></a>
+    
+    
+
+                            </div>
                 </section>
                 <section id="Experiment">
                             <input id="Experiment-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
@@ -1163,9 +1179,9 @@
 
     </div>
     <a class="headerlink" href="#Experiment"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment-187"><a href="#Experiment-187"><span class="linenos">187</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Experiment</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-</span><span id="Experiment-188"><a href="#Experiment-188"><span class="linenos">188</span></a>    <span class="n">one_percent_co2</span> <span class="o">=</span> <span class="s2">&quot;one_pct_co2&quot;</span>
-</span><span id="Experiment-189"><a href="#Experiment-189"><span class="linenos">189</span></a>    <span class="n">overshoot</span> <span class="o">=</span> <span class="s2">&quot;overshoot&quot;</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment-188"><a href="#Experiment-188"><span class="linenos">188</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Experiment</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+</span><span id="Experiment-189"><a href="#Experiment-189"><span class="linenos">189</span></a>    <span class="n">one_percent_co2</span> <span class="o">=</span> <span class="s2">&quot;one_pct_co2&quot;</span>
+</span><span id="Experiment-190"><a href="#Experiment-190"><span class="linenos">190</span></a>    <span class="n">overshoot</span> <span class="o">=</span> <span class="s2">&quot;overshoot&quot;</span>
 </span></pre></div>
 
 
@@ -1200,7 +1216,7 @@
                     <div class="attr variable">
             <span class="name">extra_factorials</span><span class="annotation">: tuple[str, ...]</span>        =
 <input id="extra_factorials-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="extra_factorials-view-value"></label><span class="default_value">(&#39;Fire0005&#39;, &#39;Fire0249&#39;, &#39;Fire0304&#39;, &#39;Fire0336&#39;, &#39;noBVOC&#39;, &#39;noDynVeg&#39;, &#39;noPermafrostC&#39;, &#39;noPermafrostCN&#39;, &#39;noPermafrostCNNinorg&#39;, &#39;addPermafrostC&#39;, &#39;addPermafrostCN&#39;, &#39;addPermafrostCNNinorg&#39;, &#39;noNitrogen_addPermafrostC&#39;, &#39;noNitrogen_noPermafrostC&#39;, &#39;flat&#39;, &#39;noWetland&#39;, &#39;noFire_noWetland&#39;, &#39;dynVeg&#39;, &#39;dynVeg_noNitrogen&#39;, &#39;dynVeg_noFire_noNitrogen&#39;)</span>
+            <label class="view-value-button pdoc-button" for="extra_factorials-view-value"></label><span class="default_value">(&#39;Fire0005&#39;, &#39;Fire0249&#39;, &#39;Fire0304&#39;, &#39;Fire0336&#39;, &#39;noBVOC&#39;, &#39;noPermafrostC&#39;, &#39;noPermafrostCN&#39;, &#39;noPermafrostCNNinorg&#39;, &#39;addPermafrostC&#39;, &#39;addPermafrostCN&#39;, &#39;addPermafrostCNNinorg&#39;, &#39;noNitrogen_addPermafrostC&#39;, &#39;noNitrogen_noPermafrostC&#39;, &#39;flat&#39;, &#39;noWetland&#39;, &#39;noFire_noWetland&#39;, &#39;dynVeg&#39;, &#39;dynVeg_noNitrogen&#39;, &#39;dynVeg_noFire_noNitrogen&#39;)</span>
 
         
     </div>
