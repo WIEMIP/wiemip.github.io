@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-05T14:22:29+00:00",
+ "generated_at": "2026-11-06T13:58:57+00:00",
  "registry_version": "0.1.1.dev188+gd848e3250",
  "variables_total": 174,
  "gcm_forcings": [
@@ -9995,7 +9995,7 @@
    "empty": false,
    "poc": "Prashant Paudel / Benjamin Smith",
    "files": {
-    "1pctCO2": 310,
+    "1pctCO2": 334,
     "overshoot": 147
    },
    "mapped": {
@@ -10099,13 +10099,13 @@
       "factorial": "noDynVeg",
       "simulation": "cou",
       "forcing": "ukesm",
-      "vars": 4
+      "vars": 5
      },
      {
       "factorial": "noDynVeg",
       "simulation": "ctrl",
       "forcing": "stable",
-      "vars": 4
+      "vars": 5
      }
     ],
     "overshoot": [
@@ -10657,7 +10657,7 @@
       {
        "simulation": "ctrl",
        "forcing": "stable",
-       "vars": 4,
+       "vars": 5,
        "state": "partial"
       },
       {
@@ -10669,7 +10669,7 @@
       {
        "simulation": "cou",
        "forcing": "ukesm",
-       "vars": 4,
+       "vars": 5,
        "state": "partial"
       },
       {
@@ -11208,7 +11208,7 @@
    "empty": false,
    "poc": "Hyuna Kim",
    "files": {
-    "1pctCO2": 3619,
+    "1pctCO2": 3622,
     "overshoot": 22498
    },
    "mapped": {
@@ -11240,7 +11240,7 @@
       "factorial": "baseline",
       "simulation": "cou",
       "forcing": "ukesm",
-      "vars": 70
+      "vars": 71
      },
      {
       "factorial": "baseline",
@@ -11288,7 +11288,7 @@
       "factorial": "baseline",
       "simulation": "cou_ndep",
       "forcing": "ukesm",
-      "vars": 70
+      "vars": 71
      },
      {
       "factorial": "baseline",
@@ -11366,7 +11366,7 @@
       "factorial": "noPermafrost",
       "simulation": "cou",
       "forcing": "ukesm",
-      "vars": 70
+      "vars": 71
      },
      {
       "factorial": "noPermafrost",
@@ -11619,7 +11619,7 @@
        {
         "simulation": "cou",
         "forcing": "ukesm",
-        "vars": 70,
+        "vars": 71,
         "state": "complete"
        }
       ]
@@ -12081,7 +12081,7 @@
       {
        "simulation": "cou",
        "forcing": "ukesm",
-       "vars": 70,
+       "vars": 71,
        "state": "complete"
       },
       {
