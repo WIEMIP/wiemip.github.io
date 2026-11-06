@@ -28,7 +28,7 @@ that experiment (its max variable count over every run):
       1pctCO2  UKESM/IPSL/GFDL   -> {cou} under that pattern, baseline factorial
       overshoot, one dot per scenario -> that scenario under all three GCM patterns
         (the hover lists ukesm / ipsl / gfdl); hist / hist_ctrl / ctrl carry no pattern
-        token, so their colour is the best pattern. The per-GCM {l, hl, hl_cf, m}
+        token, so their colour is the best pattern. The per-GCM {l, hl, hl_ctap, m}
         summaries are still computed for the hero stats.
   * a factorial chip is the same rule over that factorial's {ctrl, bgc, cou x 3};
     grey when the adapter declares it but nothing is uploaded. The chips ARE the
@@ -63,12 +63,12 @@ COMPLETE_SHARE = 0.8
 # The runs each dot summarises (simulation, forcing); "<gcm>" is the column's pattern.
 ONE_PCT_CONSTANT = [("ctrl", "stable"), ("bgc", "stable")]
 ONE_PCT_DRIVER = [("cou", "<gcm>")]
-OVERSHOOT_REQUIRED = [("l", "<gcm>"), ("hl", "<gcm>"), ("hl_cf", "<gcm>"), ("m", "<gcm>")]
+OVERSHOOT_REQUIRED = [("l", "<gcm>"), ("hl", "<gcm>"), ("hl_ctap", "<gcm>"), ("m", "<gcm>")]
 FACTORIAL_REQUIRED = ONE_PCT_CONSTANT + [("cou", g) for g in ("ukesm", "ipsl", "gfdl")]
 # Overshoot scenarios in protocol reading order (history + controls, then low -> high),
 # which ones the protocol requires, and which carry no GCM pattern (CRUJRA-driven).
-SCENARIO_ORDER = ["hist", "ctrl", "vl", "vl_cf", "l", "m", "ml", "ml_cf", "hl", "hl_cf"]
-SCENARIOS_REQUIRED = {"hist", "l", "hl", "hl_cf", "m"}
+SCENARIO_ORDER = ["hist", "ctrl", "vl", "vl_ctap", "l", "m", "ml", "ml_ctap", "hl", "hl_ctap"]
+SCENARIOS_REQUIRED = {"hist", "l", "hl", "hl_ctap", "m"}
 SCENARIOS_PATTERNLESS = {"hist", "ctrl"}
 # The registry spells the overshoot control two ways (LPJ-EOSIM uploaded `hist_ctrl`,
 # everyone else `ctrl`); it is one simulation, so the page folds them into one column.

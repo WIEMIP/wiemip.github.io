@@ -107,7 +107,7 @@ wr.land_carbon_stock(
 wr.models                     # registered models
 wr.gcm_patterns               # ukesm / ipsl / gfdl / stable
 wr.one_percent_simulations    # bgc, cou, ctrl, rad (+ _ndep variants)
-wr.overshoot_simulations      # hist, l, hl, hl_cf, m, …
+wr.overshoot_simulations      # hist, l, hl, hl_ctap, m, …
 wr.variables                  # CMIP short names
 wr.factorials                 # the shared factorial names
 wr.adapters["CLASSIC"].factorials   # what one model actually declares
