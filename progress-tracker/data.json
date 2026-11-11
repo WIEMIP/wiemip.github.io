@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-10T14:37:25+00:00",
+ "generated_at": "2026-11-11T13:51:05+00:00",
  "registry_version": "0.1.1.dev197+g76cbacdb8",
  "variables_total": 174,
  "gcm_forcings": [
@@ -2062,7 +2062,7 @@
    "empty": false,
    "poc": "Will Wieder",
    "files": {
-    "1pctCO2": 1668,
+    "1pctCO2": 1674,
     "overshoot": 7329
    },
    "mapped": {
@@ -2310,7 +2310,7 @@
       "factorial": "noNitrogen",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 1
+      "vars": 3
      },
      {
       "factorial": "noNitrogen",
@@ -14396,7 +14396,7 @@
    "empty": false,
    "poc": "Eleanor Burke",
    "files": {
-    "1pctCO2": 3706,
+    "1pctCO2": 4463,
     "overshoot": 6582
    },
    "mapped": {
@@ -14469,19 +14469,19 @@
       "factorial": "baseline",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 10
+      "vars": 51
      },
      {
       "factorial": "baseline",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 10
+      "vars": 51
      },
      {
       "factorial": "baseline",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 10
+      "vars": 51
      },
      {
       "factorial": "baseline",
@@ -14661,19 +14661,19 @@
       "factorial": "noDynVeg",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 1
+      "vars": 51
      },
      {
       "factorial": "noDynVeg",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 1
+      "vars": 51
      },
      {
       "factorial": "noDynVeg",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 1
+      "vars": 51
      },
      {
       "factorial": "noDynVeg",
@@ -15525,19 +15525,19 @@
       "factorial": "Fire0005",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 10
+      "vars": 51
      },
      {
       "factorial": "Fire0005",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 10
+      "vars": 51
      },
      {
       "factorial": "Fire0005",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 35
+      "vars": 51
      },
      {
       "factorial": "Fire0005",
@@ -15621,19 +15621,19 @@
       "factorial": "Fire0249",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 10
+      "vars": 51
      },
      {
       "factorial": "Fire0249",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 10
+      "vars": 51
      },
      {
       "factorial": "Fire0249",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 10
+      "vars": 51
      },
      {
       "factorial": "Fire0249",
@@ -15717,19 +15717,19 @@
       "factorial": "Fire0304",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 10
+      "vars": 51
      },
      {
       "factorial": "Fire0304",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 10
+      "vars": 51
      },
      {
       "factorial": "Fire0304",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 10
+      "vars": 51
      },
      {
       "factorial": "Fire0304",
@@ -15813,19 +15813,19 @@
       "factorial": "Fire0336",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 10
+      "vars": 51
      },
      {
       "factorial": "Fire0336",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 10
+      "vars": 51
      },
      {
       "factorial": "Fire0336",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 10
+      "vars": 51
      },
      {
       "factorial": "Fire0336",
