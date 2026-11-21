@@ -44,6 +44,15 @@
                                 <a class="variable" href="#BEPS.FACTORIALS">FACTORIALS</a>
                         </li>
                         <li>
+                                <a class="variable" href="#BEPS.LAYERED_VARIABLES">LAYERED_VARIABLES</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#BEPS.MONTHLY">MONTHLY</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#BEPS.ANNUAL">ANNUAL</a>
+                        </li>
+                        <li>
                                 <a class="function" href="#BEPS.land_carbon_variables">land_carbon_variables</a>
                         </li>
                         <li>
@@ -51,6 +60,9 @@
                         </li>
                         <li>
                                 <a class="function" href="#BEPS.read">read</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#BEPS.area_weight_path">area_weight_path</a>
                         </li>
                         <li>
                                 <a class="variable" href="#BEPS.LAT">LAT</a>
@@ -104,50 +116,80 @@
 
     </div>
     <a class="headerlink" href="#BEPS"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="BEPS-15"><a href="#BEPS-15"><span class="linenos">15</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BEPS</span><span class="p">(</span><span class="n">core</span><span class="o">.</span><span class="n">WIEAdapter</span><span class="p">):</span>
-</span><span id="BEPS-16"><a href="#BEPS-16"><span class="linenos">16</span></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">MODEL</span>
-</span><span id="BEPS-17"><a href="#BEPS-17"><span class="linenos">17</span></a>    <span class="n">LAT</span><span class="p">,</span> <span class="n">LON</span> <span class="o">=</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span>
-</span><span id="BEPS-18"><a href="#BEPS-18"><span class="linenos">18</span></a>    <span class="n">DECODE</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="BEPS-19"><a href="#BEPS-19"><span class="linenos">19</span></a>    <span class="n">FACTORIALS</span> <span class="o">=</span> <span class="p">{</span><span class="n">Factorial</span><span class="o">.</span><span class="n">baseline</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="s2">&quot;_noDynVeg_noFire&quot;</span><span class="p">}</span>
-</span><span id="BEPS-20"><a href="#BEPS-20"><span class="linenos">20</span></a>
-</span><span id="BEPS-21"><a href="#BEPS-21"><span class="linenos">21</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">land_carbon_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-</span><span id="BEPS-22"><a href="#BEPS-22"><span class="linenos">22</span></a>        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;cVeg&quot;</span><span class="p">,</span> <span class="s2">&quot;cLitter&quot;</span><span class="p">,</span> <span class="s2">&quot;cSoil&quot;</span><span class="p">]</span>
-</span><span id="BEPS-23"><a href="#BEPS-23"><span class="linenos">23</span></a>
-</span><span id="BEPS-24"><a href="#BEPS-24"><span class="linenos">24</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">one_pct_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="BEPS-25"><a href="#BEPS-25"><span class="linenos">25</span></a>        <span class="n">suffix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FACTORIALS</span><span class="p">[</span><span class="n">factorial</span><span class="p">]</span>
-</span><span id="BEPS-26"><a href="#BEPS-26"><span class="linenos">26</span></a>        <span class="n">cadence</span> <span class="o">=</span> <span class="p">(</span>
-</span><span id="BEPS-27"><a href="#BEPS-27"><span class="linenos">27</span></a>            <span class="s2">&quot;yr&quot;</span> <span class="k">if</span> <span class="n">core</span><span class="o">.</span><span class="n">is_annual</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span> <span class="ow">and</span> <span class="n">variable</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">MONTHLY</span> <span class="k">else</span> <span class="s2">&quot;mon&quot;</span>
-</span><span id="BEPS-28"><a href="#BEPS-28"><span class="linenos">28</span></a>        <span class="p">)</span>
-</span><span id="BEPS-29"><a href="#BEPS-29"><span class="linenos">29</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span>
-</span><span id="BEPS-30"><a href="#BEPS-30"><span class="linenos">30</span></a>            <span class="n">_OUTPUT</span>
-</span><span id="BEPS-31"><a href="#BEPS-31"><span class="linenos">31</span></a>            <span class="o">/</span> <span class="s2">&quot;1pctCO2&quot;</span>
-</span><span id="BEPS-32"><a href="#BEPS-32"><span class="linenos">32</span></a>            <span class="o">/</span> <span class="s2">&quot;output&quot;</span>
-</span><span id="BEPS-33"><a href="#BEPS-33"><span class="linenos">33</span></a>            <span class="o">/</span> <span class="n">MODEL</span>
-</span><span id="BEPS-34"><a href="#BEPS-34"><span class="linenos">34</span></a>            <span class="o">/</span> <span class="n">simulation</span>
-</span><span id="BEPS-35"><a href="#BEPS-35"><span class="linenos">35</span></a>            <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;BEPS_</span><span class="si">{</span><span class="n">forcing</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">simulation</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">variable</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">cadence</span><span class="si">}{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">_1.nc&quot;</span>
-</span><span id="BEPS-36"><a href="#BEPS-36"><span class="linenos">36</span></a>        <span class="p">)</span>
-</span><span id="BEPS-37"><a href="#BEPS-37"><span class="linenos">37</span></a>
-</span><span id="BEPS-38"><a href="#BEPS-38"><span class="linenos">38</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ds</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
-</span><span id="BEPS-39"><a href="#BEPS-39"><span class="linenos">39</span></a>        <span class="k">return</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-</span><span id="BEPS-40"><a href="#BEPS-40"><span class="linenos">40</span></a>
-</span><span id="BEPS-41"><a href="#BEPS-41"><span class="linenos">41</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span>
-</span><span id="BEPS-42"><a href="#BEPS-42"><span class="linenos">42</span></a>        <span class="bp">self</span><span class="p">,</span> <span class="n">experiment</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span>
-</span><span id="BEPS-43"><a href="#BEPS-43"><span class="linenos">43</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
-</span><span id="BEPS-44"><a href="#BEPS-44"><span class="linenos">44</span></a>        <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span>
-</span><span id="BEPS-45"><a href="#BEPS-45"><span class="linenos">45</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">experiment</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span><span class="p">),</span>
-</span><span id="BEPS-46"><a href="#BEPS-46"><span class="linenos">46</span></a>            <span class="n">decode_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DECODE</span><span class="p">,</span>
-</span><span id="BEPS-47"><a href="#BEPS-47"><span class="linenos">47</span></a>        <span class="p">)</span>
-</span><span id="BEPS-48"><a href="#BEPS-48"><span class="linenos">48</span></a>        <span class="n">da</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">mask_fill</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="n">variable</span><span class="p">])</span>
-</span><span id="BEPS-49"><a href="#BEPS-49"><span class="linenos">49</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="p">(</span><span class="n">ds</span><span class="p">))</span>
-</span><span id="BEPS-50"><a href="#BEPS-50"><span class="linenos">50</span></a>
-</span><span id="BEPS-51"><a href="#BEPS-51"><span class="linenos">51</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
-</span><span id="BEPS-52"><a href="#BEPS-52"><span class="linenos">52</span></a>        <span class="n">ref</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span>
-</span><span id="BEPS-53"><a href="#BEPS-53"><span class="linenos">53</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="s2">&quot;1pctCO2&quot;</span><span class="p">,</span> <span class="s2">&quot;bgc&quot;</span><span class="p">,</span> <span class="s2">&quot;stable&quot;</span><span class="p">,</span> <span class="n">Factorial</span><span class="o">.</span><span class="n">baseline</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;cVeg&quot;</span><span class="p">),</span>
-</span><span id="BEPS-54"><a href="#BEPS-54"><span class="linenos">54</span></a>            <span class="n">decode_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DECODE</span><span class="p">,</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BEPS-17"><a href="#BEPS-17"><span class="linenos">17</span></a><span class="k">class</span><span class="w"> </span><span class="nc">BEPS</span><span class="p">(</span><span class="n">core</span><span class="o">.</span><span class="n">WIEAdapter</span><span class="p">):</span>
+</span><span id="BEPS-18"><a href="#BEPS-18"><span class="linenos">18</span></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">MODEL</span>
+</span><span id="BEPS-19"><a href="#BEPS-19"><span class="linenos">19</span></a>    <span class="n">LAT</span><span class="p">,</span> <span class="n">LON</span> <span class="o">=</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span>
+</span><span id="BEPS-20"><a href="#BEPS-20"><span class="linenos">20</span></a>    <span class="n">DECODE</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="BEPS-21"><a href="#BEPS-21"><span class="linenos">21</span></a>    <span class="n">FACTORIALS</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="BEPS-22"><a href="#BEPS-22"><span class="linenos">22</span></a>        <span class="n">Factorial</span><span class="o">.</span><span class="n">baseline</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="s2">&quot;noDynVeg_noPermafrost&quot;</span><span class="p">,</span>
+</span><span id="BEPS-23"><a href="#BEPS-23"><span class="linenos">23</span></a>        <span class="s2">&quot;permafrost&quot;</span><span class="p">:</span> <span class="s2">&quot;noDynVeg&quot;</span><span class="p">,</span>
+</span><span id="BEPS-24"><a href="#BEPS-24"><span class="linenos">24</span></a>    <span class="p">}</span>
+</span><span id="BEPS-25"><a href="#BEPS-25"><span class="linenos">25</span></a>
+</span><span id="BEPS-26"><a href="#BEPS-26"><span class="linenos">26</span></a>    <span class="n">LAYERED_VARIABLES</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="BEPS-27"><a href="#BEPS-27"><span class="linenos">27</span></a>        <span class="s2">&quot;soilT&quot;</span><span class="p">,</span>
+</span><span id="BEPS-28"><a href="#BEPS-28"><span class="linenos">28</span></a>        <span class="s2">&quot;soilMoist&quot;</span><span class="p">,</span>
+</span><span id="BEPS-29"><a href="#BEPS-29"><span class="linenos">29</span></a>        <span class="s2">&quot;mrsoLayer&quot;</span><span class="p">,</span>
+</span><span id="BEPS-30"><a href="#BEPS-30"><span class="linenos">30</span></a>        <span class="s2">&quot;cSoilLayers&quot;</span><span class="p">,</span>
+</span><span id="BEPS-31"><a href="#BEPS-31"><span class="linenos">31</span></a>        <span class="s2">&quot;rhLayers&quot;</span><span class="p">,</span>
+</span><span id="BEPS-32"><a href="#BEPS-32"><span class="linenos">32</span></a>        <span class="s2">&quot;soilRh&quot;</span><span class="p">,</span>
+</span><span id="BEPS-33"><a href="#BEPS-33"><span class="linenos">33</span></a>        <span class="s2">&quot;nOrgSoilLayer&quot;</span><span class="p">,</span>
+</span><span id="BEPS-34"><a href="#BEPS-34"><span class="linenos">34</span></a>        <span class="s2">&quot;nInorgSoilLayer&quot;</span><span class="p">,</span>
+</span><span id="BEPS-35"><a href="#BEPS-35"><span class="linenos">35</span></a>        <span class="s2">&quot;cPoolVr&quot;</span><span class="p">,</span>
+</span><span id="BEPS-36"><a href="#BEPS-36"><span class="linenos">36</span></a>        <span class="s2">&quot;fch4layer&quot;</span><span class="p">,</span>
+</span><span id="BEPS-37"><a href="#BEPS-37"><span class="linenos">37</span></a>    <span class="p">}</span>
+</span><span id="BEPS-38"><a href="#BEPS-38"><span class="linenos">38</span></a>
+</span><span id="BEPS-39"><a href="#BEPS-39"><span class="linenos">39</span></a>    <span class="n">MONTHLY</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;wetfrac&quot;</span><span class="p">}</span>
+</span><span id="BEPS-40"><a href="#BEPS-40"><span class="linenos">40</span></a>    <span class="n">ANNUAL</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;cOther&quot;</span><span class="p">,</span> <span class="s2">&quot;canopyheightTotal&quot;</span><span class="p">,</span> <span class="s2">&quot;highcoverTotal&quot;</span><span class="p">}</span>
+</span><span id="BEPS-41"><a href="#BEPS-41"><span class="linenos">41</span></a>
+</span><span id="BEPS-42"><a href="#BEPS-42"><span class="linenos">42</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">land_carbon_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="BEPS-43"><a href="#BEPS-43"><span class="linenos">43</span></a>        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;cVeg&quot;</span><span class="p">,</span> <span class="s2">&quot;cSoil&quot;</span><span class="p">]</span>
+</span><span id="BEPS-44"><a href="#BEPS-44"><span class="linenos">44</span></a>
+</span><span id="BEPS-45"><a href="#BEPS-45"><span class="linenos">45</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">one_pct_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="BEPS-46"><a href="#BEPS-46"><span class="linenos">46</span></a>        <span class="k">if</span> <span class="n">variable</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">MONTHLY</span><span class="p">:</span>
+</span><span id="BEPS-47"><a href="#BEPS-47"><span class="linenos">47</span></a>            <span class="n">cadence</span> <span class="o">=</span> <span class="s2">&quot;mon&quot;</span>
+</span><span id="BEPS-48"><a href="#BEPS-48"><span class="linenos">48</span></a>        <span class="k">elif</span> <span class="n">variable</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ANNUAL</span> <span class="ow">or</span> <span class="n">core</span><span class="o">.</span><span class="n">is_annual</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
+</span><span id="BEPS-49"><a href="#BEPS-49"><span class="linenos">49</span></a>            <span class="n">cadence</span> <span class="o">=</span> <span class="s2">&quot;yr&quot;</span>
+</span><span id="BEPS-50"><a href="#BEPS-50"><span class="linenos">50</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="BEPS-51"><a href="#BEPS-51"><span class="linenos">51</span></a>            <span class="n">cadence</span> <span class="o">=</span> <span class="s2">&quot;mon&quot;</span>
+</span><span id="BEPS-52"><a href="#BEPS-52"><span class="linenos">52</span></a>        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FACTORIALS</span><span class="p">[</span><span class="n">factorial</span><span class="p">]</span>
+</span><span id="BEPS-53"><a href="#BEPS-53"><span class="linenos">53</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span>
+</span><span id="BEPS-54"><a href="#BEPS-54"><span class="linenos">54</span></a>            <span class="n">_OUTPUT</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;BEPS_</span><span class="si">{</span><span class="n">forcing</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">simulation</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">variable</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">cadence</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">_1.nc&quot;</span>
 </span><span id="BEPS-55"><a href="#BEPS-55"><span class="linenos">55</span></a>        <span class="p">)</span>
-</span><span id="BEPS-56"><a href="#BEPS-56"><span class="linenos">56</span></a>        <span class="n">area</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">spherical_area</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">)</span>
-</span><span id="BEPS-57"><a href="#BEPS-57"><span class="linenos">57</span></a>        <span class="n">ref</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span id="BEPS-58"><a href="#BEPS-58"><span class="linenos">58</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">rename_latlon</span><span class="p">(</span><span class="n">area</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">)</span>
+</span><span id="BEPS-56"><a href="#BEPS-56"><span class="linenos">56</span></a>
+</span><span id="BEPS-57"><a href="#BEPS-57"><span class="linenos">57</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ds</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
+</span><span id="BEPS-58"><a href="#BEPS-58"><span class="linenos">58</span></a>        <span class="k">return</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</span><span id="BEPS-59"><a href="#BEPS-59"><span class="linenos">59</span></a>
+</span><span id="BEPS-60"><a href="#BEPS-60"><span class="linenos">60</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_layer_depths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_of_layers</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+</span><span id="BEPS-61"><a href="#BEPS-61"><span class="linenos">61</span></a>        <span class="n">soil</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">_OUTPUT</span> <span class="o">/</span> <span class="s2">&quot;soil_metadata_1deg.nc&quot;</span><span class="p">)</span>
+</span><span id="BEPS-62"><a href="#BEPS-62"><span class="linenos">62</span></a>        <span class="n">configuration</span> <span class="o">=</span> <span class="n">_SOIL_CONFIGURATIONS</span><span class="p">[</span><span class="n">number_of_layers</span><span class="p">]</span>
+</span><span id="BEPS-63"><a href="#BEPS-63"><span class="linenos">63</span></a>        <span class="n">top</span> <span class="o">=</span> <span class="n">soil</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">configuration</span><span class="si">}</span><span class="s2">_layer_top_depth&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</span><span id="BEPS-64"><a href="#BEPS-64"><span class="linenos">64</span></a>        <span class="n">bottom</span> <span class="o">=</span> <span class="n">soil</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">configuration</span><span class="si">}</span><span class="s2">_layer_bottom_depth&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</span><span id="BEPS-65"><a href="#BEPS-65"><span class="linenos">65</span></a>        <span class="n">soil</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span id="BEPS-66"><a href="#BEPS-66"><span class="linenos">66</span></a>        <span class="k">return</span> <span class="p">((</span><span class="n">top</span> <span class="o">+</span> <span class="n">bottom</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</span><span id="BEPS-67"><a href="#BEPS-67"><span class="linenos">67</span></a>
+</span><span id="BEPS-68"><a href="#BEPS-68"><span class="linenos">68</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span>
+</span><span id="BEPS-69"><a href="#BEPS-69"><span class="linenos">69</span></a>        <span class="bp">self</span><span class="p">,</span> <span class="n">experiment</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span>
+</span><span id="BEPS-70"><a href="#BEPS-70"><span class="linenos">70</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
+</span><span id="BEPS-71"><a href="#BEPS-71"><span class="linenos">71</span></a>        <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span>
+</span><span id="BEPS-72"><a href="#BEPS-72"><span class="linenos">72</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">experiment</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span><span class="p">),</span>
+</span><span id="BEPS-73"><a href="#BEPS-73"><span class="linenos">73</span></a>            <span class="n">decode_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DECODE</span><span class="p">,</span>
+</span><span id="BEPS-74"><a href="#BEPS-74"><span class="linenos">74</span></a>        <span class="p">)</span>
+</span><span id="BEPS-75"><a href="#BEPS-75"><span class="linenos">75</span></a>        <span class="n">da</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">mask_fill</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="n">variable</span><span class="p">])</span>
+</span><span id="BEPS-76"><a href="#BEPS-76"><span class="linenos">76</span></a>        <span class="k">if</span> <span class="n">variable</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAYERED_VARIABLES</span><span class="p">:</span>
+</span><span id="BEPS-77"><a href="#BEPS-77"><span class="linenos">77</span></a>            <span class="n">layer_dim</span> <span class="o">=</span> <span class="s2">&quot;layer&quot;</span> <span class="k">if</span> <span class="s2">&quot;layer&quot;</span> <span class="ow">in</span> <span class="n">da</span><span class="o">.</span><span class="n">dims</span> <span class="k">else</span> <span class="s2">&quot;nsoil&quot;</span>
+</span><span id="BEPS-78"><a href="#BEPS-78"><span class="linenos">78</span></a>            <span class="n">depths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_layer_depths</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">sizes</span><span class="p">[</span><span class="n">layer_dim</span><span class="p">])</span>
+</span><span id="BEPS-79"><a href="#BEPS-79"><span class="linenos">79</span></a>            <span class="n">da</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">({</span><span class="n">layer_dim</span><span class="p">:</span> <span class="p">(</span><span class="n">layer_dim</span><span class="p">,</span> <span class="n">depths</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;m&quot;</span><span class="p">})})</span>
+</span><span id="BEPS-80"><a href="#BEPS-80"><span class="linenos">80</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="p">(</span><span class="n">ds</span><span class="p">))</span>
+</span><span id="BEPS-81"><a href="#BEPS-81"><span class="linenos">81</span></a>
+</span><span id="BEPS-82"><a href="#BEPS-82"><span class="linenos">82</span></a>    <span class="nd">@property</span>
+</span><span id="BEPS-83"><a href="#BEPS-83"><span class="linenos">83</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="BEPS-84"><a href="#BEPS-84"><span class="linenos">84</span></a>        <span class="k">return</span> <span class="n">_OUTPUT</span> <span class="o">/</span> <span class="s2">&quot;global_domain_1deg.nc&quot;</span>
+</span><span id="BEPS-85"><a href="#BEPS-85"><span class="linenos">85</span></a>
+</span><span id="BEPS-86"><a href="#BEPS-86"><span class="linenos">86</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
+</span><span id="BEPS-87"><a href="#BEPS-87"><span class="linenos">87</span></a>        <span class="n">domain</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">area_weight_path</span><span class="p">)</span>
+</span><span id="BEPS-88"><a href="#BEPS-88"><span class="linenos">88</span></a>        <span class="n">cell_area</span> <span class="o">=</span> <span class="n">domain</span><span class="p">[</span><span class="s2">&quot;cell_area&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+</span><span id="BEPS-89"><a href="#BEPS-89"><span class="linenos">89</span></a>        <span class="n">domain</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span><span id="BEPS-90"><a href="#BEPS-90"><span class="linenos">90</span></a>        <span class="k">return</span> <span class="n">cell_area</span>
 </span></pre></div>
 
 
@@ -190,11 +232,48 @@ variable) by name, and a combination that wasn't uploaded simply fails when
                             <div id="BEPS.FACTORIALS" class="classattr">
                                 <div class="attr variable">
             <span class="name">FACTORIALS</span>        =
-<span class="default_value">{&#39;baseline&#39;: &#39;_noDynVeg_noFire&#39;}</span>
+<span class="default_value">{&#39;baseline&#39;: &#39;noDynVeg_noPermafrost&#39;, &#39;permafrost&#39;: &#39;noDynVeg&#39;}</span>
 
         
     </div>
     <a class="headerlink" href="#BEPS.FACTORIALS"></a>
+    
+    
+
+                            </div>
+                            <div id="BEPS.LAYERED_VARIABLES" class="classattr">
+                                <div class="attr variable">
+            <span class="name">LAYERED_VARIABLES</span>        =
+<input id="BEPS.LAYERED_VARIABLES-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+            <label class="view-value-button pdoc-button" for="BEPS.LAYERED_VARIABLES-view-value"></label><span class="default_value">{&#39;nInorgSoilLayer&#39;, &#39;mrsoLayer&#39;, &#39;rhLayers&#39;, &#39;soilMoist&#39;, &#39;soilRh&#39;, &#39;cPoolVr&#39;, &#39;cSoilLayers&#39;, &#39;fch4layer&#39;, &#39;nOrgSoilLayer&#39;, &#39;soilT&#39;}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#BEPS.LAYERED_VARIABLES"></a>
+    
+    
+
+                            </div>
+                            <div id="BEPS.MONTHLY" class="classattr">
+                                <div class="attr variable">
+            <span class="name">MONTHLY</span>        =
+<span class="default_value">{&#39;wetfrac&#39;}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#BEPS.MONTHLY"></a>
+    
+    
+
+                            </div>
+                            <div id="BEPS.ANNUAL" class="classattr">
+                                <div class="attr variable">
+            <span class="name">ANNUAL</span>        =
+<span class="default_value">{&#39;canopyheightTotal&#39;, &#39;cOther&#39;, &#39;highcoverTotal&#39;}</span>
+
+        
+    </div>
+    <a class="headerlink" href="#BEPS.ANNUAL"></a>
     
     
 
@@ -210,8 +289,8 @@ variable) by name, and a combination that wasn't uploaded simply fails when
 
     </div>
     <a class="headerlink" href="#BEPS.land_carbon_variables"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="BEPS.land_carbon_variables-21"><a href="#BEPS.land_carbon_variables-21"><span class="linenos">21</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">land_carbon_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-</span><span id="BEPS.land_carbon_variables-22"><a href="#BEPS.land_carbon_variables-22"><span class="linenos">22</span></a>        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;cVeg&quot;</span><span class="p">,</span> <span class="s2">&quot;cLitter&quot;</span><span class="p">,</span> <span class="s2">&quot;cSoil&quot;</span><span class="p">]</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BEPS.land_carbon_variables-42"><a href="#BEPS.land_carbon_variables-42"><span class="linenos">42</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">land_carbon_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="BEPS.land_carbon_variables-43"><a href="#BEPS.land_carbon_variables-43"><span class="linenos">43</span></a>        <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;cVeg&quot;</span><span class="p">,</span> <span class="s2">&quot;cSoil&quot;</span><span class="p">]</span>
 </span></pre></div>
 
 
@@ -232,19 +311,17 @@ of cVeg, cSoil, cLitter, and cOther.</p>
 
     </div>
     <a class="headerlink" href="#BEPS.one_pct_path"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="BEPS.one_pct_path-24"><a href="#BEPS.one_pct_path-24"><span class="linenos">24</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">one_pct_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="BEPS.one_pct_path-25"><a href="#BEPS.one_pct_path-25"><span class="linenos">25</span></a>        <span class="n">suffix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FACTORIALS</span><span class="p">[</span><span class="n">factorial</span><span class="p">]</span>
-</span><span id="BEPS.one_pct_path-26"><a href="#BEPS.one_pct_path-26"><span class="linenos">26</span></a>        <span class="n">cadence</span> <span class="o">=</span> <span class="p">(</span>
-</span><span id="BEPS.one_pct_path-27"><a href="#BEPS.one_pct_path-27"><span class="linenos">27</span></a>            <span class="s2">&quot;yr&quot;</span> <span class="k">if</span> <span class="n">core</span><span class="o">.</span><span class="n">is_annual</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span> <span class="ow">and</span> <span class="n">variable</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">MONTHLY</span> <span class="k">else</span> <span class="s2">&quot;mon&quot;</span>
-</span><span id="BEPS.one_pct_path-28"><a href="#BEPS.one_pct_path-28"><span class="linenos">28</span></a>        <span class="p">)</span>
-</span><span id="BEPS.one_pct_path-29"><a href="#BEPS.one_pct_path-29"><span class="linenos">29</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span>
-</span><span id="BEPS.one_pct_path-30"><a href="#BEPS.one_pct_path-30"><span class="linenos">30</span></a>            <span class="n">_OUTPUT</span>
-</span><span id="BEPS.one_pct_path-31"><a href="#BEPS.one_pct_path-31"><span class="linenos">31</span></a>            <span class="o">/</span> <span class="s2">&quot;1pctCO2&quot;</span>
-</span><span id="BEPS.one_pct_path-32"><a href="#BEPS.one_pct_path-32"><span class="linenos">32</span></a>            <span class="o">/</span> <span class="s2">&quot;output&quot;</span>
-</span><span id="BEPS.one_pct_path-33"><a href="#BEPS.one_pct_path-33"><span class="linenos">33</span></a>            <span class="o">/</span> <span class="n">MODEL</span>
-</span><span id="BEPS.one_pct_path-34"><a href="#BEPS.one_pct_path-34"><span class="linenos">34</span></a>            <span class="o">/</span> <span class="n">simulation</span>
-</span><span id="BEPS.one_pct_path-35"><a href="#BEPS.one_pct_path-35"><span class="linenos">35</span></a>            <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;BEPS_</span><span class="si">{</span><span class="n">forcing</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">simulation</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">variable</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">cadence</span><span class="si">}{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">_1.nc&quot;</span>
-</span><span id="BEPS.one_pct_path-36"><a href="#BEPS.one_pct_path-36"><span class="linenos">36</span></a>        <span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BEPS.one_pct_path-45"><a href="#BEPS.one_pct_path-45"><span class="linenos">45</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">one_pct_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="BEPS.one_pct_path-46"><a href="#BEPS.one_pct_path-46"><span class="linenos">46</span></a>        <span class="k">if</span> <span class="n">variable</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">MONTHLY</span><span class="p">:</span>
+</span><span id="BEPS.one_pct_path-47"><a href="#BEPS.one_pct_path-47"><span class="linenos">47</span></a>            <span class="n">cadence</span> <span class="o">=</span> <span class="s2">&quot;mon&quot;</span>
+</span><span id="BEPS.one_pct_path-48"><a href="#BEPS.one_pct_path-48"><span class="linenos">48</span></a>        <span class="k">elif</span> <span class="n">variable</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ANNUAL</span> <span class="ow">or</span> <span class="n">core</span><span class="o">.</span><span class="n">is_annual</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
+</span><span id="BEPS.one_pct_path-49"><a href="#BEPS.one_pct_path-49"><span class="linenos">49</span></a>            <span class="n">cadence</span> <span class="o">=</span> <span class="s2">&quot;yr&quot;</span>
+</span><span id="BEPS.one_pct_path-50"><a href="#BEPS.one_pct_path-50"><span class="linenos">50</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="BEPS.one_pct_path-51"><a href="#BEPS.one_pct_path-51"><span class="linenos">51</span></a>            <span class="n">cadence</span> <span class="o">=</span> <span class="s2">&quot;mon&quot;</span>
+</span><span id="BEPS.one_pct_path-52"><a href="#BEPS.one_pct_path-52"><span class="linenos">52</span></a>        <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FACTORIALS</span><span class="p">[</span><span class="n">factorial</span><span class="p">]</span>
+</span><span id="BEPS.one_pct_path-53"><a href="#BEPS.one_pct_path-53"><span class="linenos">53</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span>
+</span><span id="BEPS.one_pct_path-54"><a href="#BEPS.one_pct_path-54"><span class="linenos">54</span></a>            <span class="n">_OUTPUT</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;BEPS_</span><span class="si">{</span><span class="n">forcing</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">simulation</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">variable</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">cadence</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">_1.nc&quot;</span>
+</span><span id="BEPS.one_pct_path-55"><a href="#BEPS.one_pct_path-55"><span class="linenos">55</span></a>        <span class="p">)</span>
 </span></pre></div>
 
 
@@ -265,15 +342,19 @@ tokens into THIS model's upload naming convention.</p>
 
     </div>
     <a class="headerlink" href="#BEPS.read"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="BEPS.read-41"><a href="#BEPS.read-41"><span class="linenos">41</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span>
-</span><span id="BEPS.read-42"><a href="#BEPS.read-42"><span class="linenos">42</span></a>        <span class="bp">self</span><span class="p">,</span> <span class="n">experiment</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span>
-</span><span id="BEPS.read-43"><a href="#BEPS.read-43"><span class="linenos">43</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
-</span><span id="BEPS.read-44"><a href="#BEPS.read-44"><span class="linenos">44</span></a>        <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span>
-</span><span id="BEPS.read-45"><a href="#BEPS.read-45"><span class="linenos">45</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">experiment</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span><span class="p">),</span>
-</span><span id="BEPS.read-46"><a href="#BEPS.read-46"><span class="linenos">46</span></a>            <span class="n">decode_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DECODE</span><span class="p">,</span>
-</span><span id="BEPS.read-47"><a href="#BEPS.read-47"><span class="linenos">47</span></a>        <span class="p">)</span>
-</span><span id="BEPS.read-48"><a href="#BEPS.read-48"><span class="linenos">48</span></a>        <span class="n">da</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">mask_fill</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="n">variable</span><span class="p">])</span>
-</span><span id="BEPS.read-49"><a href="#BEPS.read-49"><span class="linenos">49</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="p">(</span><span class="n">ds</span><span class="p">))</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BEPS.read-68"><a href="#BEPS.read-68"><span class="linenos">68</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span>
+</span><span id="BEPS.read-69"><a href="#BEPS.read-69"><span class="linenos">69</span></a>        <span class="bp">self</span><span class="p">,</span> <span class="n">experiment</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span>
+</span><span id="BEPS.read-70"><a href="#BEPS.read-70"><span class="linenos">70</span></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
+</span><span id="BEPS.read-71"><a href="#BEPS.read-71"><span class="linenos">71</span></a>        <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span>
+</span><span id="BEPS.read-72"><a href="#BEPS.read-72"><span class="linenos">72</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">experiment</span><span class="p">,</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">forcing</span><span class="p">,</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">variable</span><span class="p">),</span>
+</span><span id="BEPS.read-73"><a href="#BEPS.read-73"><span class="linenos">73</span></a>            <span class="n">decode_times</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DECODE</span><span class="p">,</span>
+</span><span id="BEPS.read-74"><a href="#BEPS.read-74"><span class="linenos">74</span></a>        <span class="p">)</span>
+</span><span id="BEPS.read-75"><a href="#BEPS.read-75"><span class="linenos">75</span></a>        <span class="n">da</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">mask_fill</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="n">variable</span><span class="p">])</span>
+</span><span id="BEPS.read-76"><a href="#BEPS.read-76"><span class="linenos">76</span></a>        <span class="k">if</span> <span class="n">variable</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAYERED_VARIABLES</span><span class="p">:</span>
+</span><span id="BEPS.read-77"><a href="#BEPS.read-77"><span class="linenos">77</span></a>            <span class="n">layer_dim</span> <span class="o">=</span> <span class="s2">&quot;layer&quot;</span> <span class="k">if</span> <span class="s2">&quot;layer&quot;</span> <span class="ow">in</span> <span class="n">da</span><span class="o">.</span><span class="n">dims</span> <span class="k">else</span> <span class="s2">&quot;nsoil&quot;</span>
+</span><span id="BEPS.read-78"><a href="#BEPS.read-78"><span class="linenos">78</span></a>            <span class="n">depths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_layer_depths</span><span class="p">(</span><span class="n">da</span><span class="o">.</span><span class="n">sizes</span><span class="p">[</span><span class="n">layer_dim</span><span class="p">])</span>
+</span><span id="BEPS.read-79"><a href="#BEPS.read-79"><span class="linenos">79</span></a>            <span class="n">da</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">assign_coords</span><span class="p">({</span><span class="n">layer_dim</span><span class="p">:</span> <span class="p">(</span><span class="n">layer_dim</span><span class="p">,</span> <span class="n">depths</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;m&quot;</span><span class="p">})})</span>
+</span><span id="BEPS.read-80"><a href="#BEPS.read-80"><span class="linenos">80</span></a>        <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">standardize</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LAT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LON</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span><span class="p">(</span><span class="n">ds</span><span class="p">))</span>
 </span></pre></div>
 
 
@@ -281,6 +362,26 @@ tokens into THIS model's upload naming convention.</p>
 ('time', 'lat', 'lon'[, level]), pd.DateTime <code>time</code> coord, sentinel fills
 masked to NaN. Units stay NATIVE — unit conversion happens in <code>WIEFile</code>,
 not here. Returns an unweighted DataArray.</p>
+</div>
+
+
+                            </div>
+                            <div id="BEPS.area_weight_path" class="classattr">
+                                        <input id="BEPS.area_weight_path-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr variable">
+            <span class="name">area_weight_path</span>
+
+                <label class="view-source-button" for="BEPS.area_weight_path-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#BEPS.area_weight_path"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BEPS.area_weight_path-82"><a href="#BEPS.area_weight_path-82"><span class="linenos">82</span></a>    <span class="nd">@property</span>
+</span><span id="BEPS.area_weight_path-83"><a href="#BEPS.area_weight_path-83"><span class="linenos">83</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">area_weight_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="BEPS.area_weight_path-84"><a href="#BEPS.area_weight_path-84"><span class="linenos">84</span></a>        <span class="k">return</span> <span class="n">_OUTPUT</span> <span class="o">/</span> <span class="s2">&quot;global_domain_1deg.nc&quot;</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>The path to the raster that contains the spatial weights for each model.</p>
 </div>
 
 
@@ -315,7 +416,6 @@ not here. Returns an unweighted DataArray.</p>
                                     <div><dt><a href="core.html#WIEAdapter">wiemip_registry.core.WIEAdapter</a></dt>
                                 <dd id="BEPS.OVERSHOOT_FACTORIALS" class="variable"><a href="core.html#WIEAdapter.OVERSHOOT_FACTORIALS">OVERSHOOT_FACTORIALS</a></dd>
                 <dd id="BEPS.PROVISIONAL_DATA" class="variable"><a href="core.html#WIEAdapter.PROVISIONAL_DATA">PROVISIONAL_DATA</a></dd>
-                <dd id="BEPS.LAYERED_VARIABLES" class="variable"><a href="core.html#WIEAdapter.LAYERED_VARIABLES">LAYERED_VARIABLES</a></dd>
                 <dd id="BEPS.FRACTION_TO_PERCENT" class="variable"><a href="core.html#WIEAdapter.FRACTION_TO_PERCENT">FRACTION_TO_PERCENT</a></dd>
                 <dd id="BEPS.PER_PFT_AREA" class="variable"><a href="core.html#WIEAdapter.PER_PFT_AREA">PER_PFT_AREA</a></dd>
                 <dd id="BEPS.FACTORIAL_LAND_CARBON" class="variable"><a href="core.html#WIEAdapter.FACTORIAL_LAND_CARBON">FACTORIAL_LAND_CARBON</a></dd>
@@ -326,7 +426,6 @@ not here. Returns an unweighted DataArray.</p>
                 <dd id="BEPS.overshoot_path" class="function"><a href="core.html#WIEAdapter.overshoot_path">overshoot_path</a></dd>
                 <dd id="BEPS.paths" class="function"><a href="core.html#WIEAdapter.paths">paths</a></dd>
                 <dd id="BEPS.path" class="function"><a href="core.html#WIEAdapter.path">path</a></dd>
-                <dd id="BEPS.area_weight_path" class="variable"><a href="core.html#WIEAdapter.area_weight_path">area_weight_path</a></dd>
                 <dd id="BEPS.weights" class="function"><a href="core.html#WIEAdapter.weights">weights</a></dd>
                 <dd id="BEPS.weight_dataarray" class="function"><a href="core.html#WIEAdapter.weight_dataarray">weight_dataarray</a></dd>
                 <dd id="BEPS.pft_area" class="function"><a href="core.html#WIEAdapter.pft_area">pft_area</a></dd>
