@@ -1,5 +1,3 @@
-Title: WIEMIP · Updates
-Description: The weekly WIEMIP update emails: meetings, paper plans, protocol and data news.
 
 <!-- New week: paste a `## <day> <Month> <year>` block at the top, under the intro,
      then run `uv run --with markdown python updates/build_updates.py`.
@@ -10,6 +8,65 @@ Description: The weekly WIEMIP update emails: meetings, paper plans, protocol an
 # WIEMIP Weekly Updates
 
 A record of emails sent to the WIEMIP community. 
+
+## 23 November 2026
+
+A reminder on data availability: WIEMIP data are available to anyone as long as they follow the guidelines for crediting/authoring the WIEMIP modelers. Let people know to reach out to me ([tom@sparkclimate.org](mailto:tom@sparkclimate.org)) for access and I’ll provide access keys and/or access to the shared analysis environment. Models are still uploading so we’re holding off on making the data totally public (aiming for spring 2027) until we’re sure there are no more revisions.
+
+### Upcoming meetings & info
+
+- WIEMIP Lead Author meeting is tomorrow, Nov 24, at 4PM UTC.
+- The WIE EGU session is here (link in the email); feel free to submit abstracts!
+- ICDC 12 is accepting abstracts until Dec 15th. More info in the email.
+
+### Protocol/data updates:
+
+- The deadline for uploads is in a ~week (Dec 1). After this, upload keys will be disabled and we’ll finalize the WIEMIP archive.
+- VL-1p5-CTAP is now on the hub! Simulations with these drivers would be appreciated by many of the overshoot papers.
+- NEIVA-based fire emissions are now on the bucket. Access them on the hub by asking for `f<CH4/N2O/CO2>fire_neiva`. They’re computed from each model’s fFire/fFirePFT.
+
+## 16 November 2026
+
+### Upcoming meetings & info
+
+- WIEMIP TCRE is meeting on Nov 9 at 1PM UTC
+- The WIE EGU session is here (link in the email); feel free to submit abstracts!
+- AGU is coming up. Please reach out to me if you have WIEMIP-related posters or presentations so I can start tracking them.
+- Cross-post from ILMF: Postdoctoral researcher needed to work on integrating and evaluating different representations of leaf-scale C4 photosynthesis models in CLM-FATES. More information on the posting in the email.
+
+### Protocol/data updates:
+
+- VL-1p5-CTAP is now on the hub! Simulations with these drivers would be appreciated by many of the overshoot papers.
+- Modelers: If possible, please upload fAllocWood to the bucket.
+
+## 2 November 2026
+
+### Upcoming meetings & info
+
+- The WIE EGU session is here (link in the email); feel free to submit abstracts!
+- AGU is coming up. Please reach out to me if you have WIEMIP-related posters or presentations so I can start tracking them.
+
+### Protocol/data updates:
+
+- Deadline: Please finish all runs by December 1st. This will give the WIEMIP team enough time to validate and reformat the data.
+- The emissions data used to drive FaIR are on the Hub, along with some more benchmarking data
+
+## 26 October 2026
+
+### Upcoming meetings & info
+
+- Deadline: The next WIEMIP lead author meeting is scheduled for 3PM UTC on October 29th. Lead authors (if you are a new lead author, or know of one, let me know): please come with a zero-order draft (one page, title, structure of the paper, any figure ideas) to this meeting and be prepared to present in ~3 minutes (with or without a slide)
+- Xinrui Liu is leading a WIEMIP SCM meeting 27/10 at 2PM UTC
+- Becky Varney is leading a WIEMIP Global Soils meeting 28/10 at 2:30PM UTC
+- Laura Eifler is leading a fire update meeting on 29/10 at 2PM UTC
+- Garry Hayman is leading a WIEMIP BVOC meeting 30/10 at 4PM UTC
+- AGU is coming up. Please reach out to me if you have WIEMIP-related posters or presentations so I can start tracking them.
+
+### Protocol/data updates:
+
+- Deadline: Please finish all runs by December 1st. This will give the WIEMIP team enough time to validate and reformat the data.
+- The WIEMIP team is beginning to move out on data finalization, so each file will be tagged “finalized” or similar in the registry in the coming week(s).
+- We’ve added some questions to answer before adding your name to a paper in the authorship guidelines. Feel free to comment on them.
 
 ## 20 October 2026
 
