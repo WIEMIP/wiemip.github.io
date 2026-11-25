@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-11-24T17:16:55+00:00",
- "registry_version": "0.1.1.dev245+g66f11e1bf",
+ "generated_at": "2026-11-25T16:59:52+00:00",
+ "registry_version": "0.1.1.dev247+ge62c6b9ae",
  "variables_total": 178,
  "gcm_forcings": [
   "ukesm",
@@ -339,7 +339,7 @@
    "poc": "Mousong Wu",
    "files": {
     "1pctCO2": 795,
-    "overshoot": 570
+    "overshoot": 612
    },
    "mapped": {
     "1pctCO2": true,
@@ -418,7 +418,7 @@
       "factorial": "baseline",
       "simulation": "hl",
       "forcing": "ukesm",
-      "vars": 79
+      "vars": 97
      },
      {
       "factorial": "baseline",
@@ -430,7 +430,7 @@
       "factorial": "baseline",
       "simulation": "m",
       "forcing": "ukesm",
-      "vars": 79
+      "vars": 97
      },
      {
       "factorial": "baseline",
@@ -512,7 +512,7 @@
       ]
      },
      "ukesm": {
-      "status": "yellow",
+      "status": "green",
       "runs": [
        {
         "simulation": "l",
@@ -523,8 +523,8 @@
        {
         "simulation": "hl",
         "forcing": "ukesm",
-        "vars": 79,
-        "state": "partial"
+        "vars": 97,
+        "state": "complete"
        },
        {
         "simulation": "hl_ctap",
@@ -535,8 +535,8 @@
        {
         "simulation": "m",
         "forcing": "ukesm",
-        "vars": 79,
-        "state": "partial"
+        "vars": 97,
+        "state": "complete"
        }
       ]
      },
@@ -731,8 +731,8 @@
         {
          "simulation": "m",
          "forcing": "ukesm",
-         "vars": 79,
-         "state": "partial"
+         "vars": 97,
+         "state": "complete"
         },
         {
          "simulation": "m",
@@ -806,8 +806,8 @@
         {
          "simulation": "hl",
          "forcing": "ukesm",
-         "vars": 79,
-         "state": "partial"
+         "vars": 97,
+         "state": "complete"
         },
         {
          "simulation": "hl",
@@ -1509,7 +1509,7 @@
    "empty": false,
    "poc": "Eren Bilir",
    "files": {
-    "1pctCO2": 168,
+    "1pctCO2": 172,
     "overshoot": 0
    },
    "mapped": {
@@ -3744,7 +3744,7 @@
    "empty": false,
    "poc": "Rosie Fisher",
    "files": {
-    "1pctCO2": 973,
+    "1pctCO2": 965,
     "overshoot": 714
    },
    "mapped": {
@@ -3768,25 +3768,25 @@
       "factorial": "baseline",
       "simulation": "bgc",
       "forcing": "stable",
-      "vars": 69
+      "vars": 67
      },
      {
       "factorial": "baseline",
       "simulation": "cou",
       "forcing": "ukesm",
-      "vars": 69
+      "vars": 67
      },
      {
       "factorial": "baseline",
       "simulation": "ctrl",
       "forcing": "stable",
-      "vars": 69
+      "vars": 67
      },
      {
       "factorial": "baseline",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 69
+      "vars": 67
      },
      {
       "factorial": "noFire",
@@ -3878,13 +3878,13 @@
        {
         "simulation": "ctrl",
         "forcing": "stable",
-        "vars": 69,
+        "vars": 67,
         "state": "complete"
        },
        {
         "simulation": "bgc",
         "forcing": "stable",
-        "vars": 69,
+        "vars": 67,
         "state": "complete"
        }
       ]
@@ -3895,7 +3895,7 @@
        {
         "simulation": "cou",
         "forcing": "ukesm",
-        "vars": 69,
+        "vars": 67,
         "state": "complete"
        }
       ]
@@ -4846,7 +4846,7 @@
    "empty": false,
    "poc": "Susan Pan / Yuchun Zhang",
    "files": {
-    "1pctCO2": 781,
+    "1pctCO2": 811,
     "overshoot": 346
    },
    "mapped": {
