@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-27T16:24:45+00:00",
+ "generated_at": "2026-11-28T15:17:22+00:00",
  "registry_version": "0.1.1.dev247+ge62c6b9ae",
  "variables_total": 178,
  "gcm_forcings": [
@@ -338,7 +338,7 @@
    "empty": false,
    "poc": "Mousong Wu",
    "files": {
-    "1pctCO2": 851,
+    "1pctCO2": 1256,
     "overshoot": 612
    },
    "mapped": {
@@ -8888,7 +8888,7 @@
    "empty": false,
    "poc": "Eleanor Burke",
    "files": {
-    "1pctCO2": 4888,
+    "1pctCO2": 5599,
     "overshoot": 6932
    },
    "mapped": {
@@ -9028,49 +9028,49 @@
       "factorial": "noFire_noNitrogen",
       "simulation": "bgc",
       "forcing": "stable",
-      "vars": 54
+      "vars": 55
      },
      {
       "factorial": "noFire_noNitrogen",
       "simulation": "cou",
       "forcing": "ukesm",
-      "vars": 54
+      "vars": 55
      },
      {
       "factorial": "noFire_noNitrogen",
       "simulation": "cou",
       "forcing": "ipsl",
-      "vars": 54
+      "vars": 55
      },
      {
       "factorial": "noFire_noNitrogen",
       "simulation": "cou",
       "forcing": "gfdl",
-      "vars": 54
+      "vars": 55
      },
      {
       "factorial": "noFire_noNitrogen",
       "simulation": "ctrl",
       "forcing": "stable",
-      "vars": 54
+      "vars": 55
      },
      {
       "factorial": "noFire_noNitrogen",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 49
+      "vars": 54
      },
      {
       "factorial": "noFire_noNitrogen",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 49
+      "vars": 54
      },
      {
       "factorial": "noFire_noNitrogen",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 49
+      "vars": 54
      },
      {
       "factorial": "noFire_noNitrogen",
@@ -9322,43 +9322,43 @@
       "factorial": "noPermafrostC",
       "simulation": "cou",
       "forcing": "ukesm",
-      "vars": 46
+      "vars": 47
      },
      {
       "factorial": "noPermafrostC",
       "simulation": "cou",
       "forcing": "ipsl",
-      "vars": 46
+      "vars": 47
      },
      {
       "factorial": "noPermafrostC",
       "simulation": "cou",
       "forcing": "gfdl",
-      "vars": 46
+      "vars": 47
      },
      {
       "factorial": "noPermafrostC",
       "simulation": "ctrl",
       "forcing": "stable",
-      "vars": 46
+      "vars": 47
      },
      {
       "factorial": "noPermafrostC",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 1
+      "vars": 46
      },
      {
       "factorial": "noPermafrostC",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 1
+      "vars": 46
      },
      {
       "factorial": "noPermafrostC",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 1
+      "vars": 46
      },
      {
       "factorial": "noPermafrostC",
@@ -9610,7 +9610,7 @@
       "factorial": "addPermafrostC",
       "simulation": "cou",
       "forcing": "ukesm",
-      "vars": 46
+      "vars": 47
      },
      {
       "factorial": "addPermafrostC",
@@ -9622,31 +9622,31 @@
       "factorial": "addPermafrostC",
       "simulation": "cou",
       "forcing": "gfdl",
-      "vars": 46
+      "vars": 47
      },
      {
       "factorial": "addPermafrostC",
       "simulation": "ctrl",
       "forcing": "stable",
-      "vars": 46
+      "vars": 47
      },
      {
       "factorial": "addPermafrostC",
       "simulation": "rad",
       "forcing": "ukesm",
-      "vars": 1
+      "vars": 46
      },
      {
       "factorial": "addPermafrostC",
       "simulation": "rad",
       "forcing": "ipsl",
-      "vars": 1
+      "vars": 46
      },
      {
       "factorial": "addPermafrostC",
       "simulation": "rad",
       "forcing": "gfdl",
-      "vars": 1
+      "vars": 46
      },
      {
       "factorial": "addPermafrostC",
@@ -11782,31 +11782,31 @@
       {
        "simulation": "ctrl",
        "forcing": "stable",
-       "vars": 54,
+       "vars": 55,
        "state": "complete"
       },
       {
        "simulation": "bgc",
        "forcing": "stable",
-       "vars": 54,
+       "vars": 55,
        "state": "complete"
       },
       {
        "simulation": "cou",
        "forcing": "ukesm",
-       "vars": 54,
+       "vars": 55,
        "state": "complete"
       },
       {
        "simulation": "cou",
        "forcing": "ipsl",
-       "vars": 54,
+       "vars": 55,
        "state": "complete"
       },
       {
        "simulation": "cou",
        "forcing": "gfdl",
-       "vars": 54,
+       "vars": 55,
        "state": "complete"
       }
      ]
@@ -11890,7 +11890,7 @@
       {
        "simulation": "ctrl",
        "forcing": "stable",
-       "vars": 46,
+       "vars": 47,
        "state": "complete"
       },
       {
@@ -11902,19 +11902,19 @@
       {
        "simulation": "cou",
        "forcing": "ukesm",
-       "vars": 46,
+       "vars": 47,
        "state": "complete"
       },
       {
        "simulation": "cou",
        "forcing": "ipsl",
-       "vars": 46,
+       "vars": 47,
        "state": "complete"
       },
       {
        "simulation": "cou",
        "forcing": "gfdl",
-       "vars": 46,
+       "vars": 47,
        "state": "complete"
       }
      ]
@@ -11998,7 +11998,7 @@
       {
        "simulation": "ctrl",
        "forcing": "stable",
-       "vars": 46,
+       "vars": 47,
        "state": "complete"
       },
       {
@@ -12010,7 +12010,7 @@
       {
        "simulation": "cou",
        "forcing": "ukesm",
-       "vars": 46,
+       "vars": 47,
        "state": "complete"
       },
       {
@@ -12022,7 +12022,7 @@
       {
        "simulation": "cou",
        "forcing": "gfdl",
-       "vars": 46,
+       "vars": 47,
        "state": "complete"
       }
      ]
